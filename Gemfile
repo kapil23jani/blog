@@ -6,7 +6,7 @@ ruby '2.6.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
+
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -50,6 +50,20 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+group :development do
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'sqlite3', '~> 1.4'
+end
+
+group :production do
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'pg'
+end
+
+
+
+
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
