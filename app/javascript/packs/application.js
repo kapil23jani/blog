@@ -15,7 +15,7 @@ import 'bootstrap'
 
 require("packs/demo")
 
-require("packs/moment")
+// require("packs/moment")
 require("packs/sweetal")
 require("packs/jquery.validate")
 require("packs/jquery.bootstrap-wi")
