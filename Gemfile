@@ -53,12 +53,13 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'sqlite3', '~> 1.4'
+  gem 'sqlite3'
 end
 
 group :production do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'pg'
+  gem 'rails_12factor'
 end
 
 
