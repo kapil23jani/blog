@@ -14,8 +14,8 @@ class SessionsController < ApplicationController
     def create
         @user = User.find_by(email: params[:User][:email].downcase)
         if @user.present? 
-            @token =JWT.encode({user_id: @user.id, exp: (Time.now + 2.weeks).to_i}, Rails.env.eql?('staging') ? Rails.application.credentials[:secret_key_base] : Rails.application.credentials[:secret_key_base], 'HS256')
-            @user.update(authentication_token: @token)
+            #@token =JWT.encode({user_id: @user.id, exp: (Time.now + 2.weeks).to_i}, Rails.env.eql?('staging') ? Rails.application.credentials[:secret_key_base] : Rails.application.credentials[:secret_key_base], 'HS256')
+            #@user.update(authentication_token: @token)
             session[:user_id] = @user.id
             redirect_to dashboard_index_path
         else
