@@ -3,6 +3,7 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
@@ -12,32 +13,47 @@ import 'jquery'
 import 'popper.js'
 import 'bootstrap'
 
+// require("@rails/activestorage").start()
+// require("channels")
+// require('jquery')
+
+// require("jquery")
+// require("bootstrap")
+//= require jquery
+//= require jquery_ujs
+
 
 // require("packs/demo")
 
-// // require("packs/moment")
-// require("packs/sweetal")
-// require("packs/jquery.validate")
-// require("packs/jquery.bootstrap-wi")
-// require("packs/bootstrap-selectpi")
-// require("packs/bootstrap-datetimepicker")
-// require("packs/jquery.dataTables")
-// require("packs/bootstrap-tagsi")
-// require("packs//jasny-bootstrap")
-// require("packs/fullcalendar")
-// require("packs/jquery-jvecto")
-// require("packs/nouislider")
-// require("packs/chartist")
-// require("packs/bootstrap-no")
-// require("packs/jquery")
-// require("packs/popper")
-// require("packs/bootstrap-material-design")
-// require("packs/perfect-scrollbar.jquery")
-// require("packs/material-dashb")
+// window.jQuery = $;
+// window.$ = $;
+
+// require("packs/jquery.min")
+// require("packs/popper.min")
+// require("packs/moment.min")
+// require("packs/sweetalert2")
+// require("packs/jquery.validate.min")
+// require("packs/jquery.bootstrap-wizard")
+// require("packs/bootstrap-selectpicker.min")
+// require("packs/bootstrap-datetimepicker.min")
+// require("packs/jquery.dataTables.min")
+// require("packs/bootstrap-tagsinput.min")
+// require("packs//jasny-bootstrap.min")
+// require("packs/fullcalendar.min")
+// require("packs/jquery-jvectormap")
+// require("packs/nouislider.min")
+// require("packs/chartist.min")
+// require("packs/bootstrap-notify")
+// require("packs/bootstrap-material-design.min")
+// require("packs/perfect-scrollbar.jquery.min")
+// require("packs/material-dashbboard.min")
 
  //= require popper
 //= require turbolinks
 //= require bootstrap
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap.min
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
