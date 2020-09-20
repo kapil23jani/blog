@@ -22,7 +22,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'jquery-rails'
-
+gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 gem 'braintree'
 gem 'httparty', '~> 0.13.7'
@@ -32,6 +32,8 @@ gem 'devise'
 gem 'coffee-script-source', '~> 1.11', '>= 1.11.1'
 gem 'popper_js'
 gem 'jquery-validation-rails'
+gem 'pry'
+gem 'jwt'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

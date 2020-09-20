@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
 
   # devise_for :users
-	resources :dashboard
+	resources :dashboard do 
+    get :my_teams, on: :collection  
+  end
 	resources :welcome
 
 	devise_for :users, controllers: {

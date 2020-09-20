@@ -1,0 +1,24 @@
+<!-- <div id="page-content-wrapper">     -->
+    <nav class="bg-light border-bottom" >
+      &nbsp;&nbsp;<i class="material-icons" id="menu-toggle" style="font-size: 50px;">list</i>
+
+      <div class="userdetail">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= @current_user.name %>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <a href="" class="dropdown-item" style="font-size: 16px;">Profile</a>
+            <a href="" class="dropdown-item" style="font-size: 16px;">Settings</a>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item", style: "font-size: 16px;" %>
+          </div>
+        </div>
+      </div>
+    </nav>
+<!-- </div> -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>	

@@ -28,7 +28,9 @@ import 'bootstrap'
 // window.jQuery = $;
 // window.$ = $;
 
-// require("packs/jquery.min")
+// require("custom/jquery")
+// require("custom/jquery.min")
+// require("custom/bootstrap.bundle.min")
 // require("packs/popper.min")
 // require("packs/moment.min")
 // require("packs/sweetalert2")

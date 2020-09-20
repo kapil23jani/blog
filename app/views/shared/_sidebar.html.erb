@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Simple Sidebar - Start Bootstrap Template</title>
+
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- Bootstrap core CSS -->
+  <!-- <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- Custom styles for this template -->
+  <!-- <link href="css/simple-sidebar.css" rel="stylesheet"> -->
+
+</head>
+
+<style type="text/css">
+  /*!
+ * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/templates/simple-sidebar)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
+ */
+
+ #wrapper {
+    overflow-x: hidden;
+ }
+
+  #sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin .25s ease-out;
+    -moz-transition: margin .25s ease-out;
+    -o-transition: margin .25s ease-out;
+    transition: margin .25s ease-out;
+  }
+
+  #sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+  }
+
+  #sidebar-wrapper .list-group {
+    width: 15rem;
+  }
+
+  #page-content-wrapper {
+    min-width: 100vw;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  @media (min-width: 768px) {
+    #sidebar-wrapper {
+      margin-left: 0;
+    }
+
+    #page-content-wrapper {
+      min-width: 0;
+      width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+      margin-left: -15rem;
+    }
+
+  }
+  .userdetail {
+    float: right;
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .dropdown-item:hover, .dropdown-item:focus {
+    color: gray;
+    text-decoration: none;
+    background-color: gray;
+  }
+
+  .navhref {
+    /*background-color: gray;*/
+    color: white;
+    padding: 20px;
+    font-size: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .heading {
+    color: white;
+    font-size: 15px;
+  }
+
+  a:hover {
+    background-color: #D3D3D3;
+  }
+</style>
+
+<body>
+  <!-- Sidebar -->
+    <div class="border-right" style="background: #2F4F4F;" id="sidebar-wrapper">
+      <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Blog</p></center></div>
+        <div class="list-group list-group-flush">
+          <a class="nav-link" href="/dashboard">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">dashboard</i>
+            <p class="heading">Dashboard</p></center>
+          </a>
+          <a class="nav-link" href="./dashboard.html">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">account_box</i>
+            <p class="heading">My Profile</p></center>
+          </a>
+          <a class="nav-link" href="./dashboard.html">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">account_balance_wallet</i>
+            <p class="heading">Earning</p></center>
+          </a>
+          <a class="nav-link" href="./dashboard/my_teams">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
+            <p class="heading">My Team</p></center>
+          </a>
+          <a class="nav-link" href="./dashboard.html">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
+            <p class="heading">Profile</p></center>
+          </a> 
+
+
+        <!-- <a href="#" class="navhref heading">Dashboard</a> -->
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">My Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Earnings</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">My Team</a> -->
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a> -->
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Status</a> -->
+      </div>
+    </div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+</body>
+
+</html>

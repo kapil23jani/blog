@@ -14,6 +14,8 @@
  *= require_self
  *= require demo 
  *= require material-dashboard.css
+ *= require bootstrap.min
+ *= require bootstrap
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
