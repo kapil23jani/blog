@@ -5,15 +5,17 @@
 =end
 class RegistrationsController < ApplicationController
 
+    skip_before_action :authenticate_user!, only: [ :new, :create ]
+
 	def new
 		@user = User.new
 		@url = user_registration_path
 	end
 
     def create
-    	@user = User.new
-    	@user.email = params[:user][:email]
-    	@user.password = params[:user][:password]
+    	@user = User.new(user_params)
+    	#@user.email = params[:user][:email]
+    	#@user.password = params[:user][:password]
     	if @user.save 
     		#token = JWT.encode({user_id: @user.id, exp: (Time.now + 2.weeks).to_i}, Rails.env.eql?('staging') ? Rails.application.credentials[:secret_key_base] : Rails.application.credentials[:secret_key_base], 'HS256')
     		#@user.update_attributes(authentication_token: @token)
@@ -27,6 +29,6 @@ class RegistrationsController < ApplicationController
     private
 
     def user_params
-        params.permit(:email, :password, :password_confirmation)
+        params.require(:user).permit(:zipcode, :city, :state, :country, :name, :dob, :sponser_id, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
     end
 end

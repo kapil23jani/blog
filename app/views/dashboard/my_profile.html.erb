@@ -1,0 +1,79 @@
+<form>
+  <h6 class="heading-small text-muted mb-4" style="padding: 20px; font-size: 20px;">User information</h6>
+  <div class="pl-lg-4">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-username">Username</label>
+          <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse" readonly="readonly">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-email">Email address</label>
+          <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="<%= @current_user.email%>" readonly="readonly">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-first-name">Name</label>
+          <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="<%= @current_user.name%>" value="Lucky" readonly="readonly">
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="my-4">
+  <!-- Address -->
+  <h6 class="heading-small text-muted mb-4" style="padding: 20px; font-size: 20px;">Contact information</h6>
+  <div class="pl-lg-4">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-address">Address</label>
+          <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="<%= @current_user.address %>" type="text" readonly="readonly">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-city">City</label>
+          <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<%= @current_user.city %>" readonly="readonly">
+        </div>
+      </div> 
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-city">State</label>
+          <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="State" value="<%= @current_user.state %>" readonly="readonly">
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-country">Country</label>
+          <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="<%= @current_user.country %>" value="<%= @current_user.country %>" readonly="readonly">
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-country">Postal code</label>
+          <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="<%= @current_user.zipcode %>" readonly="readonly">
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  
+  <div style="float: right; padding: 10px;">
+
+    <%= link_to "Update Password", edit_user_path(@current_user), class: "btn btn-danger"%>
+    <%= link_to "Update Profile", edit_user_path(@current_user), class: "btn btn-warning"%>
+  </div>
+
+
+
+
+</form>

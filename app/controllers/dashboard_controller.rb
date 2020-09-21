@@ -5,4 +5,7 @@ class DashboardController < ApplicationController
 
 	def my_teams
 	end
+
+	def my_profile
+	end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_080330) do
+ActiveRecord::Schema.define(version: 2020_09_21_185535) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,6 +32,18 @@ ActiveRecord::Schema.define(version: 2020_09_20_080330) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "authentication_token"
     t.string "name"
+    t.string "dob"
+    t.string "sponser_id"
+    t.string "position"
+    t.string "address"
+    t.string "country_code"
+    t.string "phone_number"
+    t.string "pan_number"
+    t.string "gender"
+    t.string "zipcode"
+    t.string "city"
+    t.string "state"
+    t.string "country"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
