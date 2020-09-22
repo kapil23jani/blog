@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 	before_action :authenticate_user!
-	skip_before_filter :verify_authenticity_token
+	skip_before_action :verify_authenticity_token
 	protect_from_forgery prepend: true, with: :null_session
     
     def authenticate_user!
