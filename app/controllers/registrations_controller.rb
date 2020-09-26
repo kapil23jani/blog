@@ -14,9 +14,36 @@ class RegistrationsController < ApplicationController
 
     def create
     	@user = User.new(user_params)
-    	#@user.email = params[:user][:email]
-    	#@user.password = params[:user][:password]
+        @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
+        @user.password = 123456789
     	if @user.save 
+            @sponser_user = User.find_by(sponser_id: params[:user][:sponser_id])
+            if params[:user][:position] == "Left"
+                if @sponser_user.pairs.where(left_user_id: nil).present?
+                    pair = @sponser_user.pairs.where(left_user_id: nil).last
+                    pair.left_user_id = @user.id
+                    pair.user_id = @sponser_user.id
+                    pair.save
+                else
+                    pair = @sponser_user.pairs.new
+                    pair.left_user_id = @user.id
+                    pair.user_id = @sponser_user.id
+                    pair.save
+                end
+            elsif params[:user][:position] == "Right"
+                if @sponser_user.pairs.where(right_user_id: nil).present?
+                    pair = @sponser_user.pairs.where(right_user_id: nil).last
+                    pair.right_user_id = @user.id
+                    pair.user_id = @sponser_user.id
+                    pair.save
+                else
+                    pair = @sponser_user.pairs.new
+                    pair.right_user_id = @user.id
+                    pair.user_id = @sponser_user.id
+                    pair.save
+                end
+            end
+                    
     		#token = JWT.encode({user_id: @user.id, exp: (Time.now + 2.weeks).to_i}, Rails.env.eql?('staging') ? Rails.application.credentials[:secret_key_base] : Rails.application.credentials[:secret_key_base], 'HS256')
     		#@user.update_attributes(authentication_token: @token)
     		session[:user_id] = @user.id

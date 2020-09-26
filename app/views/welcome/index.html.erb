@@ -93,11 +93,11 @@ body {
     						<%= f.text_field :sponser_id, autofocus: true, placeholder: "Referral Code" , class: "form-control" %>
 	            </div> 
               <div class="md-form mb-5">
-                <%= f.label :gender %>&nbsp;&nbsp;&nbsp;
-                <%= f.label :gender, "Left", :value => "Left"  %>
-                <%= f.radio_button :gender, true%>
-                <%= f.label :gender, "Right", :value => "Right" %>
-                <%= f.radio_button :gender, false %>
+                <%= f.label :position %>&nbsp;&nbsp;&nbsp;
+                <%= f.label :position, "Left", :value => "Left"  %>
+                <%= f.radio_button :position, "Left"%>
+                <%= f.label :position, "Right", :value => "Right" %>
+                <%= f.radio_button :position, "Right" %>
               </div> 
               
               <div class="square">
@@ -115,6 +115,17 @@ body {
               <%#= f.text_field :date_of_tour, "data-provide" => 'datepicker' %>
                 <%= f.text_field :dob, autofocus: true, placeholder: "Date of Birth", class: "form-control" %>
               </div> 
+
+               <div class="md-form mb-5">
+                <%= f.label :gender %>&nbsp;&nbsp;&nbsp;
+                <%= f.label :gender, "Male", :value => "Male"  %>
+                <%= f.radio_button :gender, "Male"%>
+                <%= f.label :gender, "Female", :value => "Female" %>
+                <%= f.radio_button :gender, "Female" %>
+                <%= f.label :gender, "Other", :value => "Other" %>
+                <%= f.radio_button :gender, "Other" %>
+              </div> 
+              
 
               <div class="square">
                 <center>
