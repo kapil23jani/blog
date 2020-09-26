@@ -84,6 +84,11 @@ body {
           <%= form_for @user, url: @url do |f| %>
              
 	          <div class="modal-body mx-2" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+              <% flash.each do |type, msg| %>
+                <div class="alert alert-info">
+                  <%= msg %>
+                </div>
+              <% end %>
               <div class="square">
                 <center>
                   <b>Who referred you!</b>

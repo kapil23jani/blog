@@ -15,7 +15,6 @@ class RegistrationsController < ApplicationController
     def create
     	@user = User.new(user_params)
         @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
-        @user.password = 123456789
     	if @user.save 
             @sponser_user = User.find_by(sponser_id: params[:user][:sponser_id])
             if params[:user][:position] == "Left"
@@ -49,7 +48,8 @@ class RegistrationsController < ApplicationController
     		session[:user_id] = @user.id
     		redirect_to dashboard_index_path
     	else
-    		render 'new'
+    		flash[:notice] = @user.errors.full_messages.join(', ')
+            redirect_to welcome_index_path
     	end
     end
 
