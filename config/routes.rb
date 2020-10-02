@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 	resources :dashboard do 
     get :my_teams, on: :collection  
     get :my_profile, on: :collection  
+    get :graph, on: :collection  
   end
 	resources :welcome
 

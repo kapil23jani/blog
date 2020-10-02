@@ -13,4 +13,7 @@ class DashboardController < ApplicationController
 
 	def my_profile
 	end
+
+	def graph
+	end
 end

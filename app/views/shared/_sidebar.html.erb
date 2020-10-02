@@ -104,6 +104,14 @@
   a:hover {
     background-color: #D3D3D3;
   }
+
+  .wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+
 </style>
 
 <body>
@@ -111,14 +119,38 @@
     <div class="border-right" style="background: #2F4F4F;" id="sidebar-wrapper">
       <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Blog</p></center></div>
         <div class="list-group list-group-flush">
+
           <a class="nav-link" href="/dashboard">
             <center><i class="material-icons" style="color: white; font-size: 30px;">dashboard</i>
             <p class="heading">Dashboard</p></center>
           </a>
-          <a class="nav-link" href="/dashboard/my_profile">
-            <center><i class="material-icons" style="color: white; font-size: 30px;">account_box</i>
-            <p class="heading">My Profile</p></center>
+          <a href="#pageSubmenu" data-toggle="collapse" id="mydashboard" >
+            <center>
+              <i class="  material-icons" style="color: white; font-size: 30px;">dashboard</i>
+                <p class="heading">My Business</p>
+              </center>
           </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu" style="background-color: #332e2e">
+            <li>
+              <a class="nav-link" href="/dashboard/my_teams">
+                <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
+                <p class="heading">My Team</p></center>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="/dashboard/graph">
+                <center>
+                  <i class="material-icons" style="color: white; font-size: 30px;">person</i>
+                  <p class="heading">Graph</p>
+                </center>
+              </a> 
+            </li>
+            <!-- <li>
+                <a href="#">Page 3</a>
+            </li> -->
+          </ul>
+
+      
           <a class="nav-link" href="./dashboard.html">
             <center><i class="material-icons" style="color: white; font-size: 30px;">account_balance_wallet</i>
             <p class="heading">Earning</p></center>
@@ -127,12 +159,14 @@
             <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
             <p class="heading">My Team</p></center>
           </a>
-          <a class="nav-link" href="./dashboard.html">
+          <a class="nav-link" href="/dashboard/graph">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
+            <p class="heading">Graph</p></center>
+          </a> 
+          <a class="nav-link" href="/dashboard/my_profile">
             <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
             <p class="heading">Profile</p></center>
-          </a> 
-
-
+          </a>
         <!-- <a href="#" class="navhref heading">Dashboard</a> -->
         <!-- <a href="#" class="list-group-item list-group-item-action bg-light">My Profile</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Earnings</a>
@@ -143,6 +177,13 @@
     </div>
   <!-- /#sidebar-wrapper -->
 
+<script>
+$(document).ready(function(){
+  $("#mydashboard").click(function(){
+    $("#pageSubmenu").toggle();
+  });
+});
+</script>
   <!-- Page Content -->
 </body>
 
