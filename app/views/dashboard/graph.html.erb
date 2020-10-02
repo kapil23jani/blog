@@ -199,30 +199,34 @@ right connector from last child*/
 		<div class="tree">
 			<ul class="center">
 			  	<li >
-			    	<a href ="#"class= "avatar_men"  >
-			    	</a>
+			    	<a href ="#"class= "<%= @current_user.gender.eql?("male") ? "avatar_men" : "avatar_female"%>"></a>
 			    	<ul>
-			          	<li>
-			            	<a href="#" class = "avatar_men"></a>
-			            	<ul>
-					          	<li>
-					            	<a href="#" class = "avatar_men"></a>
-					            	<ul>
-							          	<li>
-							            	<a href="#" class = "avatar_female"></a>
-							            	
-							          	</li>
-							          	<li>
-							            	<a href="#" class = "avatar_men"></a>
-							          	</li>
-						        	</ul>
+
+			    		<% @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil).each do |user| %>
+				          	<li>
+				            	<a href="#" class = "<%= User.find(user.left_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%>"></a>
+				          	</li>
+				          	<li>
+				          		<a href="#" class = "<%= User.find(user.right_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%>"></a>
+				          	</li>
+			    		<%end%> 
+
+			    		<%# @current_user.pairs.where(left_user_id: nil).or(@current_user.pairs.where(right_user_id: nil)).each do |user| %>
+
+			    			<%#if user.right_user_id.nil? %>
+				    			<!-- <li>
+					            	<a href="#" class = "<%#= User.find(user.left_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%>"></a>
 					          	</li>
+					        <%#elsif user.left_user_id.nil?%>
 					          	<li>
-					            	<a href="#" class = "avatar_men"></a>
-					          	</li>
-				        	</ul>
-			          	</li>
-			          	<li>
+					          		<a href="#" class = "<%#= User.find(user.right_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%>"></a>
+					          	</li> -->
+					        <%#end%>
+			    		<%#end %>
+
+
+
+			          	<!-- <li>
 			            	<a href="#" class = "avatar_men"></a>
 			            	<ul>
 					          	<li>
@@ -233,7 +237,7 @@ right connector from last child*/
 					            	<a href="#" class = "avatar_female"></a>
 					          	</li>
 				        	</ul>
-			          	</li>
+			          	</li> -->
 		        	</ul>
 		      	</li>  
 			   
