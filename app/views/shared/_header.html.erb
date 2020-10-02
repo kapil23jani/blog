@@ -1,24 +1,77 @@
 <!-- <div id="page-content-wrapper">     -->
+<style type="text/css">
+  .logout {
+    width: 300px;
+    height: 200px;
+    background-color: white;
+  }
+
+  .img_div {
+    padding: 5px;
+  }
+  
+  .text_label {
+    /*width: 100px;
+    height: 80px;
+*/
+}
+
+  .p.hover {
+    background-color: gray;
+  }
+
+
+    /*float: right;*/
+
+
+</style>    
     <nav class="bg-light border-bottom" >
       &nbsp;&nbsp;<i class="material-icons" id="menu-toggle" style="font-size: 50px;">list</i>
 
       <div class="userdetail">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= @current_user.name %>
-          </button>
+          <a href="" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="/assets/icon.png" width="35px;">
+          </a>
+
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <a href="" class="dropdown-item" style="font-size: 16px;">Profile</a>
-            <a href="" class="dropdown-item" style="font-size: 16px;">Settings</a>
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item", style: "font-size: 16px;" %>
+            <div class="logout">
+              <div class="img_div">
+                <center>
+                  <img src="/assets/icon.png" class="rounded-circle" width="85px;">
+                </center>
+              </div>
+              <div class="text_label">
+                <p style="text-align: center; font-size: 20px;"> <%= @current_user.name %></p>
+                <p style="text-align: center; font-size: 20px;"> <%= link_to "Profile", edit_user_path(@current_user.id), class: "btn btn-info"%></p>
+                
+                
+              </div>
+              <div style="padding: 10px;">
+                <%= link_to "Graph", "", class: "btn btn-secondary", style: "padding:5px;float:left;font-size:16px;" %>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-secondary", style: "padding: 5px;float: right;font-size: 16px;" %>
+              </div>
+
+
+            </div>
+            <!-- <a href="" class="dropdown-item" style="font-size: 16px;">Profile</a> -->
+            <!-- <a href="" class="dropdown-item" style="font-size: 16px;">Settings</a> -->
           </div>
         </div>
       </div>
     </nav>
 <!-- </div> -->
-    <script>
+  <script>
     $("#menu-toggle").click(function(e) {
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
   </script>	
+
+  <script>
+    $(document).ready(function(){
+      $(".logout").click(function(){
+        $(".logout").toggle();
+      });
+    }); 
+  </script>

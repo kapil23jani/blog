@@ -17,8 +17,12 @@ class UsersController < ApplicationController
 		end
 	end
 
-	# def destroy
-	# end
+	def get_user_kyc
+	end
+
+	def update_user_kyc
+	end
+	
 
 	private
 

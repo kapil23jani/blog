@@ -31,9 +31,9 @@ class SessionsController < ApplicationController
     def destroy
         if @current_user.present?
             @current_user.authentication_token = nil
-            if @current_user.save
+            # if @current_user.save
                 redirect_to welcome_index_path
-            end
+            # end
         else
             #render_error("not_found", "#{I18n.t 'Password_create_failed'}")
         end

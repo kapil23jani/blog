@@ -1,17 +1,36 @@
+<style type="">
+  .datetime select:nth-child(1) {
+  width: 60px;
+  text-indent: 15px; 
+  padding: 5px;
+}
+.datetime select:nth-child(2) {
+  width: 100px;
+  text-indent: 15px; 
+  padding: 5px;
+}
+.datetime select:nth-child(3) {
+  width: 60px;
+  text-indent: 15px; 
+  padding: 5px;
+}
+</style>
+
+
 <%= form_for @current_user, url: user_path do |f| %>
   <h6 class="heading-small text-muted mb-4" style="padding: 20px; font-size: 20px;">User information</h6>
   <div class="pl-lg-4">
     <div class="row">
       <div class="col-lg-4">
         <div class="form-group focused" style="width: auto; padding: 10px;">
-          <label class="form-control-label" for="input-username">Username</label>
-          <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse" readonly="readonly">
+          <label class="form-control-label" for="input-username">Sponser Id</label>
+          <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="<%= @current_user.sponser_id %>" readonly="readonly">
         </div>
       </div>
       <div class="col-lg-4">
         <div class="form-group focused" style="width: auto; padding: 10px;">
-          <label class="form-control-label" for="input-email">Email address</label>
-          <%= f.email_field :email, autofocus: true, placeholder: "Name", class: "form-control" %>
+          <label class="form-control-label" for="input-username">Email ID</label>
+          <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="<%= @current_user.email %>" readonly="readonly">
         </div>
       </div>
     </div>
@@ -23,9 +42,26 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="form-group focused" style="width: auto; padding: 10px;">
-          <label class="form-control-label" for="input-first-name">Pan Number</label>
-          <%= f.text_field :pan_number, autofocus: true, placeholder: "Pan Number", class: "form-control" %>
+        <div class="form-group focused" style="width: auto; padding: 10px;"><br>
+          <label class="form-control-label" for="input-first-name">Gender</label>
+          <%#= f.label :gender %>&nbsp;&nbsp;&nbsp;
+          <%= f.label :gender, "Male", :value => "Male"  %>
+          <%= f.radio_button :gender, "Male", id: "gender"%>
+          <%= f.label :gender, "Female", :value => "Female" %>
+          <%= f.radio_button :gender, "Female", id: "gender" %>
+          <%= f.label :gender, "Other", :value => "Other" %>
+          <%= f.radio_button :gender, "Other", id: "gender" %>
+          <%#= f.text_field :pan_number, autofocus: true, placeholder: "Pan Number", class: "form-control" %>
+        </div>
+      </div> 
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;"><br>
+          <label class="form-control-label" for="input-first-name">Date of Birth</label>
+          <%#= f.label :gender %>&nbsp;&nbsp;&nbsp;
+          <span class="datetime"><%= date_select :dob, id: "dob", start_year: 1950, ampm: true, order: [:day, :month, :year], :class => "form-control"%><span/>
+          <%#= f.text_field :pan_number, autofocus: true, placeholder: "Pan Number", class: "form-control" %>
         </div>
       </div>
     </div>
@@ -43,12 +79,12 @@
       </div>
       <div class="col-lg-4">
         <div class="form-group focused" style="width: auto; padding: 10px;">
-          <label class="form-control-label" for="input-city">City</label>
-          <%= f.text_field :city, autofocus: true, placeholder: "City", class: "form-control" %>
+          <label class="form-control-label" for="input-city">Zipcode</label>
+          <%= f.text_field :zipcode, autofocus: true, placeholder: "City", class: "form-control" %>
         </div>
       </div> 
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-lg-4">
         <div class="form-group focused" style="width: auto; padding: 10px;">
           <label class="form-control-label" for="input-city">State</label>
@@ -67,12 +103,11 @@
           <%= f.text_field :zipcode, autofocus: true, placeholder: "Postal Code", class: "form-control" %>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
   <div style="float: right; padding: 10px;">
     <button class="btn btn-warning">Submit</button>
   </div>
-
 <%end%>
 
  

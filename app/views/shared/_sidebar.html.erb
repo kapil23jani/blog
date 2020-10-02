@@ -126,7 +126,7 @@
           </a>
           <a href="#pageSubmenu" data-toggle="collapse" id="mydashboard" >
             <center>
-              <i class="  material-icons" style="color: white; font-size: 30px;">dashboard</i>
+              <i class=" material-icons" style="color: white; font-size: 30px;">dashboard</i>
                 <p class="heading">My Business</p>
               </center>
           </a>
@@ -145,9 +145,6 @@
                 </center>
               </a> 
             </li>
-            <!-- <li>
-                <a href="#">Page 3</a>
-            </li> -->
           </ul>
 
       
@@ -163,27 +160,52 @@
             <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
             <p class="heading">Graph</p></center>
           </a> 
-          <a class="nav-link" href="/dashboard/my_profile">
-            <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
-            <p class="heading">Profile</p></center>
+
+          <a href="#profileSubMenu" data-toggle="collapse" id="profilemenu" >
+            <center>
+              <i class=" material-icons" style="color: white; font-size: 30px;">dashboard</i>
+                <p class="heading">Profile</p>
+              </center>
           </a>
-        <!-- <a href="#" class="navhref heading">Dashboard</a> -->
-        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">My Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Earnings</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">My Team</a> -->
-        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a> -->
-        <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Status</a> -->
+
+           <ul class="collapse list-unstyled" id="profileSubMenu" style="background-color: #332e2e">
+            <li>
+              <a class="nav-link" href="/dashboard/my_profile">
+                <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
+                <p class="heading">Personal Detail</p></center>
+              </a>
+            </li> 
+            <li>
+              <a class="nav-link" href="/users/password/edit">
+                <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
+                <p class="heading">Update Password</p></center>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link" href="/dashboard/graph">
+                <center>
+                  <i class="material-icons" style="color: white; font-size: 30px;">person</i>
+                  <p class="heading">KYC Details</p>
+                </center>
+              </a> 
+            </li>
+          </ul>
+
       </div>
     </div>
-  <!-- /#sidebar-wrapper -->
+  <script>
+    $(document).ready(function(){
+      $("#mydashboard").click(function(){
+        $("#pageSubmenu").toggle();
+      });
+    });
 
-<script>
-$(document).ready(function(){
-  $("#mydashboard").click(function(){
-    $("#pageSubmenu").toggle();
-  });
-});
-</script>
+    $(document).ready(function(){
+      $("#profilemenu").click(function(){
+        $("#profileSubMenu").toggle();
+      });
+    });
+  </script>
   <!-- Page Content -->
 </body>
 

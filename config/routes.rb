@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get :my_teams, on: :collection  
     get :my_profile, on: :collection  
     get :graph, on: :collection  
+    get :get_user_kyc, on: :collection  
+    put :update_user_kyc, on: :collection  
   end
 	resources :welcome
 

@@ -5,6 +5,8 @@
 =end
 class RegistrationsController < ApplicationController
 
+    include UsersHelper
+
     skip_before_action :authenticate_user!, only: [ :new, :create ]
 
 	def new
@@ -15,6 +17,7 @@ class RegistrationsController < ApplicationController
     def create
     	@user = User.new(user_params)
         @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
+        @user.dob = params[:date].present? ? fetch_date_of_birth : ""
     	if @user.save 
             @sponser_user = User.find_by(sponser_id: params[:sponser_id])
             if params[:position] == "Left"
