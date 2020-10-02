@@ -16,8 +16,8 @@ class RegistrationsController < ApplicationController
     	@user = User.new(user_params)
         @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
     	if @user.save 
-            @sponser_user = User.find_by(sponser_id: params[:user][:sponser_id])
-            if params[:user][:position] == "Left"
+            @sponser_user = User.find_by(sponser_id: params[:sponser_id])
+            if params[:position] == "Left"
                 if @sponser_user.pairs.where(left_user_id: nil).present?
                     pair = @sponser_user.pairs.where(left_user_id: nil).last
                     pair.left_user_id = @user.id
@@ -29,7 +29,7 @@ class RegistrationsController < ApplicationController
                     pair.user_id = @sponser_user.id
                     pair.save
                 end
-            elsif params[:user][:position] == "Right"
+            elsif params[:position] == "Right"
                 if @sponser_user.pairs.where(right_user_id: nil).present?
                     pair = @sponser_user.pairs.where(right_user_id: nil).last
                     pair.right_user_id = @user.id
@@ -42,20 +42,16 @@ class RegistrationsController < ApplicationController
                     pair.save
                 end
             end
-                    
-    		#token = JWT.encode({user_id: @user.id, exp: (Time.now + 2.weeks).to_i}, Rails.env.eql?('staging') ? Rails.application.credentials[:secret_key_base] : Rails.application.credentials[:secret_key_base], 'HS256')
-    		#@user.update_attributes(authentication_token: @token)
     		session[:user_id] = @user.id
-    		redirect_to dashboard_index_path
+    		redirect_to welcome_index_path
     	else
-    		flash[:notice] = @user.errors.full_messages.join(', ')
-            redirect_to welcome_index_path
+            render_error(400, @user.errors.full_messages.join(','))
     	end
     end
 
     private
 
     def user_params
-        params.require(:user).permit(:zipcode, :city, :state, :country, :name, :dob, :sponser_id, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
+        params.permit(:zipcode, :city, :state, :country, :name, :dob, :sponser_id, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
     end
 end

@@ -9,4 +9,18 @@ class ApplicationController < ActionController::Base
             redirect_to welcome_index_path
         end
     end
+
+    def render_error(error_type, message, status_code = 200)
+        render json: {
+            responseCode: error_type,
+            responseMessage: message
+        }
+    end
+
+     def render_message(message)
+        render json: {
+            responseCode: 200,
+            responseMessage: message,
+        }
+    end
 end

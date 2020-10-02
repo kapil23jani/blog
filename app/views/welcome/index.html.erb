@@ -70,7 +70,21 @@ body {
     margin-top: 10px;
     margin-right: 10px;
 }
-
+.datetime select:nth-child(1) {
+  width: 60px;
+  text-indent: 15px; 
+  padding: 5px;
+}
+.datetime select:nth-child(2) {
+  width: 100px;
+  text-indent: 15px; 
+  padding: 5px;
+}
+.datetime select:nth-child(3) {
+  width: 60px;
+  text-indent: 15px; 
+  padding: 5px;
+}
 
 </style>
 </head>
@@ -95,25 +109,23 @@ body {
           <%= form_for @user, url: @url do |f| %>
              
 	          <div class="modal-body mx-2" style="max-height: calc(100vh - 200px); overflow-y: auto;">
-              <% flash.each do |type, msg| %>
-                <div class="alert alert-info">
-                  <%= msg %>
-                </div>
-              <% end %>
-              <div class="square">
+               <p id="notice"><%= flash[:notice] %></p>
+
+
+              <div class="square" style="padding: 3px;">
                 <center>
                   <b>Who referred you!</b>
                 </center>
               </div>
 	            <div class="md-form mb-5"><br>
-    						<%= f.text_field :sponser_id, autofocus: true, placeholder: "Referral Code" , class: "form-control" %>
+    						<%= f.text_field :sponser_id, autofocus: true, id: "sponser_id", placeholder: "Sponser ID" , class: "form-control" %>
 	            </div> 
               <div class="md-form mb-5">
                 <%= f.label :position %>&nbsp;&nbsp;&nbsp;
-                <%= f.label :position, "Left", :value => "Left"  %>
-                <%= f.radio_button :position, "Left"%>
-                <%= f.label :position, "Right", :value => "Right" %>
-                <%= f.radio_button :position, "Right" %>
+                <%= f.label :position, "Left", :value => "Left" %>
+                <%= f.radio_button :position, "Left" ,id: "position"%>
+                <%= f.label :position, "Right", :value => "Right"%>
+                <%= f.radio_button :position, "Right", id: "position" %>
               </div> 
               
               <div class="square">
@@ -123,27 +135,26 @@ body {
               </div>
 
               <div class="md-form mb-5"><br>
-                <%= f.text_field :name, autofocus: true, placeholder: "Name", class: "form-control" %>
+                <%= f.text_field :name, autofocus: true, id: "name" ,placeholder: "Name", class: "form-control" %>
               </div> 
 
               <div class="md-form mb-5">
-              <%#= datepicker(form, :test_date) %>
-              <%#= f.text_field :date_of_tour, "data-provide" => 'datepicker' %>
-                <%= f.text_field :dob, autofocus: true, placeholder: "Date of Birth", class: "form-control" %>
+                <%= f.label :DateOfBirth %>&nbsp;&nbsp;&nbsp;<br>
+                <span class="datetime"><%= f.date_select :dob, id: "dob", start_year: 1950, ampm: true, order: [:day, :month, :year], :class => "form-control"%><span/>
               </div> 
 
                <div class="md-form mb-5">
                 <%= f.label :gender %>&nbsp;&nbsp;&nbsp;
                 <%= f.label :gender, "Male", :value => "Male"  %>
-                <%= f.radio_button :gender, "Male"%>
+                <%= f.radio_button :gender, "Male", id: "gender"%>
                 <%= f.label :gender, "Female", :value => "Female" %>
-                <%= f.radio_button :gender, "Female" %>
+                <%= f.radio_button :gender, "Female", id: "gender" %>
                 <%= f.label :gender, "Other", :value => "Other" %>
-                <%= f.radio_button :gender, "Other" %>
+                <%= f.radio_button :gender, "Other", id: "gender" %>
               </div> 
               
 
-              <div class="square">
+              <div class="square" style="padding: 3px;">
                 <center>
                   <b>Contact Details</b>
                 </center>
@@ -151,42 +162,26 @@ body {
 
 
               <div class="md-form mb-5"><br>
-                <%= f.text_field :address, autofocus: true, placeholder: "Address", class: "form-control" %>
+                <%= f.text_field :address, autofocus: true, id: "address" , placeholder: "Address", class: "form-control" %>
               </div>     
 
               <div class="md-form mb-5">
-                <%= f.text_field :city, autofocus: true, placeholder: "City", class: "form-control" %>
-              </div> 
+                <%= f.text_field :zipcode, autofocus: true, id: "zipcode" , placeholder: "Zipcode", class: "form-control" %>
+              </div>     
 
               <div class="md-form mb-5" style="margin-bottom: 2px;">
-                <%= f.text_field :state, autofocus: true, placeholder: "State", class: "form-control" %>
+                <%= f.text_field :phone_number, autofocus: true, id: "phone_number" ,placeholder: "Phone", class: "form-control" %>
               </div> 
 
               <div class="md-form mb-5">
-                <%= f.text_field :country, autofocus: true, placeholder: "Country", class: "form-control" %>
+                <%= f.email_field :email, autofocus: true, id: "email" ,placeholder: "Email", class: "form-control" %>
               </div> 
 
               <div class="md-form mb-5">
-                <%= f.text_field :zipcode, autofocus: true, placeholder: "Zipcode", class: "form-control" %>
+                <%= f.text_field :pan_number, autofocus: true, id: "pan_number" ,placeholder: "Pan", class: "form-control" %>
               </div>     
 
-              <div class="md-form mb-5">
-                <%= f.text_field :country_code, autofocus: true, placeholder: "Country Code", class: "form-control" %>
-              </div> 
-
-              <div class="md-form mb-5" style="margin-bottom: 2px;">
-                <%= f.text_field :phone_number, autofocus: true, placeholder: "Phone", class: "form-control" %>
-              </div> 
-
-              <div class="md-form mb-5">
-                <%= f.email_field :email, autofocus: true, placeholder: "Email", class: "form-control" %>
-              </div> 
-
-              <div class="md-form mb-5">
-                <%= f.text_field :pan_number, autofocus: true, placeholder: "Pan", class: "form-control" %>
-              </div>     
-
-              <div class="square">
+              <div class="square" style="padding: 3px;">
                 <center>
                   <b>Login Details</b>
                 </center>
@@ -196,19 +191,21 @@ body {
 						    <% if @minimum_password_length %>
 						    <em>(<%= @minimum_password_length %> characters minimum)</em>
 						    <% end %><br/>
-    						<%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "form-control" %>
+    						<%= f.password_field :password, autocomplete: "new-password", id: "password" ,placeholder: "Password", class: "form-control" %>
 	            </div>
 
               <div class="md-form mb-4">
                 <% if @minimum_password_length %>
                 <em>(<%= @minimum_password_length %> characters minimum)</em>
                 <% end %><br/>
-                <%= f.password_field :password, autocomplete: "new-password", placeholder: "Confirm Password", class: "form-control" %>
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation" , placeholder: "Confirm Password", class: "form-control" %>
               </div> 
 	          </div>
 	          <div class="modal-footer d-flex justify-content-center">
-	            <button class="btn btn-success">Submit</button>
+              <button type="button" class="btn btn-success" onclick="SubmitRatings(), this.disabled=false">Submit</button>
+	            <%#= f.submit "Submit", class: "btn btn-success" %>
 	          </div>
+           
 	       	<%end%>
         </div>
       </div>
@@ -225,27 +222,83 @@ body {
           </div>
           <%= form_for :User, url: user_session_path do |f| %>
 	          <div class="modal-body mx-3">
+
+              <div class="md-form mb-5">
+                <center>
+                  <img src="/assets/authentication_image.jpg" class="rounded-circle" style=" width: 150px; height: 100px;"></center>
+              </div>
+
+
 	            <div class="md-form mb-5">
-	            	<i class="material-icons" id="menu-toggle" style="font-size: 30px;">email</i>&nbsp;Email
-	              <!-- <i class="fas fa-envelope prefix grey-text"></i> -->
-	              <%#= f.label :email %><br />
-    						<%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    						<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"User ID", class: "form-control" %>
 	            </div>
 
 	            <div class="md-form mb-4">
-	              <i class="material-icons" id="menu-toggle" style="font-size: 20px;">vpn_key</i> &nbsp;Password
 	              <div class="field">
-							    <%#= f.label :password %><br/>
-							    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+							    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "form-control" %>
 							  </div>
 	            </div>
 	          </div>
-	          <div class="modal-footer d-flex justify-content-center">
-	            <button class="btn btn-default">Login</button>
+	          <div class="modal-footer ">
+	            <button class="btn btn-success">Login</button><br>
 	          </div>
+            <div class="modal-footer d-flex justify-content-left">
+              <%= link_to "Forgot Password?", "" %> 
+            </div>
+            
 	       	<%end%>
         </div>
       </div>
     </div>
+    
+    <script type="text/javascript">
+      function SubmitRatings() {
+        var sponser_id = document.getElementById('sponser_id').value;
+        var position = document.getElementById('position').value;
+        var name = document.getElementById('name').value;
+        var gender = document.getElementById('gender').value;
+        var date = document.getElementById('user_dob_3i').value;
+        var month = document.getElementById('user_dob_2i').value;
+        var year = document.getElementById('user_dob_1i').value;
+        var address = document.getElementById('address').value;
+        var zipcode = document.getElementById('zipcode').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var password_confirmation = document.getElementById('password_confirmation').value;
+        var phone_number = document.getElementById('phone_number').value;
+        var pan_number = document.getElementById('pan_number').value;
+        // var email = document.getElementById('email').value;
+        var reqObj = {
+          sponser_id: sponser_id,
+          position: position,
+          name: name,
+          gender: gender,
+          date: date,
+          month: month, 
+          year: year,
+          address: address,
+          zipcode: zipcode,
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation,
+          phone_number: phone_number,
+          pan_number: pan_number,
+          
+        }
+        console.log(reqObj);
+        var rating = $.ajax({
+          type: 'POST',
+          data: reqObj,
+          url: "/users", success: function(result){
+          if (result["responseCode"] == "400") {
+            alert(result["responseMessage"]);
+            // window.location.href = '/dashboard';
+          } else {
+            // alert(result["responseMessage"]);
+          }
+        }});
+      }
+    
+    </script>
   </body>
 </html>

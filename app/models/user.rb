@@ -5,4 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :pairs
+  validates :name, presence: true
+  validates :sponser_id, presence: true
+  validates :position, presence: true
+  validates :pan_number, presence: true, uniqueness: true
 end
