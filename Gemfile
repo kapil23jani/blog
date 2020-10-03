@@ -34,6 +34,8 @@ gem 'popper_js'
 gem 'jquery-validation-rails'
 gem 'pry'
 gem 'jwt'
+
+gem 'ancestry'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

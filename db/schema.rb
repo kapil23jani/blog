@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_26_173927) do
+ActiveRecord::Schema.define(version: 2020_10_03_171417) do
 
   create_table "pairs", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
@@ -55,9 +55,13 @@ ActiveRecord::Schema.define(version: 2020_09_26_173927) do
     t.string "city"
     t.string "state"
     t.string "country"
+    t.integer "ancestry"
+    t.integer "sponsered_by_id"
     t.index "\"left_user_id\"", name: "index_users_on_left_user_id"
     t.index "\"right_user_id\"", name: "index_users_on_right_user_id"
+    t.index ["ancestry"], name: "index_users_on_ancestry"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["sponsered_by_id"], name: "index_users_on_sponsered_by_id"
     t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
 

@@ -145,7 +145,7 @@
                 <i class="material-icons">sync_alt</i>
               </div>
               <p class="card-category">Referral</p>
-              <h3 class="card-title">12</h3>
+              <h3 class="card-title"><%= Pair.where(user_id: @current_user.id).count%> </h3>
             </div>
             <div class="card-footer">
               <div class="stats">

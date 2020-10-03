@@ -18,6 +18,7 @@ class RegistrationsController < ApplicationController
     	@user = User.new(user_params)
         @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
+        @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).id
     	if @user.save 
             @sponser_user = User.find_by(sponser_id: params[:sponser_id])
             if params[:position] == "Left"

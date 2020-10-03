@@ -122,10 +122,10 @@ body {
 	            </div> 
               <div class="md-form mb-5">
                 <%= f.label :position %>&nbsp;&nbsp;&nbsp;
-                <%= f.label :position, "Left", :value => "Left" %>
-                <%= f.radio_button :position, "Left" ,id: "position"%>
-                <%= f.label :position, "Right", :value => "Right"%>
-                <%= f.radio_button :position, "Right", id: "position" %>
+                <input type="radio" id="Left" name="position" value="Left">
+                <label for="Left">Left</label>
+                <input type="radio" id="Right" name="position" value="Right">
+                <label for="Right">Right</label>
               </div> 
               
               <div class="square">
@@ -144,13 +144,13 @@ body {
               </div> 
 
                <div class="md-form mb-5">
-                <%= f.label :gender %>&nbsp;&nbsp;&nbsp;
-                <%= f.label :gender, "Male", :value => "Male"  %>
-                <%= f.radio_button :gender, "Male", id: "gender"%>
-                <%= f.label :gender, "Female", :value => "Female" %>
-                <%= f.radio_button :gender, "Female", id: "gender" %>
-                <%= f.label :gender, "Other", :value => "Other" %>
-                <%= f.radio_button :gender, "Other", id: "gender" %>
+                  <label>Gender</label>
+                  <input type="radio" id="male" name="gender" value="male">
+                  <label for="male">Male</label>
+                  <input type="radio" id="female" name="gender" value="female">
+                  <label for="female">Female</label>
+                  <input type="radio" id="other" name="gender" value="other">
+                  <label for="other">Other</label>
               </div> 
               
 
@@ -254,9 +254,9 @@ body {
     <script type="text/javascript">
       function SubmitRatings() {
         var sponser_id = document.getElementById('sponser_id').value;
-        var position = document.getElementById('position').value;
+        var position = $("input:radio[name=position]:checked").val();
         var name = document.getElementById('name').value;
-        var gender = document.getElementById('gender').value;
+        var gender = $("input:radio[name=gender]:checked").val();
         var date = document.getElementById('user_dob_3i').value;
         var month = document.getElementById('user_dob_2i').value;
         var year = document.getElementById('user_dob_1i').value;
@@ -267,7 +267,6 @@ body {
         var password_confirmation = document.getElementById('password_confirmation').value;
         var phone_number = document.getElementById('phone_number').value;
         var pan_number = document.getElementById('pan_number').value;
-        // var email = document.getElementById('email').value;
         var reqObj = {
           sponser_id: sponser_id,
           position: position,
