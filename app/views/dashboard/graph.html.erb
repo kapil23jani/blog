@@ -111,7 +111,7 @@ right connector from last child*/
     /*padding: 20px;*/
     width: 1;
     width: 1600px;
-    height: 1000px;
+    height: 1200px;
     border: 3px solid gray;
     background-color: white;
     border-radius: 5px;
@@ -203,8 +203,8 @@ right connector from last child*/
 	</div><br>
 	<div class="treestyle">
 		<div class="tree">
-			<ul class="center">
-			  	<li >
+			<ul>
+			  	<li style="padding: 20px;">
 			    	<a href ="#"class= "<%= @current_user.gender.eql?("male") ? "avatar_men" : "avatar_female"%> rounded-circle"></a>
 			    	<p><%= @current_user.name%><br>(<%= @current_user.sponser_id%>)</p>
 			    	<ul>
@@ -215,23 +215,40 @@ right connector from last child*/
 					            	<ul>
 					            		<li>
 					            			<a href="#" class = "<%= User.find(left_user.left_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%> rounded-circle"></a><p><%= User.find(left_user.left_user_id).name%><br>(<%= User.find(left_user.left_user_id).sponser_id%>)</p>
-						            		<% next_element = @current_user.pairs.where.not(left_user_id: nil).where(right_user_id: nil)[i + 1] %>
-						            		<% if next_element.present? %>
+						            		<% next_element_one = @current_user.pairs.where.not(left_user_id: nil).where(right_user_id: nil)[i + 1].present? ? @current_user.pairs.where.not(left_user_id: nil).where(right_user_id: nil)[i + 1] : User.find_by(sponsered_by_id: left_user.left_user_id, position: "Left").first  %>
+						            		<% if next_element_one.present? %>
 						            			<ul>
 							            			<li>
-							            				<a href="" class="black_spot rounded-circle"></a>
+							            				<a href="#" class = "<%= User.find(next_element_one.left_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%> rounded-circle"></a><p><%= User.find(next_element_one.left_user_id).name%><br>(<%= User.find(next_element_one.left_user_id).sponser_id%>)</p>
+						            					<% next_element_two = @current_user.pairs.where.not(left_user_id: nil).where(right_user_id: nil)[i + 2].present? ? @current_user.pairs.where.not(left_user_id: nil).where(right_user_id: nil)[i + 2] : User.where(sponsered_by_id: next_element_one.left_user_id, position: "Left").first %>
 							            			</li>
 						            				<li>
-							            				<a href="" class="black_spot rounded-circle"></a>
+						            					<% right_user = User.where(sponsered_by_id: left_user.left_user_id, position: "Right").try(:first).present? ? User.where(sponsered_by_id: left_user.left_user_id, position: "Right").try(:first).try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"%>
+							            				<a href="" class="<%= right_user%> rounded-circle"></a><p><%= User.where(sponsered_by_id: left_user.left_user_id, position: "Right").try(:first).try(:name)%><br>(<%= User.where(sponsered_by_id: left_user.left_user_id, position: "Right").try(:first).try(:sponser_id)%>)</p>
 							            			</li>
 						            			</ul>
 						            		<%end%>
 					            		</li>
 					            		<li>
-					            			<% avatar = User.find(left_user.left_user_id).try(:pairs).where(left_user_id: nil).where.not(right_user_id: nil).first.present? ? avatar = User.find(left_user.left_user_id).try(:pairs).where(left_user_id: nil).where.not(right_user_id: nil).first.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %>
-					            			<a href="" class="<%=avatar%> rounded-circle"></a>
+					            			<% right_user = User.where(sponsered_by_id: user.left_user_id).try(:first).present? ? User.where(sponsered_by_id: user.left_user_id, position: "Right").try(:first).try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"%>
+					            			<a href="" class="<%=right_user%> rounded-circle"></a><p><%=  User.where(sponsered_by_id: user.left_user_id).try(:first).try(:name)%><br>(<%=  User.where(sponsered_by_id: user.left_user_id).try(:first).try(:sponser_id)%>)</p>
+					            			<ul>
+					            				<li>
+					            					<% left_user = User.where(sponsered_by_id: User.where(sponsered_by_id: user.left_user_id).try(:first), position: "Left").try(:first)%>
+					            					<% left_user_gender = left_user.present? ? left_user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"%>
+					            					<a href="" class="<%= left_user_gender%> rounded-circle"></a><br>
+					            					<%=  left_user.try(:name)%><br>(<%=  left_user.try(:sponser_id)%>)</p>
+					            				</li>
+					            				<li>
+					            					<% right_user = User.where(sponsered_by_id: User.where(sponsered_by_id: user.left_user_id).try(:first), position: "Right").try(:first)%>
+					            					<% right_user_gender = right_user.present? ? right_user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"%>
+					            					<a href="" class="<%= right_user_gender%> rounded-circle"></a><br>
+					            					<%=  right_user.try(:name)%><br>(<%=  right_user.try(:sponser_id)%>)</p>
+					            				</li>
+					            			</ul>
 					            		</li>
 					            	</ul>
+					            	<%break %>
 					            <%end%>
 				          	</li>
 				          	<li>
@@ -239,42 +256,60 @@ right connector from last child*/
 				          			<% @current_user.pairs.where.not(right_user_id: nil).where(left_user_id: nil).each_with_index do |right_user, i| %>
 					            	<ul>
 					            		<li>
+
+					            			<% left_node_user = User.where(sponsered_by_id: user.right_user_id, position: "Left").try(:first)%>
+					            			<% avatar = User.where(sponsered_by_id: user.right_user_id, position: "Left").try(:first).present? ? User.where(sponsered_by_id: user.right_user_id, position: "Left").try(:first).try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"%>
+					            			<a href="" class="<%=avatar%> rounded-circle"></a>
+					            			<p>
+					            				<%=  User.where(sponsered_by_id: user.right_user_id, position: "Left").try(:first).try(:name)%><br>(<%=  User.where(sponsered_by_id: user.right_user_id, position: "Left").try(:first).try(:sponser_id)%>)
+					            			</p>
+					            			<ul>
+					            				<li>
+					            					<% left_avatar_user = User.where(sponsered_by_id: left_node_user.id, position: "Left").try(:first)%> 
+					            					<% left_u_avatar = left_avatar_user.present? ? left_avatar_user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %>
+					            					<a href="" class="<%= left_u_avatar%> rounded-circle"></a><br>
+					            					<%=  left_avatar_user.try(:name)%><br>(<%=  left_avatar_user.try(:sponser_id)%>)
+					            				</li>
+					            				<li>
+					            					<% avatar_user = User.where(sponsered_by_id: left_node_user.id, position: "Right").try(:first)%> 
+					            					<% right_u_gn = avatar_user.present? ? avatar_user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %>
+					            					<a href="" class="<%=right_u_gn%> rounded-circle"></a><br>
+					            					<%=  avatar_user.try(:name)%><br>(<%=  avatar_user.try(:sponser_id)%>)
+					            				</li>
+					            			</ul>
+					            		</li>
+					            		<li>
 					            			<a href="#" class = "<%= User.find(right_user.right_user_id).try(:gender).eql?("male") ? "avatar_men" : "avatar_female"%> rounded-circle"></a><p><%= User.find(right_user.right_user_id).name%><br>(<%= User.find(right_user.right_user_id).sponser_id%>)</p>
-						            		<% next_element = @current_user.pairs.where.not(right_user_id: nil).where(right_user_id: nil)[i + 1] %>
+						            		<% next_element = @current_user.pairs.where.not(right_user_id: nil).where(left_user_id: nil)[i + 1] %>
 						            		<% if next_element.present? %>
-						            			<ul>
-							            			<li>
-							            				<a href="" class="black_spot rounded-circle"></a>
+
+							            				<ul>
+								            				<li>
+								            					<% left_avatar_user = User.where(sponsered_by_id: right_user.right_user_id, position: "Left").try(:first)%> 
+								            					<% left_u_avatar = left_avatar_user.present? ? left_avatar_user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %>
+								            					<a href="" class="<%= left_u_avatar%> rounded-circle"></a><br>
+								            					<%=  left_avatar_user.try(:name)%><br>(<%=  left_avatar_user.try(:sponser_id)%>)
+								            				</li>
+								            				<li>
+								            					<% avatar_user = User.where(sponsered_by_id: right_user.right_user_id, position: "Right").try(:first)%> 
+								            					<% right_u_gn = avatar_user.present? ? avatar_user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %>
+								            					<a href="" class="<%=right_u_gn%> rounded-circle"></a><br>
+								            					<%=  avatar_user.try(:name)%><br>(<%=  avatar_user.try(:sponser_id)%>)
+								            				</li>
+								            			</ul>
 							            			</li>
-						            				<li>
-							            				<a href="" class="black_spot rounded-circle"></a>
-							            			</li>
+							            			
 						            			</ul>
 						            		<%end%>
 					            		</li>
-					            		<li>
-					            			<% avatar = User.find(right_user.right_user_id).try(:pairs).where(right_user_id: nil).where.not(right_user_id: nil).first.present? ? avatar = User.find(right_user.right_user_id).try(:pairs).where(right_user_id: nil).where.not(right_user_id: nil).first.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %>
-					            			<a href="" class="<%=avatar%> rounded-circle"></a>
-					            		</li>
 					            	</ul>
+					            	<%break%>
 					            <%end%>
 				          	</li>
 			    		<%end%> 
 		        	</ul>
 		      	</li>  
-			  </li>
 			</ul>
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-
-	function charf() {
-		var data = "<%= @current_user.pairs.where.not(left_user_id: nil).where(right_user_id: nil) %>";
-
-		return console.log("data");
-		// body...
-	}
-
-</script>
