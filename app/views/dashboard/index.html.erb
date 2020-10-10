@@ -127,7 +127,7 @@
                 <i class="material-icons">group</i>
               </div>
               <p class="card-category">My Team</p>
-              <h3 class="card-title">10
+              <h3 class="card-title"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %>
                 <small>Members</small>
               </h3>
             </div>

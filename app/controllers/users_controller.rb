@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 	def update
 		@user = @current_user
 		@user.update_attributes(user_params)
-		if @user.save
+		if @user.save(validate: false)
 			redirect_to my_profile_dashboard_index_path
 		else
 			render 'edit'
@@ -27,6 +27,6 @@ class UsersController < ApplicationController
 	private
 
     def user_params
-        params.require(:user).permit(:zipcode, :city, :state, :country, :name, :dob, :sponser_id, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
+        params.require(:user).permit(:invoice_number, :zipcode, :city, :state, :country, :name, :dob, :sponser_id, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
     end
 end

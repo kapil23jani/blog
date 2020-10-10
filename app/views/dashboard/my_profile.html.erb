@@ -15,6 +15,14 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-email">Invoice Number</label>
+          <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="<%= @current_user.invoice_number%>" readonly="readonly">
+        </div>
+      </div>
+    </div>
   </div>
 
   <h6 class="heading-small text-muted mb-4" style="padding: 20px; font-size: 20px;">Personal Information</h6>
@@ -70,10 +78,12 @@
       </div>
     </div>
   </div>
+
+  <div style="float: left; padding: 10px;">
+    <%= link_to "Update Password", edit_user_password_path, class: "btn btn-warning"%>
+  </div> 
   
   <div style="float: right; padding: 10px;">
-
-    <%#= link_to "Update Password", edit_user_path(@current_user), class: "btn btn-danger"%>
     <%= link_to "Update Profile", edit_user_path(@current_user), class: "btn btn-info"%>
   </div>
 

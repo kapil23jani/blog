@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-	
+  
 
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -89,216 +89,221 @@ body {
 </style>
 </head>
 <body>
-	<div class="topnav bg-dark border-bottom">
-	  <div class="topnav-right">
-	    <a href="" style="font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modalLoginForm">Log In<!-- <i class="material-icons" id="menu-toggle" style="font-size: 25px;">login</i>&nbsp;&nbsp;&nbsp; --></a>
-	    <a href="" style="font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modalRegistrationForm">New Registration!<!-- <i class="material-icons" id="menu-toggle" style="font-size: 25px;">login</i>&nbsp;&nbsp;&nbsp; --></a>
-	  </div>
-	</div>&nbsp;&nbsp;&nbsp;
-
-    <div class="modal fade" id="modalRegistrationForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-center">
-            <center><h4 class="modal-title w-200 font-weight-bold">Registration</h4></center>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <%= form_for @user, url: @url do |f| %>
-             
-	          <div class="modal-body mx-2" style="max-height: calc(100vh - 200px); overflow-y: auto;">
-               <p id="notice"><%= flash[:notice] %></p>
 
 
-              <div class="square" style="padding: 3px;">
-                <center>
-                  <b>Who referred you!</b>
-                </center>
-              </div>
-	            <div class="md-form mb-5"><br>
-    						<%= f.text_field :sponser_id, autofocus: true, id: "sponser_id", placeholder: "Sponser ID" , class: "form-control" %>
-	            </div> 
-              <div class="md-form mb-5">
-                <%= f.label :position %>&nbsp;&nbsp;&nbsp;
-                <input type="radio" id="Left" name="position" value="Left">
-                <label for="Left">Left</label>
-                <input type="radio" id="Right" name="position" value="Right">
-                <label for="Right">Right</label>
-              </div> 
-              
-              <div class="square">
-                <center>
-                  <b>Personal Details</b>
-                </center>
-              </div>
-
-              <div class="md-form mb-5"><br>
-                <%= f.text_field :name, autofocus: true, id: "name" ,placeholder: "Name", class: "form-control" %>
-              </div> 
-
-              <div class="md-form mb-5">
-                <%= f.label :DateOfBirth %>&nbsp;&nbsp;&nbsp;<br>
-                <span class="datetime"><%= f.date_select :dob, id: "dob", start_year: 1950, ampm: true, order: [:day, :month, :year], :class => "form-control"%><span/>
-              </div> 
-
-               <div class="md-form mb-5">
-                  <label>Gender</label>
-                  <input type="radio" id="male" name="gender" value="male">
-                  <label for="male">Male</label>
-                  <input type="radio" id="female" name="gender" value="female">
-                  <label for="female">Female</label>
-                  <input type="radio" id="other" name="gender" value="other">
-                  <label for="other">Other</label>
-              </div> 
-              
-
-              <div class="square" style="padding: 3px;">
-                <center>
-                  <b>Contact Details</b>
-                </center>
-              </div>
 
 
-              <div class="md-form mb-5"><br>
-                <%= f.text_field :address, autofocus: true, id: "address" , placeholder: "Address", class: "form-control" %>
-              </div>     
+  <div class="topnav bg-dark border-bottom">
+    <div class="topnav">
 
-              <div class="md-form mb-5">
-                <%= f.text_field :zipcode, autofocus: true, id: "zipcode" , placeholder: "Zipcode", class: "form-control" %>
-              </div>     
-
-              <div class="md-form mb-5" style="margin-bottom: 2px;">
-                <%= f.text_field :phone_number, autofocus: true, id: "phone_number" ,placeholder: "Phone", class: "form-control" %>
-              </div> 
-
-              <div class="md-form mb-5">
-                <%= f.email_field :email, autofocus: true, id: "email" ,placeholder: "Email", class: "form-control" %>
-              </div> 
-
-              <div class="md-form mb-5">
-                <%= f.text_field :pan_number, autofocus: true, id: "pan_number" ,placeholder: "Pan", class: "form-control" %>
-              </div>     
-
-              <div class="square" style="padding: 3px;">
-                <center>
-                  <b>Login Details</b>
-                </center>
-              </div>
-
-	            <div class="md-form mb-4">
-						    <% if @minimum_password_length %>
-						    <em>(<%= @minimum_password_length %> characters minimum)</em>
-						    <% end %><br/>
-    						<%= f.password_field :password, autocomplete: "new-password", id: "password" ,placeholder: "Password", class: "form-control" %>
-	            </div>
-
-              <div class="md-form mb-4">
-                <% if @minimum_password_length %>
-                <em>(<%= @minimum_password_length %> characters minimum)</em>
-                <% end %><br/>
-                <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation" , placeholder: "Confirm Password", class: "form-control" %>
-              </div> 
-	          </div>
-	          <div class="modal-footer d-flex justify-content-center">
-              <button type="button" class="btn btn-success" onclick="SubmitRatings(), this.disabled=false">Submit</button>
-	            <%#= f.submit "Submit", class: "btn btn-success" %>
-	          </div>
+      <a href="" style="padding-left: 10px; float: left; font-size: 25px; margin-bottom: 10px;" data-toggle="" data-target="">Surekha</a>
+      <a href="" style="float: right; font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modalRegistrationForm">New Registration!</a>
+      <a href="" style="float: right; font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modalLoginForm">Log In</a>
+    </div>
+  </div>
+ 
+  <div class="modal fade" id="modalRegistrationForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <center><h4 class="modal-title w-200 font-weight-bold">Registration</h4></center>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <%= form_for @user, url: @url do |f| %>
            
-	       	<%end%>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header text-center">
-            <h4 class="modal-title w-100 font-weight-bold">Login</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <%= form_for :User, url: user_session_path do |f| %>
-	          <div class="modal-body mx-3">
-
-              <div class="md-form mb-5">
-                <center>
-                  <img src="/assets/authentication_image.jpg" class="rounded-circle" style=" width: 150px; height: 100px;"></center>
-              </div>
+          <div class="modal-body mx-2" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+             <p id="notice"><%= flash[:notice] %></p>
 
 
-	            <div class="md-form mb-5">
-    						<%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"User ID", class: "form-control" %>
-	            </div>
-
-	            <div class="md-form mb-4">
-	              <div class="field">
-							    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "form-control" %>
-							  </div>
-	            </div>
-	          </div>
-	          <div class="modal-footer ">
-	            <button class="btn btn-success">Login</button><br>
-	          </div>
-            <div class="modal-footer d-flex justify-content-left">
-              <%= link_to "Forgot Password?", "" %> 
+            <div class="square" style="padding: 3px;">
+              <center>
+                <b>Who referred you!</b>
+              </center>
             </div>
+            <div class="md-form mb-5"><br>
+              <%= f.text_field :sponser_id, autofocus: true, id: "sponser_id", placeholder: "Sponser ID" , class: "form-control" %>
+            </div> 
+            <div class="md-form mb-5">
+              <%= f.label :position %>&nbsp;&nbsp;&nbsp;
+              <input type="radio" id="Left" name="position" value="Left">
+              <label for="Left">Left</label>
+              <input type="radio" id="Right" name="position" value="Right">
+              <label for="Right">Right</label>
+            </div> 
             
-	       	<%end%>
-        </div>
+            <div class="square">
+              <center>
+                <b>Personal Details</b>
+              </center>
+            </div>
+
+            <div class="md-form mb-5"><br>
+              <%= f.text_field :name, autofocus: true, id: "name" ,placeholder: "Name", class: "form-control" %>
+            </div> 
+
+            <div class="md-form mb-5">
+              <%= f.label :DateOfBirth %>&nbsp;&nbsp;&nbsp;<br>
+              <span class="datetime"><%= f.date_select :dob, id: "dob", start_year: 1950, ampm: true, order: [:day, :month, :year], :class => "form-control"%><span/>
+            </div> 
+
+             <div class="md-form mb-5">
+                <label>Gender</label>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+                <input type="radio" id="other" name="gender" value="other">
+                <label for="other">Other</label>
+            </div> 
+            
+
+            <div class="square" style="padding: 3px;">
+              <center>
+                <b>Contact Details</b>
+              </center>
+            </div>
+
+
+            <div class="md-form mb-5"><br>
+              <%= f.text_field :address, autofocus: true, id: "address" , placeholder: "Address", class: "form-control" %>
+            </div>     
+
+            <div class="md-form mb-5">
+              <%= f.text_field :zipcode, autofocus: true, id: "zipcode" , placeholder: "Zipcode", class: "form-control" %>
+            </div>     
+
+            <div class="md-form mb-5" style="margin-bottom: 2px;">
+              <%= f.text_field :phone_number, autofocus: true, id: "phone_number" ,placeholder: "Phone", class: "form-control" %>
+            </div> 
+
+            <div class="md-form mb-5">
+              <%= f.email_field :email, autofocus: true, id: "email" ,placeholder: "Email", class: "form-control" %>
+            </div> 
+
+            <div class="md-form mb-5">
+              <%= f.text_field :pan_number, autofocus: true, id: "pan_number" ,placeholder: "Pan", class: "form-control" %>
+            </div>     
+
+            <div class="square" style="padding: 3px;">
+              <center>
+                <b>Login Details</b>
+              </center>
+            </div>
+
+            <div class="md-form mb-4">
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br/>
+              <%= f.password_field :password, autocomplete: "new-password", id: "password" ,placeholder: "Password", class: "form-control" %>
+            </div>
+
+            <div class="md-form mb-4">
+              <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br/>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", id: "password_confirmation" , placeholder: "Confirm Password", class: "form-control" %>
+            </div> 
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-success" onclick="SubmitRatings(), this.disabled=false">Submit</button>
+            <%#= f.submit "Submit", class: "btn btn-success" %>
+          </div>
+         
+        <%end%>
       </div>
     </div>
-    
-    <script type="text/javascript">
-      function SubmitRatings() {
-        var sponser_id = document.getElementById('sponser_id').value;
-        var position = $("input:radio[name=position]:checked").val();
-        var name = document.getElementById('name').value;
-        var gender = $("input:radio[name=gender]:checked").val();
-        var date = document.getElementById('user_dob_3i').value;
-        var month = document.getElementById('user_dob_2i').value;
-        var year = document.getElementById('user_dob_1i').value;
-        var address = document.getElementById('address').value;
-        var zipcode = document.getElementById('zipcode').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var password_confirmation = document.getElementById('password_confirmation').value;
-        var phone_number = document.getElementById('phone_number').value;
-        var pan_number = document.getElementById('pan_number').value;
-        var reqObj = {
-          sponser_id: sponser_id,
-          position: position,
-          name: name,
-          gender: gender,
-          date: date,
-          month: month, 
-          year: year,
-          address: address,
-          zipcode: zipcode,
-          email: email,
-          password: password,
-          password_confirmation: password_confirmation,
-          phone_number: phone_number,
-          pan_number: pan_number,
+  </div>
+  <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Login</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <%= form_for :User, url: user_session_path do |f| %>
+          <div class="modal-body mx-3">
+
+            <div class="md-form mb-5">
+              <center>
+                <img src="/assets/authentication_image.jpg" class="rounded-circle" style=" width: 150px; height: 100px;"></center>
+            </div>
+
+
+            <div class="md-form mb-5">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"User ID", class: "form-control" %>
+            </div>
+
+            <div class="md-form mb-4">
+              <div class="field">
+                <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer ">
+            <button class="btn btn-success">Login</button><br>
+          </div>
+          <div class="modal-footer d-flex justify-content-left">
+            <%= link_to "Forgot Password?", "" %> 
+          </div>
           
-        }
-        console.log(reqObj);
-        var rating = $.ajax({
-          type: 'POST',
-          data: reqObj,
-          url: "/users", success: function(result){
-          if (result["responseCode"] == "200") {
-            alert(result["responseMessage"]);
-            window.location.href = '/welcome';
-          } else {
-            alert(result["responseMessage"]);
-            // alert(result["responseMessage"]);
-          }
-        }});
-      }
+        <%end%>
+      </div>
+    </div>
+  </div>
     
-    </script>
+  <script type="text/javascript">
+    function SubmitRatings() {
+      var sponser_id = document.getElementById('sponser_id').value;
+      var position = $("input:radio[name=position]:checked").val();
+      var name = document.getElementById('name').value;
+      var gender = $("input:radio[name=gender]:checked").val();
+      var date = document.getElementById('user_dob_3i').value;
+      var month = document.getElementById('user_dob_2i').value;
+      var year = document.getElementById('user_dob_1i').value;
+      var address = document.getElementById('address').value;
+      var zipcode = document.getElementById('zipcode').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+      var password_confirmation = document.getElementById('password_confirmation').value;
+      var phone_number = document.getElementById('phone_number').value;
+      var pan_number = document.getElementById('pan_number').value;
+      var reqObj = {
+        sponser_id: sponser_id,
+        position: position,
+        name: name,
+        gender: gender,
+        date: date,
+        month: month, 
+        year: year,
+        address: address,
+        zipcode: zipcode,
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation,
+        phone_number: phone_number,
+        pan_number: pan_number,
+        
+      }
+      console.log(reqObj);
+      var rating = $.ajax({
+        type: 'POST',
+        data: reqObj,
+        url: "/users", success: function(result){
+        if (result["responseCode"] == "200") {
+          alert(result["responseMessage"]);
+          window.location.href = '/welcome';
+        } else {
+          alert(result["responseMessage"]);
+          // alert(result["responseMessage"]);
+        }
+      }});
+    }
+  </script>
   </body>
 </html>

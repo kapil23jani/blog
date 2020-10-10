@@ -8,11 +8,10 @@ class PasswordsController < ApplicationController
 	end
 
 	def update
-	
 	end
 
-	# def destroy
-	# end
+	def destroy
+	end
 
 	private
 
