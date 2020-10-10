@@ -2,6 +2,12 @@
 <link rel="stylesheet" herf="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 <br>    
 <div class="container-fluid">
+    <div>
+        <%= form_for :user, url: my_teams_dashboard_index_path, method: :get do |form| %>
+          <%= form.text_field :search, placeholder: "Search"  %>
+          <%= form.submit "Search", class: "btn btn-warning"  %>
+        <% end  %>
+    </div>
     <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
@@ -14,9 +20,10 @@
             </tr>
         </thead>
         <tbody>
-            <% @final_object.each do |member| %>
+            <%#binding.pry%>
+            <% @users.each do |user| %>
             <tr>
-                <% user = User.find(member) %>
+                <%# user = User.find(member) %>
 
                 <td><%= user.name %></td>
                 <td><%= user.position %></td>

@@ -289,10 +289,11 @@ body {
           type: 'POST',
           data: reqObj,
           url: "/users", success: function(result){
-          if (result["responseCode"] == "400") {
+          if (result["responseCode"] == "200") {
             alert(result["responseMessage"]);
-            // window.location.href = '/dashboard';
+            window.location.href = '/welcome';
           } else {
+            alert(result["responseMessage"]);
             // alert(result["responseMessage"]);
           }
         }});

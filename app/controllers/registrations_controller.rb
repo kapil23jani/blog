@@ -18,8 +18,9 @@ class RegistrationsController < ApplicationController
     	@user = User.new(user_params)
         @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
-        @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).id
     	if @user.save 
+            @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).id
+            @user.save
             @sponser_user = User.find_by(sponser_id: params[:sponser_id])
             if params[:position] == "Left"
                 if @sponser_user.pairs.where(left_user_id: nil).present?
@@ -46,8 +47,9 @@ class RegistrationsController < ApplicationController
                     pair.save
                 end
             end
-    		session[:user_id] = @user.id
-    		redirect_to welcome_index_path
+    		#session[:user_id] = @user.id
+    		# redirect_to welcome_index_path
+            render_error(200, "Registered Successfully")
     	else
             render_error(400, @user.errors.full_messages.join(','))
     	end
