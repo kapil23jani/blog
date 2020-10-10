@@ -116,6 +116,9 @@
 
 <body>
   <!-- Sidebar -->
+
+  <%if !@current_user.admin?%>
+
     <div class="border-right" style="background: #2F4F4F;" id="sidebar-wrapper">
       <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Surekha</p></center></div>
         <div class="list-group list-group-flush">
@@ -140,7 +143,7 @@
           </ul>
 
       
-          <a class="nav-link" href="./dashboard.html">
+          <a class="nav-link" href="">
             <center><i class="material-icons" style="color: white; font-size: 30px;">account_balance_wallet</i>
             <p class="heading">Earning</p></center>
           </a>
@@ -148,7 +151,7 @@
             <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
             <p class="heading">My Team</p></center>
           </a>
-          <a class="nav-link" href="/dashboard/graph">
+          <a class="nav-link" href="">
             <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
             <p class="heading">Graph</p></center>
           </a> 
@@ -179,19 +182,88 @@
 
       </div>
     </div>
-  <script>
-    $(document).ready(function(){
-      $("#mydashboard").click(function(){
-        $("#pageSubmenu").toggle();
+    <script>
+      $(document).ready(function(){
+        $("#mydashboard").click(function(){
+          $("#pageSubmenu").toggle();
+        });
       });
-    });
 
-    $(document).ready(function(){
-      $("#profilemenu").click(function(){
-        $("#profileSubMenu").toggle();
+      $(document).ready(function(){
+        $("#profilemenu").click(function(){
+          $("#profileSubMenu").toggle();
+        });
       });
-    });
-  </script>
+    </script>
+  <%else%>
+    <div class="border-right" style="background: #575554;" id="sidebar-wrapper">
+        <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Admin</p></center></div>
+          <div class="list-group list-group-flush">
+
+            <a class="nav-link" href="/dashboard">
+              <center><i class="material-icons" style="color: white; font-size: 30px;">dashboard</i>
+              <p class="heading">Dashboard</p></center>
+            </a>
+            <a href="#pageSubmenu" data-toggle="collapse" id="mydashboard" >
+              <center>
+                <i class=" material-icons" style="color: white; font-size: 30px;">business</i>
+                  <p class="heading">Business</p>
+                </center>
+            </a>
+            <ul class="collapse list-unstyled" id="pageSubmenu" style="background-color: #332e2e">
+              <li>
+                <a class="nav-link" href="/admin/members">
+                  <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
+                  <p class="heading">Members</p></center>
+                </a>
+              </li>
+            </ul>
+
+        
+            <a class="nav-link" href="/admin/manage_members">
+              <center><i class="material-icons" style="color: white; font-size: 30px;">group</i>
+              <p class="heading">Manage Members</p></center>
+            </a>
+            <!-- <a href="#profileSubMenu" data-toggle="collapse" id="profilemenu" >
+              <center>
+                <i class=" material-icons" style="color: white; font-size: 30px;">dashboard</i>
+                  <p class="heading">Profile</p>
+                </center>
+            </a>
+
+             <ul class="collapse list-unstyled" id="profileSubMenu" style="background-color: #332e2e">
+              <li>
+                <a class="nav-link" href="/dashboard/my_profile">
+                  <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
+                  <p class="heading">Personal Detail</p></center>
+                </a>
+              </li> 
+              <li>
+                <a class="nav-link" href="/users/get_user_kyc">
+                  <center>
+                    <i class="material-icons" style="color: white; font-size: 30px;">person</i>
+                    <p class="heading">KYC Details</p>
+                  </center>
+                </a> 
+              </li>
+            </ul>
+ -->
+        </div>
+      </div>
+    <script>
+      $(document).ready(function(){
+        $("#mydashboard").click(function(){
+          $("#pageSubmenu").toggle();
+        });
+      });
+
+      $(document).ready(function(){
+        $("#profilemenu").click(function(){
+          $("#profileSubMenu").toggle();
+        });
+      });
+    </script>
+  <%end%>
   <!-- Page Content -->
 </body>
 

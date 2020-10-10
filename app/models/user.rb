@@ -8,6 +8,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :pairs
+  belongs_to :role, optional: true
 
 
   has_one :sponser, class_name: 'User', foreign_key: :sponsered_by_id
@@ -19,4 +20,10 @@ class User < ApplicationRecord
   validates :phone_number, numericality: { only_integer: true }, length: { minimum: 10 }
   validates :zipcode, numericality: { only_integer: true }, length: { minimum: 6 }
   validates :pan_number, presence: true, uniqueness: true, length: { minimum: 10 }
+
+
+
+    def admin?
+        role.role_type.eql?('admin')
+    end
 end

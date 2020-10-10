@@ -31,14 +31,22 @@
       <div class="userdetail">
         <div class="dropdown">
           <a href="" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="/assets/icon.png" width="35px;">
+            <% if !@current_user.admin? %>
+              <img src="/assets/icon.png" width="35px;">
+            <%else%>
+              <img src="/assets/admin.png" width="45px;">
+            <%end%>
           </a>
 
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <div class="logout">
               <div class="img_div">
                 <center>
-                  <img src="/assets/icon.png" class="rounded-circle" width="85px;">
+                  <% if !@current_user.admin? %>
+                    <img src="/assets/icon.png" class="rounded-circle" width="85px;">
+                  <%else%>
+                    <img src="/assets/admin.png" class="rounded-circle" width="85px;">
+                  <%end%>
                 </center>
               </div>
               <div class="text_label">
@@ -49,14 +57,13 @@
                 
               </div>
               <div style="padding: 10px;">
-                <%= link_to "Graph", "", class: "btn btn-secondary", style: "padding:5px;float:left;font-size:16px;" %>
+                <% if !@current_user.admin? %>
+                  <%= link_to "Graph", "", class: "btn btn-secondary", style: "padding:5px;float:left;font-size:16px;" %>
+                <%else%>
+                <%end%>
                 <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-secondary", style: "padding: 5px;float: right;font-size: 16px;" %>
               </div>
-
-
             </div>
-            <!-- <a href="" class="dropdown-item" style="font-size: 16px;">Profile</a> -->
-            <!-- <a href="" class="dropdown-item" style="font-size: 16px;">Settings</a> -->
           </div>
         </div>
       </div>

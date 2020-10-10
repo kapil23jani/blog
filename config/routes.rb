@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     get :graph, on: :collection  
   end
 	resources :welcome
+  resources :admin do 
+    get :members, on: :collection
+    get :manage_members, on: :collection
+  end
 
 	devise_for :users, controllers: {
                     registrations: "registrations",

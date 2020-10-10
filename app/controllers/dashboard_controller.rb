@@ -4,9 +4,10 @@ class DashboardController < ApplicationController
 	end
 
 	def my_teams
+		user = params[:user_id].present? ? User.find_by(id: params[:user_id]) : @current_user
 		@teams = []
-		@teams << @current_user.pairs.pluck(:left_user_id) if @current_user.pairs.present? 
-		@teams << @current_user.pairs.pluck(:right_user_id) if @current_user.pairs.present? 
+		@teams << user.pairs.pluck(:left_user_id) if user.pairs.present? 
+		@teams << user.pairs.pluck(:right_user_id) if user.pairs.present? 
 		@final_object = @teams.flatten.compact
 		data = {}
 		users_where = "(lower(users.name) LIKE :search) OR (lower(users.position) LIKE :search) OR (lower(users.phone_number) LIKE :search)"
