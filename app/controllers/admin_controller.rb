@@ -25,9 +25,9 @@ class AdminController < ApplicationController
 	    search = params[:search].to_s.downcase if params[:search].present?
 	    users_where_values.merge!(search: "%#{search}%")  
 	    if params[:start_date].present? && params[:end_time].present?
-		    @users = User.where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
+		    @users = User.where(role_id: nil).where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
 		else
-			@users = User.where([users_where, users_where_values])
+			@users = User.where(role_id: nil).where([users_where, users_where_values])
 		end
 
 
