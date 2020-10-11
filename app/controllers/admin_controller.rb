@@ -32,8 +32,8 @@ class AdminController < ApplicationController
 
 
 		if params[:range].present?
-			@pairs = Pair.where(user_id: @users.pluck(:id)).where.not(left_user_id: nil, right_user_id: nil).group(:user).pluck(:user_id)
-			@users = User.where(id: @pairs)
+			@pairs = Pair.where(user_id: @users.pluck(:id)).where.not(left_user_id: nil, right_user_id: nil).pluck(:user_id)
+			@users = User.where(id: @pairs.uniq)
 			@users.limit(params[:range])
 		end
 
