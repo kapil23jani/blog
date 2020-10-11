@@ -22,6 +22,14 @@ class UsersController < ApplicationController
 
 	def update_user_kyc
 	end
+
+	def destroy
+		user = User.find_by(id: params[:id])
+		if user.destroy
+			redirect_to manage_members_admin_index_path
+		else
+		end
+	end
 	
 
 	private

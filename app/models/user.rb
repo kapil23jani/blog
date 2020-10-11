@@ -23,7 +23,11 @@ class User < ApplicationRecord
 
 
 
+    def no_role?
+        role.nil?
+    end
+    
     def admin?
-        role.role_type.eql?('admin')
+        role.try(:role_type).eql?('admin')
     end
 end

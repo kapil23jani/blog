@@ -119,105 +119,106 @@
     
     <!-- </nav> -->
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats" style="background: white; width: 280px;">
-            <div class="card-header card-header-warning card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">group</i>
+      <%if !@current_user.admin? %>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats" style="background: white; width: 280px;">
+              <div class="card-header card-header-warning card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">group</i>
+                </div>
+                <p class="card-category">My Team</p>
+                <h3 class="card-title"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %>
+                  <small>Members</small>
+                </h3>
               </div>
-              <p class="card-category">My Team</p>
-              <h3 class="card-title"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %>
-                <small>Members</small>
-              </h3>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
+                </div>
+              </div>
             </div>
-            <div class="card-footer">
-              <div class="stats">
-                <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6" >
+            <div class="card card-stats"  style="background: white; width: 280px;">
+              <div class="card-header card-header-success card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">sync_alt</i>
+                </div>
+                <p class="card-category">Referral</p>
+                <h3 class="card-title"><%= Pair.where(user_id: @current_user.id).count%> </h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats"  style="background: white; width: 280px;">
+              <div class="card-header card-header-danger card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">business</i>
+                </div>
+                <p class="card-category">My Business</p>
+                <h3 class="card-title">75</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons">local_offer</i> Tracked from Github -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats"  style="background: white; width: 280px;">
+              <div class="card-header card-header-info card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">account_balance_wallet</i>
+                </div>
+                <p class="card-category">Earnings</p>
+                <h3 class="card-title">+245</h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons">update</i> Just Updated -->
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-6" >
-          <div class="card card-stats"  style="background: white; width: 280px;">
-            <div class="card-header card-header-success card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">sync_alt</i>
-              </div>
-              <p class="card-category">Referral</p>
-              <h3 class="card-title"><%= Pair.where(user_id: @current_user.id).count%> </h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <!-- <i class="material-icons">date_range</i> Last 24 Hours -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats"  style="background: white; width: 280px;">
-            <div class="card-header card-header-danger card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">business</i>
-              </div>
-              <p class="card-category">My Business</p>
-              <h3 class="card-title">75</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <!-- <i class="material-icons">local_offer</i> Tracked from Github -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-          <div class="card card-stats"  style="background: white; width: 280px;">
-            <div class="card-header card-header-info card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">account_balance_wallet</i>
-              </div>
-              <p class="card-category">Earnings</p>
-              <h3 class="card-title">+245</h3>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <!-- <i class="material-icons">update</i> Just Updated -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="row">
-        <div class="col-lg-6 col-md-12">
-          <div class="card"  style="background: white">
-            <div class="card-header card-header-success">
-              <h4 class="card-title">My Business</h4>
-            </div>
-            <div class="card-body table-responsive">
-              <table class="table table-hover">
-                <thead class="text-success">
-                  <th style="font-size: 14px;">Left Wing Users</th>
-                  <th style="font-size: 14px;">Right Wing Users</th>
-                  <th style="font-size: 14px;">Pairs</th>
-                  <th style="font-size: 14px;">Total</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil).count %></td>
-                    <td style="font-size: 14px;"><%= @current_user.pairs.where.not(right_user_id: nil).count %></td>
-                    <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil).count %></td>
-                    <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %></td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
       
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <div class="card"  style="background: white">
+              <div class="card-header card-header-success">
+                <h4 class="card-title">My Business</h4>
+              </div>
+              <div class="card-body table-responsive">
+                <table class="table table-hover">
+                  <thead class="text-success">
+                    <th style="font-size: 14px;">Left Wing Users</th>
+                    <th style="font-size: 14px;">Right Wing Users</th>
+                    <th style="font-size: 14px;">Pairs</th>
+                    <th style="font-size: 14px;">Total</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil).count %></td>
+                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(right_user_id: nil).count %></td>
+                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil).count %></td>
+                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      <%else%>
+      <%end%>
     </div>
 </body>
 
