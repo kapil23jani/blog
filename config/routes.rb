@@ -11,9 +11,12 @@ Rails.application.routes.draw do
     get :graph, on: :collection  
   end
 	resources :welcome
+  resources :contact_us
   resources :admin do 
     get :members, on: :collection
     get :manage_members, on: :collection
+    get :pair_details, on: :collection
+    get :contact_us, on: :collection
   end
 
 	devise_for :users, controllers: {

@@ -5,6 +5,7 @@
     <div class="col-lg-4">
         <form action="<%my_teams_dashboard_index_path%>" method="get">
           <input type="text" id="search" name="search" class="form-control" placeholder="Search"><br>
+          <input type="hidden" id="user_id" name="user_id" value="<%= params[:user_id] %>">
           <input type="submit" value="Submit" class="btn btn-warning">
           <input type="reset" value="Reset" class="btn btn-danger">
         </form> 

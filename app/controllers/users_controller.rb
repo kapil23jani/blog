@@ -5,13 +5,18 @@ class UsersController < ApplicationController
 	end
 
 	def edit
+		@user = params[:id].present? ? User.find_by(id: params[:id]) : @current_user
 	end
 
 	def update
-		@user = @current_user
+		@user = params[:id].present? ? User.find_by(id: params[:id]) : @current_user
 		@user.update_attributes(user_params)
 		if @user.save(validate: false)
-			redirect_to my_profile_dashboard_index_path
+			if @current_user.admin?
+				redirect_to manage_members_admin_index_path 
+			else
+				redirect_to my_profile_dashboard_index_path
+			end
 		else
 			render 'edit'
 		end

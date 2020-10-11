@@ -18,7 +18,7 @@
     <div class="col-lg-4">
     </div> 
 
-    
+
     <div class="col-lg-4">
         <%= link_to "Last Month", members_admin_index_path(start_date: (Date.today.beginning_of_month - 1.month).to_datetime, end_time: (Date.today.end_of_month - 1.month).to_datetime), class: "btn btn- primary"%> &nbsp;
         <%= link_to "Current Month", members_admin_index_path(start_date: (Date.today.beginning_of_month).to_datetime, end_time: (Date.today.end_of_month).to_datetime), class: "btn btn- primary"%> &nbsp;
