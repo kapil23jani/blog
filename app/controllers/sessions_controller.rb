@@ -15,8 +15,6 @@ class SessionsController < ApplicationController
         @user = User.find_by(email: params[:User][:email].downcase)
         if @user.present? 
             if @user.valid_password?(params[:User][:password])
-                #@token =JWT.encode({user_id: @user.id, exp: (Time.now + 2.weeks).to_i}, Rails.env.eql?('staging') ? Rails.application.credentials[:secret_key_base] : Rails.application.credentials[:secret_key_base], 'HS256')
-                #@user.update(authentication_token: @token)
                 session[:user_id] = @user.id
                 if !@user.admin?
                     redirect_to dashboard_index_path
@@ -26,7 +24,6 @@ class SessionsController < ApplicationController
 
             end
         else
-            render 'new'
         end
     end
 
