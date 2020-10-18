@@ -161,8 +161,8 @@
                 <div class="card-icon">
                   <i class="material-icons">business</i>
                 </div>
-                <p class="card-category">My Business</p>
-                <h3 class="card-title">75</h3>
+                <p class="card-category">Valid Invoices</p>
+                <h3 class="card-title"><%= User.where(sponsered_by_id: @current_user.id, is_invoice_valid: true).count %></h3>
               </div>
               <div class="card-footer">
                 <div class="stats">
@@ -178,7 +178,7 @@
                   <i class="material-icons">account_balance_wallet</i>
                 </div>
                 <p class="card-category">Earnings</p>
-                <h3 class="card-title">+245</h3>
+                <h3 class="card-title">+<%= Invoice.where(user_id: User.where(sponsered_by_id: @current_user.id, is_invoice_valid: true).pluck(:id)).present? ? Invoice.where(user_id: User.where(sponsered_by_id: @current_user.id, is_invoice_valid: true).pluck(:id)).pluck(:amount).map(&:to_i).inject(0){|sum,x| sum + x } : ""%></h3>
               </div>
               <div class="card-footer">
                 <div class="stats">
@@ -205,10 +205,10 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil), is_invoice_valid: true).count %></td>
-                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(right_user_id: nil), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id:  @current_user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
                       <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil), is_invoice_valid: true).count %></td>
-                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil), is_invoice_valid: true).count + User.where(id: @current_user.pairs.where.not(right_user_id: nil), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id:  @current_user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count + User.where(id: @current_user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
                     </tr>
                   </tbody>
                 </table>

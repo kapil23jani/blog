@@ -38,7 +38,7 @@
                     <td><%= user.created_at.strftime("%F") %></td>
                     <td><%= user.address %></td>
                     <td><%= user.sponser_id %></td>
-                    <td><%= user.invoice_number.present? ? "Active" : "Inactive" %> </td>
+                    <td><%= user.is_invoice_valid.eql?(true) ? "Active" : "Inactive" %> </td>
                 </tr>
                 <%end%>
                 
