@@ -120,7 +120,7 @@
   <%if !@current_user.admin?%>
 
     <div class="border-right" style="background: #2F4F4F;" id="sidebar-wrapper">
-      <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Surekha</p></center></div>
+      <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Shikhar</p></center></div>
         <div class="list-group list-group-flush">
 
           <a class="nav-link" href="/dashboard">
@@ -147,13 +147,14 @@
             <center><i class="material-icons" style="color: white; font-size: 30px;">account_balance_wallet</i>
             <p class="heading">Earning</p></center>
           </a>
+
           <a class="nav-link" href="/dashboard/my_teams">
             <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
             <p class="heading">My Team</p></center>
           </a>
-          <a class="nav-link" href="">
-            <center><i class="material-icons" style="color: white; font-size: 30px;">person</i>
-            <p class="heading">Graph</p></center>
+          <a class="nav-link" href="/invoices/">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">receipt</i>
+            <p class="heading">Invoice</p></center>
           </a> 
 
           <a href="#profileSubMenu" data-toggle="collapse" id="profilemenu" >
@@ -200,7 +201,7 @@
         <div class="sidebar-heading" ><center><p class="heading" style= "font-size: 30px;">Admin</p></center></div>
           <div class="list-group list-group-flush">
 
-            <a class="nav-link" href="/dashboard">
+            <a class="nav-link" href="/admin">
               <center><i class="material-icons" style="color: white; font-size: 30px;">dashboard</i>
               <p class="heading">Dashboard</p></center>
             </a>
@@ -229,6 +230,10 @@
             <a class="nav-link" href="/admin/manage_members">
               <center><i class="material-icons" style="color: white; font-size: 30px;">group</i>
               <p class="heading">Manage Members</p></center>
+            </a> 
+            <a class="nav-link" href="/admin/invoices">
+              <center><i class="material-icons" style="color: white; font-size: 30px;">receipt</i>
+              <p class="heading">Invoices</p></center>
             </a>
             <a class="nav-link" href="/admin/contact_us">
               <center><i class="material-icons" style="color: white; font-size: 30px;">play_arrow</i>

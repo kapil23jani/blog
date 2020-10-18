@@ -205,10 +205,10 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil).count %></td>
-                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(right_user_id: nil).count %></td>
-                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil).count %></td>
-                      <td style="font-size: 14px;"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(right_user_id: nil), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil), is_invoice_valid: true).count + User.where(id: @current_user.pairs.where.not(right_user_id: nil), is_invoice_valid: true).count %></td>
                     </tr>
                   </tbody>
                 </table>

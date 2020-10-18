@@ -1,0 +1,41 @@
+<div class="col-lg-12" style="overflow-x:auto;">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th> Name </th>
+                <th> Invoice Number </th>
+                <th> Sponser Id </th>
+                <th> Sponsered Name </th>
+                <th> Amount </th>
+                <th> Status</th>
+                <th> Invoice Applied Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            <% Invoice.all.each do |invoice| %>
+            <tr>
+                <td><%= invoice.try(:user).try(:name)%></td>
+                <td><%= invoice.try(:invoice_number) %></td>
+                <td><%= invoice.try(:user).try(:sponser_id) %> </td>
+                <td><%= User.find_by(sponser_id: invoice.try(:user).try(:sponser_id)).try(:name) %></td>
+                <td><%= invoice.try(:amount)%></td>
+                <td><%= invoice.try(:is_invoice_valid).present? ? invoice.try(:is_invoice_valid) : "N/A" %></td>
+                <td><%= invoice.created_at.strftime("%F") %></td>
+            </tr>
+            <%end%>
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th> Name </th>
+                <th> Invoice Number </th>
+                <th> Sponser Id </th>
+                <th> Sponsered Name </th>
+                <th> Amount </th>
+                <th> Status</th>
+                <th> Invoice Applied Date </th>
+            </tr>
+        </tfoot>
+    </table>
+    
+</div>

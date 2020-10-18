@@ -28,4 +28,7 @@ class DashboardController < ApplicationController
 
 	def graph
 	end
+
+	def invoice
+	end
 end

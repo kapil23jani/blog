@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
 
 	def index
+		@invoices = Invoice.where(is_invoice_valid: [nil, false])
 	end
 
 	def members
@@ -41,8 +42,10 @@ class AdminController < ApplicationController
 		session[:range] = {}
 	end
 
+
 	def manage_members
 		@users = User.all
+		@users = User.where(is_invoice_valid: params[:is_invoice_valid]) if params[:is_invoice_valid].present?
 		@user = User.new
 	end
 
@@ -51,5 +54,22 @@ class AdminController < ApplicationController
 
 	def contact_us
 		@contacts = Contact.all
+	end
+
+	def invoices
+
+	end
+
+	def invoice_operation
+		invoice = Invoice.find(params[:id])
+		if invoice.present? 
+			invoice.is_invoice_valid = params[:status].eql?("accept") ? true : false
+			if invoice.save
+				user = invoice.try(:user)
+				user.is_invoice_valid = params[:status].eql?("accept") ? true : false
+				user.save(validate: false)
+				redirect_to admin_index_path
+			end
+		end
 	end
 end

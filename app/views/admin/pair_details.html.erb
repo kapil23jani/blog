@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	<div class="col-sm-12">
-		<% @users.each do |user|%>	
+		<% @users.where(is_invoice_valid: true).each do |user|%>	
 			<div class="col-sm-3" style="margin-left: 10px; margin-right: 10px;">
 				<div class="card white bg-info mb-3" style="width: auto;height:auto;">
 					 <div class="card-body">
@@ -90,10 +90,10 @@
 			                  </thead>
 			                  <tbody>
 			                    <tr>
-			                      <td style="font-size: 15px;"><%= user.pairs.where.not(left_user_id: nil).count %></td>
-			                      <td style="font-size: 15px;"><%= user.pairs.where.not(right_user_id: nil).count %></td>
-			                      <td style="font-size: 15px;"><%= user.pairs.where.not(left_user_id: nil, right_user_id: nil).count %></td>
-			                      <td style="font-size: 15px;"><%= user.pairs.where.not(left_user_id: nil).count + user.pairs.where.not(right_user_id: nil).count %></td>
+			                      <td style="font-size: 15px;"><%= User.where(id: user.pairs.where.not(left_user_id: nil), is_invoice_valid: true).count %></td>
+			                      <td style="font-size: 15px;"><%= User.where(id: user.pairs.where.not(right_user_id: nil), is_invoice_valid: true).count %></td>
+			                      <td style="font-size: 15px;"><%= User.where(id: user.pairs.where.not(left_user_id: nil, right_user_id: nil), is_invoice_valid: true).count %></td>
+			                      <td style="font-size: 15px;"><%= User.where(id: user.pairs.where.not(left_user_id: nil), is_invoice_valid: true).count + User.where(id: user.pairs.where.not(right_user_id: nil), is_invoice_valid: true).count %></td>
 			                    </tr>
 			                  </tbody>
 			                </table>

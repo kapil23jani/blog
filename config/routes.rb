@@ -9,7 +9,11 @@ Rails.application.routes.draw do
     get :my_teams, on: :collection  
     get :my_profile, on: :collection  
     get :graph, on: :collection  
+    get :invoice, on: :collection  
   end
+
+  resources :invoices
+
 	resources :welcome
   resources :contact_us
   resources :admin do 
@@ -17,6 +21,8 @@ Rails.application.routes.draw do
     get :manage_members, on: :collection
     get :pair_details, on: :collection
     get :contact_us, on: :collection
+    get :invoice_operation, on: :collection
+    get :invoices, on: :collection
   end
 
 	devise_for :users, controllers: {

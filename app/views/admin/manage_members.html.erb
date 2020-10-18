@@ -138,6 +138,8 @@ $(document).ready(function(){
                     <div class="row">
                         <div class="col-sm-8"><h2>Member <b>Details</b></h2></div>
                         <div class="col-sm-4">
+                            <%= link_to "Active", manage_members_admin_index_path(is_invoice_valid: true), class: "btn", style: "font-size: 15px;"%>
+                            <%= link_to "Inactive", manage_members_admin_index_path(is_invoice_valid: [nil, false]), class: "btn", style: "font-size: 15px;"%>
                             <a href="" class= "btn btn-info" style="float: right; font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modalRegistrationForm"> Add New</a>
                         </div>
                     </div>
@@ -162,7 +164,7 @@ $(document).ready(function(){
                                 <td><%= user.created_at.strftime("%F") %></td>
                                 <td><%= User.find_by(sponser_id: user.sponser_id).try(:name) %></td>
                                 <td><%= user.try(:sponser_id) %></td>
-                                <td><%= user.invoice_number.present? ? "Active" : "Inactive" %> </td>
+                                <td><%= user.is_invoice_valid.eql?(true) ? "Active" : "Inactive" %> </td>
                                 <td>
                                     <%= link_to '<i class="material-icons">&#xE254;</i>'.html_safe, edit_user_path(user), style: "color:orange;" %>&nbsp;&nbsp;&nbsp;
                                     <%= link_to '<i class="material-icons">&#xE872;</i>'.html_safe, user_path(user), method: :delete, data: { confirm: "You sure?" } ,style: "color:red;" %>

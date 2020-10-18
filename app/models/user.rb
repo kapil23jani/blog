@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_many :pairs
   belongs_to :role, optional: true
+  has_one :invoice
 
 
   has_one :sponser, class_name: 'User', foreign_key: :sponsered_by_id

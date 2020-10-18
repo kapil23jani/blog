@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_11_112841) do
+ActiveRecord::Schema.define(version: 2020_10_18_082239) do
 
   create_table "contacts", force: :cascade do |t|
     t.string "first_name"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 2020_10_11_112841) do
     t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string "amount"
+    t.string "invoice_pdf"
+    t.string "invoice_number"
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_invoice_valid"
+    t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
   create_table "pairs", force: :cascade do |t|
@@ -75,6 +86,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_112841) do
     t.integer "sponsered_by_id"
     t.string "invoice_number"
     t.integer "role_id"
+    t.boolean "is_invoice_valid"
+    t.string "unique_user_id"
     t.index "\"left_user_id\"", name: "index_users_on_left_user_id"
     t.index "\"right_user_id\"", name: "index_users_on_right_user_id"
     t.index ["ancestry"], name: "index_users_on_ancestry"
@@ -84,5 +97,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_112841) do
     t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
 
+  add_foreign_key "invoices", "users"
   add_foreign_key "users", "roles"
 end

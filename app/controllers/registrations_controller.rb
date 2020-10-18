@@ -16,8 +16,13 @@ class RegistrationsController < ApplicationController
 
     def create
     	@user = User.new(user_params)
-        @user.sponser_id = 8.times.map { [*'0'..'9', *'a'..'z'].sample }.join.upcase
+        get_company_name = "TS"
+        @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).try(:id)  if params[:sponser_id].present?
+        return render_error(400, "Sponser Not Found") if @user.sponsered_by_id.nil?
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
+        get_uniq_id = sprintf '%08d', User.count + 1
+        @user.sponser_id = get_company_name + get_uniq_id
+        @user.is_invoice_valid = false
     	if @user.save 
             @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).id
             @user.save
