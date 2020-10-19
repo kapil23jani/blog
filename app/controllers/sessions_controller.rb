@@ -12,8 +12,9 @@ class SessionsController < ApplicationController
     end
 
     def create
-        @user = User.find_by(email: params[:User][:email].downcase)
-        if @user.present? 
+        temp_user = User.where(sponser_id: params[:User][:sponser_id]).or(User.where(email: params[:User][:sponser_id]))
+        if temp_user.last.present? 
+            @user = temp_user.last
             if @user.valid_password?(params[:User][:password])
                 session[:user_id] = @user.id
                 if !@user.admin?
@@ -21,7 +22,6 @@ class SessionsController < ApplicationController
                 else
                     redirect_to admin_index_path
                 end
-
             end
         else
         end

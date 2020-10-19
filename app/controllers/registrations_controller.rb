@@ -21,7 +21,7 @@ class RegistrationsController < ApplicationController
         return render_error(400, "Sponser Not Found") if @user.sponsered_by_id.nil?
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
         get_uniq_id = sprintf '%08d', User.count + 1
-        @user.sponser_id = get_company_name + get_uniq_id
+        @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id] : nil
         @user.is_invoice_valid = false
     	if @user.save 
             @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).id
@@ -63,6 +63,6 @@ class RegistrationsController < ApplicationController
     private
 
     def user_params
-        params.permit(:zipcode, :city, :state, :country, :name, :dob, :sponser_id, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
+        params.permit(:zipcode, :city, :state, :country, :name, :dob, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
     end
 end

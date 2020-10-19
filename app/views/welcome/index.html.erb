@@ -367,12 +367,16 @@ body {
               <center>
                 <b>Login Details</b>
               </center>
-            </div>
+            </div><br>
+
+             <div class="md-form mb-5">
+              <%= f.text_field :unique_user_id, autofocus: true, id: "unique_user_id" ,placeholder: "User ID", class: "form-control" %>
+            </div>   
 
             <div class="md-form mb-4">
               <% if @minimum_password_length %>
               <em>(<%= @minimum_password_length %> characters minimum)</em>
-              <% end %><br/>
+              <% end %>
               <%= f.password_field :password, autocomplete: "new-password", id: "password" ,placeholder: "Password", class: "form-control" %>
             </div>
 
@@ -412,7 +416,7 @@ body {
 
 
             <div class="md-form mb-5">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder:"User ID", class: "form-control" %>
+              <%= f.text_field :sponser_id, autofocus: true, autocomplete: "email", placeholder:"User ID", class: "form-control" %>
             </div>
 
             <div class="md-form mb-4">
@@ -449,6 +453,7 @@ body {
       var password_confirmation = document.getElementById('password_confirmation').value;
       var phone_number = document.getElementById('phone_number').value;
       var pan_number = document.getElementById('pan_number').value;
+      var unique_user_id = document.getElementById('unique_user_id').value;
       var reqObj = {
         sponser_id: sponser_id,
         position: position,
@@ -464,7 +469,7 @@ body {
         password_confirmation: password_confirmation,
         phone_number: phone_number,
         pan_number: pan_number,
-        
+        unique_user_id: unique_user_id,
       }
       console.log(reqObj);
       var rating = $.ajax({
