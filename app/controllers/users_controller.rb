@@ -10,6 +10,8 @@ class UsersController < ApplicationController
 
 	def update
 		@user = params[:id].present? ? User.find_by(id: params[:id]) : @current_user
+		binding.pry
+		@user.role_id = Role.find_by(role_type: "super_user").id if params[:role_type].present?
 		@user.update_attributes(user_params)
 		if @user.save(validate: false)
 			if @current_user.admin?
@@ -27,6 +29,9 @@ class UsersController < ApplicationController
 
 	def update_user_kyc
 	end
+
+	
+
 
 	def destroy
 		user = User.find_by(id: params[:id])

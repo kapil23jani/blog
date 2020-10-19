@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :contact_us
   resources :admin do 
     get :members, on: :collection
+    put :assign_super_user, on: :collection  
     get :manage_members, on: :collection
     get :pair_details, on: :collection
     get :contact_us, on: :collection
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
                     confirmations: "confirmations"
                 }
   resources :users do 
+    put :assign_super_user, on: :collection  
     get :get_user_kyc, on: :collection  
     put :update_user_kyc, on: :collection  
   end

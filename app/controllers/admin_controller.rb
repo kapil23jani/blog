@@ -60,6 +60,19 @@ class AdminController < ApplicationController
 
 	end
 
+	def show
+	end
+
+	def assign_super_user
+		user = User.find_by(id: params[:user_id])
+		if user.present?
+			user.role_id = Role.find_by(role_type: "super_user").id if params[:role_type].present?
+			if user.save
+				redirect_to manage_members_admin_index_path 
+			end
+		end
+	end
+
 	def invoice_operation
 		invoice = Invoice.find(params[:id])
 		if invoice.present? 

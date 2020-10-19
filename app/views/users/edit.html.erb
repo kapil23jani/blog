@@ -33,6 +33,7 @@
           <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Email ID" value="<%= @user.email %>" readonly= "readonly">
         </div>
       </div>
+     
     </div>
     <div class="row">
       <div class="col-lg-4">
@@ -55,6 +56,16 @@
         </div>
       </div> 
     </div>
+    <div class="row">
+      <% if @current_user.admin? %>
+        <div class="col-lg-4">
+          <div class="form-group focused" style="width: auto; padding: 10px;">
+            <input type="checkbox" id="role_type" name="role_type" value="role_type">
+            <label for="vehicle1">Assign Super User</label><br>
+          </div>
+        </div>
+      <%end%>
+    </div>
   </div>
   <hr class="my-4">
   <!-- Address -->
@@ -75,6 +86,8 @@
       </div> 
     </div>
   </div>
+
+
   <div style="float: right; padding: 10px;">
     <button class="btn btn-warning">Submit</button>
   </div>

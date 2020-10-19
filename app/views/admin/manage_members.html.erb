@@ -154,6 +154,7 @@ $(document).ready(function(){
                             <th> Sponser ID </th>
                             <th> Status </th>
                             <th> Actions </th>
+                            <th> Assign Super User </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -168,6 +169,13 @@ $(document).ready(function(){
                                 <td>
                                     <%= link_to '<i class="material-icons">&#xE254;</i>'.html_safe, edit_user_path(user), style: "color:orange;" %>&nbsp;&nbsp;&nbsp;
                                     <%= link_to '<i class="material-icons">&#xE872;</i>'.html_safe, user_path(user), method: :delete, data: { confirm: "You sure?" } ,style: "color:red;" %>
+                                </td>
+                                <td>
+                                  <% if user.try(:role).try(:role_type) == "super_user" %>
+                                    <%= link_to "Super User", "", class: "btn btn-success"%>
+                                  <%else%>
+                                    <%= link_to "Assign", edit_user_path(id: user.id, role_type: "super_user"), class: "btn btn-warning"%>
+                                  <%end%>
                                 </td>
                             </tr>
                         <%end%>

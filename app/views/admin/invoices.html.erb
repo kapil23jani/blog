@@ -19,7 +19,7 @@
                 <td><%= invoice.try(:user).try(:sponser_id) %> </td>
                 <td><%= User.find_by(sponser_id: invoice.try(:user).try(:sponser_id)).try(:name) %></td>
                 <td><%= invoice.try(:amount)%></td>
-                <td><%= invoice.try(:is_invoice_valid).present? ? invoice.try(:is_invoice_valid) : "N/A" %></td>
+                <td><%= invoice.try(:is_invoice_valid).eql?(true) ? "Active" : "Inactive" %></td>
                 <td><%= invoice.created_at.strftime("%F") %></td>
             </tr>
             <%end%>
