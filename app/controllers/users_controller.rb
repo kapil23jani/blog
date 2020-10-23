@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 
 	def destroy
 		user = User.find_by(id: params[:id])
+		user.invoice.destroy
 		if user.delete
 			redirect_to manage_members_admin_index_path
 		else
