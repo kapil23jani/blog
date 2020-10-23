@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_ancestry
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable#, :validatable
 
   has_many :pairs
   belongs_to :role, optional: true
