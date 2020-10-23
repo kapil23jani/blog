@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+	skip_before_action :authenticate_user!, only: [ :fetch_sponser]
+
 	def show
 
 	end
@@ -27,6 +29,18 @@ class UsersController < ApplicationController
 	end
 
 	def update_user_kyc
+	end
+
+	def fetch_sponser
+		user = User.find_by(sponser_id: params[:sponser_id])
+		if user.present?
+			render json: {
+            responseCode: 200,
+            responseMessage: "Sponser Name: #{user.name}",
+        }
+		else
+			render_error(400, "Sponser not found")
+		end
 	end
 
 	

@@ -54,7 +54,7 @@ class RegistrationsController < ApplicationController
             end
     		#session[:user_id] = @user.id
     		# redirect_to welcome_index_path
-            render_error(200, "Registered Successfully")
+            render_message("Registered Successfully")
     	else
             render_error(400, @user.errors.full_messages.join(','))
     	end

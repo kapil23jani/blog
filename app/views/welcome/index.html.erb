@@ -307,8 +307,13 @@ body {
               <input type="radio" id="Left" name="position" value="Left">
               <label for="Left">Left</label>
               <input type="radio" id="Right" name="position" value="Right">
-              <label for="Right">Right</label>
+              <label for="Right">Right</label><br>
+
             </div> 
+            <div class="md-form mb-5">
+              <input type="button" value="Check Sponser" name="fetch_sponser" class="btn btn-info" style="float: right;" onclick="fetchSponser()"><br><br><br>
+              <center><p id="name" style="font-size: 17px; background-color: #d9d4ca; padding: 5px; width: auto;"></p></center>
+            </div>
             
             <div class="square">
               <center>
@@ -438,6 +443,32 @@ body {
   </div>
     
   <script type="text/javascript">
+
+    function fetchSponser() {
+      var sponser_id = document.getElementById('sponser_id').value;
+      var position = $("input:radio[name=position]:checked").val();
+       var reqObj = {
+        sponser_id: sponser_id,
+        position: position,
+      }
+      console.log(reqObj);
+      var sponser = $.ajax({
+        type: 'post',
+        data: reqObj,
+        url: "/users/fetch_sponser", success: function(result){
+        if (result["responseCode"] == "200") {
+          document.getElementById("name").innerHTML = result["responseMessage"]
+          // console.log(result["responseMessage"]["name"]);
+          // alert(result["responseMessage"]);
+          // window.location.href = '/welcome';
+        } else {
+          document.getElementById("name").innerHTML = result["responseMessage"]
+          // alert(result["responseMessage"]);
+        }
+      }});
+    }
+
+
     function SubmitRatings() {
       var sponser_id = document.getElementById('sponser_id').value;
       var position = $("input:radio[name=position]:checked").val();
