@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_18_082239) do
+ActiveRecord::Schema.define(version: 2020_10_24_121800) do
 
   create_table "contacts", force: :cascade do |t|
     t.string "first_name"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2020_10_18_082239) do
     t.integer "left_user_id"
     t.integer "right_user_id"
     t.integer "user_id"
+    t.boolean "is_left_verified"
+    t.boolean "is_right_verified"
     t.index ["left_user_id"], name: "index_pairs_on_left_user_id"
     t.index ["right_user_id"], name: "index_pairs_on_right_user_id"
     t.index ["user_id"], name: "index_pairs_on_user_id"

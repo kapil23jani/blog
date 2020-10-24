@@ -16,11 +16,9 @@ class RegistrationsController < ApplicationController
 
     def create
     	@user = User.new(user_params)
-        get_company_name = "TS"
         @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).try(:id)  if params[:sponser_id].present?
         return render_error(400, "Sponser Not Found") if @user.sponsered_by_id.nil?
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
-        get_uniq_id = sprintf '%08d', User.count + 1
         @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id] : nil
         @user.is_invoice_valid = false
     	if @user.save 
@@ -52,8 +50,6 @@ class RegistrationsController < ApplicationController
                     pair.save
                 end
             end
-    		#session[:user_id] = @user.id
-    		# redirect_to welcome_index_path
             render_message("Registered Successfully")
     	else
             render_error(400, @user.errors.full_messages.join(','))

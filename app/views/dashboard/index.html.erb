@@ -207,7 +207,7 @@
                     <tr>
                       <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count %></td>
                       <td style="font-size: 15px;"><%= User.where(id:  @current_user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
-                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil, right_user_id: nil), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= Pair.where(is_left_verified: true, is_right_verified: true, user_id: @current_user.id).count %></td>
                       <td style="font-size: 15px;"><%= User.where(id:  @current_user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count + User.where(id: @current_user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
                     </tr>
                   </tbody>

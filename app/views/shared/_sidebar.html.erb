@@ -164,7 +164,7 @@
               </center>
           </a>
 
-           <ul class="collapse list-unstyled" id="profileSubMenu" style="background-color: #332e2e">
+          <ul class="collapse list-unstyled" id="profileSubMenu" style="background-color: #332e2e">
             <li>
               <a class="nav-link" href="/dashboard/my_profile">
                 <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
@@ -180,6 +180,13 @@
               </a> 
             </li>
           </ul>
+
+          <% if @current_user.try(:role).try(:role_type) == "super_user" %>
+            <a class="nav-link" href="/admin/invoices">
+              <center><i class="material-icons" style="color: white; font-size: 30px;">receipt</i>
+              <p class="heading">Approve Invoices</p></center>
+            </a>
+          <%end%>
 
       </div>
     </div>

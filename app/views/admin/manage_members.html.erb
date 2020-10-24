@@ -185,12 +185,12 @@ $(document).ready(function(){
         </div>
     </div>
 
-    <div class="modal fade" id="modalRegistrationForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+ <div class="modal fade" id="modalRegistrationForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <center><h4 class="modal-title w-200 font-weight-bold">Add New Member</h4></center>
+          <center><h4 class="modal-title w-200 font-weight-bold">Registration</h4></center>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -214,8 +214,13 @@ $(document).ready(function(){
               <input type="radio" id="Left" name="position" value="Left">
               <label for="Left">Left</label>
               <input type="radio" id="Right" name="position" value="Right">
-              <label for="Right">Right</label>
+              <label for="Right">Right</label><br>
+
             </div> 
+            <div class="md-form mb-5">
+              <input type="button" value="Check Sponser" name="fetch_sponser" class="btn btn-info" style="float: right;" onclick="fetchSponser()"><br><br><br>
+              <center><p id="name" style="font-size: 17px; background-color: #d9d4ca; padding: 5px; width: auto;"></p></center>
+            </div>
             
             <div class="square">
               <center>
@@ -224,7 +229,7 @@ $(document).ready(function(){
             </div>
 
             <div class="md-form mb-5"><br>
-              <%= f.text_field :name, autofocus: true, id: "name" ,placeholder: "Name", class: "form-control" %>
+              <%= f.text_field :name, autofocus: true, id: "user_name" ,placeholder: "Name", class: "form-control" %>
             </div> 
 
             <div class="md-form mb-5">
@@ -274,12 +279,16 @@ $(document).ready(function(){
               <center>
                 <b>Login Details</b>
               </center>
-            </div>
+            </div><br>
+
+             <div class="md-form mb-5">
+              <%= f.text_field :unique_user_id, autofocus: true, id: "unique_user_id" ,placeholder: "User ID", class: "form-control" %>
+            </div>   
 
             <div class="md-form mb-4">
               <% if @minimum_password_length %>
               <em>(<%= @minimum_password_length %> characters minimum)</em>
-              <% end %><br/>
+              <% end %>
               <%= f.password_field :password, autocomplete: "new-password", id: "password" ,placeholder: "Password", class: "form-control" %>
             </div>
 
@@ -291,8 +300,8 @@ $(document).ready(function(){
             </div> 
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-success" onclick="SubmitRatings(), this.disabled=false">Add</button>
-            <%#= f.submit "Add", class: "btn btn-success" %>
+            <button type="button" class="btn btn-success" onclick="SubmitRatings(), this.disabled=false">Submit</button>
+            <%#= f.submit "Submit", class: "btn btn-success" %>
           </div>
          
         <%end%>
@@ -300,10 +309,36 @@ $(document).ready(function(){
     </div>
   </div>
  <script type="text/javascript">
+
+    function fetchSponser() {
+      var sponser_id = document.getElementById('sponser_id').value;
+      var position = $("input:radio[name=position]:checked").val();
+       var reqObj = {
+        sponser_id: sponser_id,
+        position: position,
+      }
+      console.log(reqObj);
+      var sponser = $.ajax({
+        type: 'post',
+        data: reqObj,
+        url: "/users/fetch_sponser", success: function(result){
+        if (result["responseCode"] == "200") {
+          document.getElementById("name").innerHTML = result["responseMessage"]
+          // console.log(result["responseMessage"]["name"]);
+          // alert(result["responseMessage"]);
+          // window.location.href = '/welcome';
+        } else {
+          document.getElementById("name").innerHTML = result["responseMessage"]
+          // alert(result["responseMessage"]);
+        }
+      }});
+    }
+
+
     function SubmitRatings() {
       var sponser_id = document.getElementById('sponser_id').value;
       var position = $("input:radio[name=position]:checked").val();
-      var name = document.getElementById('name').value;
+      var name = document.getElementById('user_name').value;
       var gender = $("input:radio[name=gender]:checked").val();
       var date = document.getElementById('user_dob_3i').value;
       var month = document.getElementById('user_dob_2i').value;
@@ -315,6 +350,7 @@ $(document).ready(function(){
       var password_confirmation = document.getElementById('password_confirmation').value;
       var phone_number = document.getElementById('phone_number').value;
       var pan_number = document.getElementById('pan_number').value;
+      var unique_user_id = document.getElementById('unique_user_id').value;
       var reqObj = {
         sponser_id: sponser_id,
         position: position,
@@ -330,7 +366,7 @@ $(document).ready(function(){
         password_confirmation: password_confirmation,
         phone_number: phone_number,
         pan_number: pan_number,
-        
+        unique_user_id: unique_user_id,
       }
       console.log(reqObj);
       var rating = $.ajax({
@@ -339,7 +375,7 @@ $(document).ready(function(){
         url: "/users", success: function(result){
         if (result["responseCode"] == "200") {
           alert(result["responseMessage"]);
-          window.location.href = '/admin/manage_members';
+          window.location.href = '/welcome';
         } else {
           alert(result["responseMessage"]);
           // alert(result["responseMessage"]);
@@ -347,7 +383,6 @@ $(document).ready(function(){
       }});
     }
   </script>
-
 
 
 

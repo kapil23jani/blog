@@ -19,7 +19,7 @@ class User < ApplicationRecord
   validates :sponser_id, presence: true
   validates :position, presence: true
   validates :phone_number, numericality: { only_integer: true }, length: { minimum: 10 }
-  validates :zipcode, numericality: { only_integer: true }, length: { minimum: 6 }
+  #validates :zipcode, numericality: { only_integer: true }, length: { minimum: 6 }
   validates :pan_number, presence: true, uniqueness: true, length: { minimum: 10 }
 
 

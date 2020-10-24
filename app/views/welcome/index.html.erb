@@ -322,7 +322,7 @@ body {
             </div>
 
             <div class="md-form mb-5"><br>
-              <%= f.text_field :name, autofocus: true, id: "name" ,placeholder: "Name", class: "form-control" %>
+              <%= f.text_field :name, autofocus: true, id: "user_name" ,placeholder: "Name", class: "form-control" %>
             </div> 
 
             <div class="md-form mb-5">
@@ -472,7 +472,7 @@ body {
     function SubmitRatings() {
       var sponser_id = document.getElementById('sponser_id').value;
       var position = $("input:radio[name=position]:checked").val();
-      var name = document.getElementById('name').value;
+      var name = document.getElementById('user_name').value;
       var gender = $("input:radio[name=gender]:checked").val();
       var date = document.getElementById('user_dob_3i').value;
       var month = document.getElementById('user_dob_2i').value;

@@ -9,6 +9,7 @@
                 <th> Amount </th>
                 <th> Status</th>
                 <th> Invoice Applied Date </th>
+                <th> Operation </th>
             </tr>
         </thead>
         <tbody>
@@ -21,6 +22,14 @@
                 <td><%= invoice.try(:amount)%></td>
                 <td><%= invoice.try(:is_invoice_valid).eql?(true) ? "Active" : "Inactive" %></td>
                 <td><%= invoice.created_at.strftime("%F") %></td>
+                <%if invoice.try(:is_invoice_valid) == false || invoice.try(:is_invoice_valid) == nil %>
+                    <td> <%= link_to "Accept Invoice", invoice_operation_admin_index_path(id: invoice.id, status: "accept"), class: "btn btn-success"%>
+                        <%= link_to "Reject Invoice", invoice_operation_admin_index_path(id: invoice.id, status: "reject"), class: "btn btn-danger"%>
+                            
+                    </td>
+                <%else%>
+                    <td> - </td>
+                <%end%>
             </tr>
             <%end%>
             
@@ -34,6 +43,7 @@
                 <th> Amount </th>
                 <th> Status</th>
                 <th> Invoice Applied Date </th>
+                <th> Operation </th>
             </tr>
         </tfoot>
     </table>
