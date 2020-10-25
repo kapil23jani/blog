@@ -147,7 +147,8 @@ $(document).ready(function(){
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th> Name </th>
+                            <th> User Name </th>
+                            <th> User ID </th>
                             <th> Position </th>
                             <th> Joining Date </th>
                             <th> Sponser Name </th>
@@ -161,10 +162,11 @@ $(document).ready(function(){
                         <% @users.each do |user| %>
                             <tr>
                                 <td><%= user.name%></td>
+                                <td><%= user.sponser_id%></td>
                                 <td><%= user.position %></td>
                                 <td><%= user.created_at.strftime("%F") %></td>
-                                <td><%= User.find_by(sponser_id: user.sponser_id).try(:name) %></td>
-                                <td><%= user.try(:sponser_id) %></td>
+                                <td><%= User.find_by(id: user.sponsered_by_id).try(:name) %></td>
+                                <td><%= User.find_by(id: user.sponsered_by_id).try(:sponser_id) %></td>
                                 <td><%= user.is_invoice_valid.eql?(true) ? "Active" : "Inactive" %> </td>
                                 <td>
                                     <%= link_to '<i class="material-icons">&#xE254;</i>'.html_safe, edit_user_path(user), style: "color:orange;" %>&nbsp;&nbsp;&nbsp;

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
 	def update
 		@user = params[:id].present? ? User.find_by(id: params[:id]) : @current_user
-		@user.role_id = Role.find_by(role_type: "super_user").id if params[:role_type].present?
+		@user.role_id = Role.find_by(role_type: "super_user").try(:id) if params[:role_type].present?
 		@user.update_attributes(user_params)
 		if @user.save(validate: false)
 			if @current_user.admin?
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
 
 	def destroy
 		user = User.find_by(id: params[:id])
-		user.invoice.destroy
+		user.try(:invoice).try(:destroy)
 		if user.delete
 			redirect_to manage_members_admin_index_path
 		else

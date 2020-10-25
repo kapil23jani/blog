@@ -22,7 +22,8 @@
         <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th> Name </th>
+                    <th> User Name </th>
+                    <th> User ID </th>
                     <th> Position </th>
                     <th> Joining Date </th>
                     <th> Address </th>
@@ -34,10 +35,11 @@
                 <% @users.each do |user| %>
                 <tr>
                     <td><%= user.name %></td>
+                    <td><%= user.sponser_id %></td>
                     <td><%= user.position %></td>
                     <td><%= user.created_at.strftime("%F") %></td>
                     <td><%= user.address %></td>
-                    <td><%= user.sponser_id %></td>
+                    <td><%= User.find_by(id: user.sponsered_by_id).try(:sponser_id) %></td>
                     <td><%= user.is_invoice_valid.eql?(true) ? "Active" : "Inactive" %> </td>
                 </tr>
                 <%end%>
@@ -45,7 +47,8 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>Name</th>
+                    <th>User Name</th>
+                    <th>User ID</th>
                     <th>Position</th>
                     <th>Joining Date</th>
                     <th>Address</th>
