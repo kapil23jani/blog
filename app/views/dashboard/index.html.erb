@@ -128,7 +128,7 @@
                   <i class="material-icons">group</i>
                 </div>
                 <p class="card-category">My Team</p>
-                <h3 class="card-title"><%= @current_user.pairs.where.not(left_user_id: nil).count + @current_user.pairs.where.not(right_user_id: nil).count %>
+                <h3 class="card-title"><%= get_final_users(@current_user).count %>
                   <small>Members</small>
                 </h3>
               </div>
@@ -146,7 +146,7 @@
                   <i class="material-icons">sync_alt</i>
                 </div>
                 <p class="card-category">Referral</p>
-                <h3 class="card-title"><%= Pair.where(user_id: @current_user.id).count%> </h3>
+                <h3 class="card-title"><%= User.where(sponsered_by_id: @current_user.id).count%> </h3>
               </div>
               <div class="card-footer">
                 <div class="stats">
