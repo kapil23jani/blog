@@ -14,7 +14,9 @@ Rails.application.routes.draw do
 
   resources :invoices
 
-	resources :welcome
+	resources :welcome do
+    get :user_detail, on: :collection
+  end
   resources :contact_us
   resources :admin do 
     get :members, on: :collection

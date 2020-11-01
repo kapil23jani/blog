@@ -17,10 +17,11 @@ class ApplicationController < ActionController::Base
         }
     end
 
-     def render_message(message)
+     def render_message(message, object = nil)
         render json: {
             responseCode: 200,
             responseMessage: message,
+            object: object
         }
     end
 end

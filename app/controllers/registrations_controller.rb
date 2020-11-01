@@ -21,9 +21,8 @@ class RegistrationsController < ApplicationController
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
         @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id] : nil
         @user.is_invoice_valid = false
-    	if @user.save 
-            @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).id
-            @user.save
+        @user.unique_user_id = params[:password]
+    	if @user.save(validate: false)
             @sponser_user = User.find_by(sponser_id: params[:sponser_id])
             if params[:position] == "Left"
                 if @sponser_user.pairs.where(left_user_id: nil).present?
@@ -50,7 +49,7 @@ class RegistrationsController < ApplicationController
                     pair.save
                 end
             end
-            render_message("Registered Successfully")
+            render_message("Registered Successfully", @user)
     	else
             render_error(400, @user.errors.full_messages.join(','))
     	end

@@ -282,7 +282,7 @@ body {
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header text-center">
+        <div class="modal-header text-center" style="background: #afd7db;">
           <center><h4 class="modal-title w-200 font-weight-bold">Registration</h4></center>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -441,7 +441,48 @@ body {
       </div>
     </div>
   </div>
-    
+
+
+   <div class="modal fade" id="getCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title" id="myModalLabel"> API CODE </h4>
+       </div>
+       <div class="modal-body" id="getCode" style="overflow-x: scroll;">
+          //ajax success content here.
+       </div>
+    </div>
+   </div>
+ </div>
+
+  <%if @saved_user.present?%>
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header" style="background: #8fb5b2">
+                  <h3 class="modal-title" >Congratulations,</h3>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body" style="background: #e8eded">
+                <p>You are now part of "Team Shikhar" which is associated with "OK LifeCare" we are dedicated to build your personality tp turn your dreams into reality with your support system.</p>
+                  <h4>Your Login Details: </h4>
+                  Name: <b><%= @saved_user.name %></b><br>
+                  Login ID: <b><%= @saved_user.sponser_id %></b><br>
+                  Password: <b><%= @saved_user.unique_user_id %></b><br>
+                  <h4>Sponser Details</h4>
+                  Name: <b><%= User.find_by(id: @saved_user.sponsered_by_id).try(:name)%></b><br>
+                  ID: <b><%= User.find_by(id: @saved_user.sponsered_by_id).try(:sponser_id)%></b>
+              </div>
+              <div class="modal-footer" style="background: #8fb5b2">
+                <h4>Keep it Up! See you at the top - "Shikhar".</h4>
+              </div>
+          </div>
+      </div>
+    </div>
+  <%end%>
+      
   <script type="text/javascript">
 
     function fetchSponser() {
@@ -508,14 +549,25 @@ body {
         data: reqObj,
         url: "/users", success: function(result){
         if (result["responseCode"] == "200") {
-          alert(result["responseMessage"]);
-          window.location.href = '/welcome';
+          var user = result["object"]
+          // alert(result["responseMessage"]);
+            // $('#modalRegistrationForm').hide();
+            // $('#modalRegistrationForm').modal('hide');
+          // alert(result["responseMessage"]);
+          console.log(result["object"].id)
+          window.location.href = '/welcome?user_id=' + user.id;
+           // $("#getCode").html(result);
+          // $("#getCodeModal").modal('show');
         } else {
           alert(result["responseMessage"]);
-          // alert(result["responseMessage"]);
         }
       }});
     }
+  </script>
+  <script>
+    $(document).ready(function(){
+      $("#myModal").modal('show');
+    });
   </script>
   </body>
 </html>
