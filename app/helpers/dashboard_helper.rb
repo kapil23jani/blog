@@ -11,7 +11,7 @@ module DashboardHelper
 		   					SELECT * FROM r")
 			result << users
 			if users.present?
-				if @user.position == "Left"
+				if @user.position == "Left" && User.find_by(id: @user.sponsered_by_id).try(:position) == "Left"
 					if users.select {|user| user.position == "Left" }.present?
 						users.each do |user|
 							parent_users = User.find_by_sql(
@@ -27,18 +27,18 @@ module DashboardHelper
 						end
 					end
 				else
-					# users.each do |user|
-					# 	parent_users = User.find_by_sql(
-					# 				  					"WITH RECURSIVE r AS (
-					# 				     				#{User.where(id: user.sponsered_by_id, position: "right").to_sql}
-					# 				    				UNION ALL
-					# 				     				#{User.joins('JOIN r').where('r.id = users.sponsered_by_id').to_sql})
-					# 				   					SELECT * FROM r")
-					# 	if parent_users.present?
-					# 		c = parent_users.select { |c_user| c_user.position == "Left" && c_user.created_at > @user.created_at }
-					# 		result << c
-					# 	end
-					# end
+					users.each do |user|
+						parent_users = User.find_by_sql(
+									  					"WITH RECURSIVE r AS (
+									     				#{User.where(id: user.sponsered_by_id, position: "Right").to_sql}
+									    				UNION ALL
+									     				#{User.joins('JOIN r').where('r.id = users.sponsered_by_id').to_sql})
+									   					SELECT * FROM r")
+						if parent_users.present?
+							c = parent_users.select { |c_user| c_user.position == "Left" && c_user.created_at > @user.created_at }
+							result << c
+						end
+					end
 				end
 			end
 		result.flatten.delete_if { |user| user.id == @user.id}
