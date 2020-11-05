@@ -31,4 +31,13 @@ class User < ApplicationRecord
     def admin?
         role.try(:role_type).eql?('admin')
     end
+
+    # def all_children(children_array = [])
+    #   children = User.where(sponsered_by_id: self.id)
+    #   children_array += children.all
+    #   children.each do |child|
+    #     child.all_children(children_array)
+    #   end
+    #   children_array
+    # end
 end

@@ -23,32 +23,32 @@ class RegistrationsController < ApplicationController
         @user.is_invoice_valid = false
         @user.unique_user_id = params[:password]
     	if @user.save(validate: false)
-            @sponser_user = User.find_by(sponser_id: params[:sponser_id])
-            if params[:position] == "Left"
-                if @sponser_user.pairs.where(left_user_id: nil).present?
-                    pair = @sponser_user.pairs.where(left_user_id: nil).last
-                    pair.left_user_id = @user.id
-                    pair.user_id = @sponser_user.id
-                    pair.save
-                else
-                    pair = @sponser_user.pairs.new
-                    pair.left_user_id = @user.id
-                    pair.user_id = @sponser_user.id
-                    pair.save
-                end
-            elsif params[:position] == "Right"
-                if @sponser_user.pairs.where(right_user_id: nil).present?
-                    pair = @sponser_user.pairs.where(right_user_id: nil).last
-                    pair.right_user_id = @user.id
-                    pair.user_id = @sponser_user.id
-                    pair.save
-                else
-                    pair = @sponser_user.pairs.new
-                    pair.right_user_id = @user.id
-                    pair.user_id = @sponser_user.id
-                    pair.save
-                end
-            end
+            # @sponser_user = User.find_by(sponser_id: params[:sponser_id])
+            # if params[:position] == "Left"
+            #     if @sponser_user.pairs.where(left_user_id: nil).present?
+            #         pair = @sponser_user.pairs.where(left_user_id: nil).last
+            #         pair.left_user_id = @user.id
+            #         pair.user_id = @sponser_user.id
+            #         pair.save
+            #     else
+            #         pair = @sponser_user.pairs.new
+            #         pair.left_user_id = @user.id
+            #         pair.user_id = @sponser_user.id
+            #         pair.save
+            #     end
+            # elsif params[:position] == "Right"
+            #     if @sponser_user.pairs.where(right_user_id: nil).present?
+            #         pair = @sponser_user.pairs.where(right_user_id: nil).last
+            #         pair.right_user_id = @user.id
+            #         pair.user_id = @sponser_user.id
+            #         pair.save
+            #     else
+            #         pair = @sponser_user.pairs.new
+            #         pair.right_user_id = @user.id
+            #         pair.user_id = @sponser_user.id
+            #         pair.save
+            #     end
+            # end
             render_message("Registered Successfully", @user)
     	else
             render_error(400, @user.errors.full_messages.join(','))
