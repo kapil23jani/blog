@@ -10,7 +10,7 @@ module DashboardHelper
 			sql = " WITH RECURSIVE r AS ( "+ 
 				"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left' "+
 				"UNION "+ 
-				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
+				"SELECT users.* FROM users JOIN r WHERE r.id = users.sponsered_by_id) "+
 				"SELECT * FROM r"
 				records_array = ActiveRecord::Base.connection.execute(sql)
 				if records_array.present?
@@ -26,7 +26,7 @@ module DashboardHelper
 								sql = " WITH RECURSIVE r AS ( "+ 
 																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Left' "+
 																				"UNION "+ 
-																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
+																				"SELECT users.* FROM users JOIN r WHERE r.id = users.sponsered_by_id) "+
 																				"SELECT * FROM r"
 								records_array = ActiveRecord::Base.connection.execute(sql)
 								if records_array.present?
@@ -44,7 +44,7 @@ module DashboardHelper
 							sql = " WITH RECURSIVE r AS ( "+ 
 																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Right' "+
 																				"UNION "+ 
-																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
+																				"SELECT users.* FROM users JOIN r WHERE r.id = users.sponsered_by_id) "+
 																				"SELECT * FROM r"
 								records_array = ActiveRecord::Base.connection.execute(sql)
 								if records_array.present?
