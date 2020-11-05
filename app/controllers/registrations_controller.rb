@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
         @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id] : nil
         @user.is_invoice_valid = false
         @user.unique_user_id = params[:password]
-    	if @user.save(validate: false)
+    	if @user.save
             # @sponser_user = User.find_by(sponser_id: params[:sponser_id])
             # if params[:position] == "Left"
             #     if @sponser_user.pairs.where(left_user_id: nil).present?
