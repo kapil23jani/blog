@@ -9,7 +9,7 @@ module DashboardHelper
 
 			sql = " WITH RECURSIVE r AS ( "+ 
 				"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left' "+
-				"UNION ALL "+ 
+				"UNION "+ 
 				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
 				"SELECT * FROM r"
 				records_array = ActiveRecord::Base.connection.execute(sql)
@@ -25,7 +25,7 @@ module DashboardHelper
 							users.each do |user|
 								sql = " WITH RECURSIVE r AS ( "+ 
 																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Left' "+
-																				"UNION ALL "+ 
+																				"UNION "+ 
 																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
 																				"SELECT * FROM r"
 								records_array = ActiveRecord::Base.connection.execute(sql)
@@ -43,7 +43,7 @@ module DashboardHelper
 						users.each do |user|
 							sql = " WITH RECURSIVE r AS ( "+ 
 																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Right' "+
-																				"UNION ALL "+ 
+																				"UNION "+ 
 																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
 																				"SELECT * FROM r"
 								records_array = ActiveRecord::Base.connection.execute(sql)
