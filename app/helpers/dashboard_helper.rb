@@ -4,23 +4,35 @@ module DashboardHelper
 		@user = user
 		if user.present?
 			result = []
-				users = User.find_by_sql(
-			  					"WITH RECURSIVE r AS (
-			     				#{User.where(id: user.id).to_sql}
-			    				UNION ALL
-			     				#{User.joins('JOIN r').where('r.id = users.sponsered_by_id').to_sql})
-			   					SELECT * FROM r")
+			users = []
+			parent_users = []
+
+			sql = " WITH RECURSIVE r AS ( "+ 
+				"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left'"+
+				"UNION ALL "+ 
+				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
+				"SELECT * FROM r"
+				records_array = ActiveRecord::Base.connection.execute(sql)
+				if records_array.present?
+					users << User.where(id: records_array.pluck("id"))
+				end
+				users = users.flatten
+				
 				result << users
 				if users.present?
 					if @user.position == "Left" && User.find_by(id: @user.sponsered_by_id).try(:position) == "Left"
 						if users.select {|user| user.position == "Left" }.present?
 							users.each do |user|
-								parent_users = User.find_by_sql(
-											  					"WITH RECURSIVE r AS (
-											     				#{User.where(id: user.sponsered_by_id, position: "Left").to_sql}
-											    				UNION ALL
-											     				#{User.joins('JOIN r').where('r.id = users.sponsered_by_id').to_sql})
-											   					SELECT * FROM r")
+								sql = " WITH RECURSIVE r AS ( "+ 
+																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Left'"+
+																				"UNION ALL "+ 
+																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
+																				"SELECT * FROM r"
+								records_array = ActiveRecord::Base.connection.execute(sql)
+								if records_array.present?
+									parent_users << User.where(id: records_array.pluck("id"))
+								end
+								parent_users = parent_users.flatten
 								if parent_users.present?
 									c = parent_users.select { |c_user| c_user.position == "Left" && c_user.created_at > @user.created_at }
 									result << c
@@ -29,16 +41,20 @@ module DashboardHelper
 						end
 					else
 						users.each do |user|
-							parent_users = User.find_by_sql(
-										  					"WITH RECURSIVE r AS (
-										     				#{User.where(id: user.sponsered_by_id, position: "Right").to_sql}
-										    				UNION ALL
-										     				#{User.joins('JOIN r').where('r.id = users.sponsered_by_id').to_sql})
-										   					SELECT * FROM r")
-							if parent_users.present?
-								c = parent_users.select { |c_user| c_user.position == "Left" && c_user.created_at > @user.created_at }
-								result << c
-							end
+							sql = " WITH RECURSIVE r AS ( "+ 
+																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Right'"+
+																				"UNION ALL "+ 
+																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
+																				"SELECT * FROM r"
+								records_array = ActiveRecord::Base.connection.execute(sql)
+								if records_array.present?
+									parent_users << User.where(id: records_array.pluck("id"))
+								end
+								parent_users = parent_users.flatten
+								if parent_users.present?
+									c = parent_users.select { |c_user| c_user.position == "Left" && c_user.created_at > @user.created_at }
+									result << c
+								end
 						end
 					end
 				end
