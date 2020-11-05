@@ -8,7 +8,7 @@ module DashboardHelper
 			parent_users = []
 
 			sql = " WITH RECURSIVE r AS ( "+ 
-				"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left'"+
+				"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left' "+
 				"UNION ALL "+ 
 				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
 				"SELECT * FROM r"
@@ -24,7 +24,7 @@ module DashboardHelper
 						if users.select {|user| user.position == "Left" }.present?
 							users.each do |user|
 								sql = " WITH RECURSIVE r AS ( "+ 
-																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Left'"+
+																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Left' "+
 																				"UNION ALL "+ 
 																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
 																				"SELECT * FROM r"
@@ -42,7 +42,7 @@ module DashboardHelper
 					else
 						users.each do |user|
 							sql = " WITH RECURSIVE r AS ( "+ 
-																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Right'"+
+																				"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Right' "+
 																				"UNION ALL "+ 
 																				"SELECT users.* FROM users JOIN r WHERE (r.id = users.sponsered_by_id)) "+
 																				"SELECT * FROM r"
