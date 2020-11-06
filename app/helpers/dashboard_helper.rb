@@ -6,18 +6,33 @@ module DashboardHelper
 			result = []
 			users = []
 			parent_users = []
-			sql = " WITH RECURSIVE r AS ( "+ 
-				"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left' "+
-				"UNION ALL "+ 
-				"SELECT users.* FROM users JOIN r on (r.id = users.sponsered_by_id)) "+
-				"SELECT * FROM r "
-				records_array = ActiveRecord::Base.connection.execute(sql)
-				if records_array.present?
-					users << User.where(id: records_array.pluck("id"))
-				end
-				users = users.flatten
-				
-				result << users
+			if user.position == "Left"
+				sql = " WITH RECURSIVE r AS ( "+ 
+					"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left' "+
+					"UNION ALL "+ 
+					"SELECT users.* FROM users JOIN r on (r.id = users.sponsered_by_id)) "+
+					"SELECT * FROM r "
+					records_array = ActiveRecord::Base.connection.execute(sql)
+					if records_array.present?
+						users << User.where(id: records_array.pluck("id"))
+					end
+					users = users.flatten
+					
+					result << users
+			else
+				sql = " WITH RECURSIVE r AS ( "+ 
+					"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Right' "+
+					"UNION ALL "+ 
+					"SELECT users.* FROM users JOIN r on (r.id = users.sponsered_by_id)) "+
+					"SELECT * FROM r "
+					records_array = ActiveRecord::Base.connection.execute(sql)
+					if records_array.present?
+						users << User.where(id: records_array.pluck("id"))
+					end
+					users = users.flatten
+					
+					result << users
+			end
 				if users.present?
 					if @user.position == "Left" && User.find_by(id: @user.sponsered_by_id).try(:position) == "Left"
 						if users.select {|user| user.position == "Left" }.present?
