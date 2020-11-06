@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
 	    if params[:start_date].present? && params[:end_time].present?
 		    @users = User.where(id: @final_object).where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
 		else
-			@users = User.where(id: @final_object).where([users_where, users_where_values])
+			@users = User.where(id: @final_object).where([users_where, users_where_values]).uniq
 		end
 
 	    session[:search] = {}
