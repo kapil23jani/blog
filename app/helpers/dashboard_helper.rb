@@ -19,6 +19,7 @@ module DashboardHelper
 					end
 				end
 			end
+			result
 
 			# sql = " WITH RECURSIVE r AS ( "+ 
 			# 	"SELECT * FROM users WHERE users.id = #{user.id} AND users.position = 'Left' "+
