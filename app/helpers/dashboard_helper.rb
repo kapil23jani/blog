@@ -45,6 +45,7 @@ module DashboardHelper
 									"SELECT * FROM r"
 							records_array = ActiveRecord::Base.connection.execute(sql).to_a
 							if records_array.present?
+								@parent_users << User.where(sponsered_by_id: records_array.pluck("id"), position: "Left")
 								@parent_users = User.where(sponsered_by_id: User.where(sponsered_by_id: records_array.pluck("id"), position: "Left"), position: "Left")
 								if @parent_users.present?
 									c = @parent_users.select { |c_user| c_user.try(:position) == "Left" && c_user.created_at > @user.created_at  && User.find_by(id: c_user.sponsered_by_id).try(:position) != "Right"}
@@ -116,6 +117,7 @@ module DashboardHelper
 
 							records_array = ActiveRecord::Base.connection.execute(sql).to_a
 							if records_array.present?
+								@parent_users << User.where(sponsered_by_id: records_array.pluck("id").sort.last, position: "Right")
 								@parent_users << User.where(sponsered_by_id: User.where(sponsered_by_id: records_array.pluck("id").sort.last, position: "Right").pluck(:id), position: "Right")
 							end
 							@parent_users = @parent_users.flatten
@@ -165,6 +167,7 @@ module DashboardHelper
 
 							records_array = ActiveRecord::Base.connection.execute(sql).to_a
 							if records_array.present?
+								@parent_users << User.where(sponsered_by_id: records_array.pluck("id"), position: "Right")
 								@parent_users << User.where(sponsered_by_id: User.where(sponsered_by_id: records_array.pluck("id"), position: "Right"), position: "Right")
 							end
 							@parent_users = @parent_users.flatten
@@ -175,15 +178,15 @@ module DashboardHelper
 								@parent_users = []
 							end
 
-							if User.where(position: "Left", sponsered_by_id: nil).present?
+							# if User.where(position: "Left", sponsered_by_id: nil).present?
 
-									users = User.where(sponsered_by_id: User.where(position: "Left", sponsered_by_id: nil).pluck(:id), position: "Right")
-									if users.present?
-										c = users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at}
-										result << c
-										@parent_users = []
-									end
-							end
+							# 		users = User.where(sponsered_by_id: User.where(position: "Left", sponsered_by_id: nil).pluck(:id), position: "Right")
+							# 		if users.present?
+							# 			c = users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at}
+							# 			result << c
+							# 			@parent_users = []
+							# 		end
+							# end
 						end
 					end
 				end
