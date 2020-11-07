@@ -90,6 +90,54 @@ module DashboardHelper
 							end
 						end
 					end
+				elsif @user.position == "Right" && User.find_by(id: @user.sponsered_by_id).try(:position) == "Left"
+					users.select {|user| user.position == "Right" }.each do |user|
+						if user.sponsered_by_id.present?
+							sql = " WITH RECURSIVE r AS ( "+ 
+									"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} AND users.position = 'Right' "+
+									"UNION ALL "+ 
+									"SELECT users.* FROM users JOIN r on (r.id = users.sponsered_by_id)) "+
+									"SELECT * FROM r"
+							records_array = ActiveRecord::Base.connection.execute(sql).to_a
+							if records_array.present?
+								@parent_users << User.where(id: records_array.pluck("id"))
+							end
+							if @parent_users.present?
+								c = @parent_users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at && User.find_by(id: c_user.sponsered_by_id).try(:position) == "Right"}
+								result << c
+								@parent_users = []
+							end
+
+							sql = " WITH RECURSIVE r AS ( "+ 
+									"SELECT * FROM users WHERE users.id = #{user.sponsered_by_id} "+
+									"UNION ALL "+ 
+									"SELECT users.* from r, users where users.id = r.sponsered_by_id) "+
+									"SELECT * FROM r"
+
+							records_array = ActiveRecord::Base.connection.execute(sql).to_a
+							if records_array.present?
+								@parent_users << User.where(sponsered_by_id: records_array.pluck("id").sort.last, position: "Right")
+							end
+							@parent_users = @parent_users.flatten
+
+
+							if @parent_users.present?
+								c = @parent_users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at}
+								result << c
+								@parent_users = []
+							end
+
+							if User.where(position: "Left", sponsered_by_id: nil).present?
+
+									users = User.where(sponsered_by_id: User.where(position: "Left", sponsered_by_id: nil).pluck(:id), position: "Right")
+									if users.present?
+										c = users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at}
+										result << c
+										@parent_users = []
+									end
+							end
+						end
+					end	
 				else
 					users.select {|user| user.position == "Right" }.each do |user|
 						if user.sponsered_by_id.present?
@@ -125,6 +173,16 @@ module DashboardHelper
 								c = @parent_users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at && User.find_by(id: c_user.sponsered_by_id).try(:position) == "Right"}
 								result << c
 								@parent_users = []
+							end
+
+							if User.where(position: "Left", sponsered_by_id: nil).present?
+
+									users = User.where(sponsered_by_id: User.where(position: "Left", sponsered_by_id: nil).pluck(:id), position: "Right")
+									if users.present?
+										c = users.select { |c_user| c_user.try(:position) == "Right" && c_user.created_at > @user.created_at}
+										result << c
+										@parent_users = []
+									end
 							end
 						end
 					end
