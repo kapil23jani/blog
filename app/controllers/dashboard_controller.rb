@@ -20,6 +20,7 @@ class DashboardController < ApplicationController
 			@users = User.where(id: @final_object).where([users_where, users_where_values]).uniq
 		end
 
+
 	    session[:search] = {}
 	 end
 
@@ -27,6 +28,8 @@ class DashboardController < ApplicationController
 	end
 
 	def graph
+		@graph_users = get_final_users(@current_user)
+		@graph_users.sort
 	end
 
 	def invoice
