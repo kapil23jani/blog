@@ -28,9 +28,9 @@ class DashboardController < ApplicationController
 	end
 
 	def graph
-		user = params[:graph].present? ? User.find_by(sponser_id: params[:graph][:sponser_id]) : params[:id].nil? ? @current_user : User.find_by(id: params[:id])
-		@graph_data = get_chart_for_users(user)
-		@graph_users = User.where(id: @graph_data.pluck("id")).sort
+		@user = params[:graph].present? ? User.find_by(sponser_id: params[:graph][:sponser_id]) : params[:id].nil? ? @current_user : User.find_by(id: params[:id])
+		#@graph_data = get_chart_for_users(user)
+		#@graph_users = User.where(id: @graph_data.pluck("id")).sort
 	end
 
 	def invoice
