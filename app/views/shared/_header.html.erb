@@ -58,7 +58,7 @@
               </div>
               <div style="padding: 10px;">
                 <% if !@current_user.admin? %>
-                  <%= link_to "Graph", "", class: "btn btn-secondary", style: "padding:5px;float:left;font-size:16px;" %>
+                  <%= link_to "Graph", graph_dashboard_index_path, class: "btn btn-secondary", style: "padding:5px;float:left;font-size:16px;" %>
                 <%else%>
                 <%end%>
                 <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-secondary", style: "padding: 5px;float: right;font-size: 16px;" %>

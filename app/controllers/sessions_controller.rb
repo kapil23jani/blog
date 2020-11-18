@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     end
 
     def create
-        temp_user = User.where(sponser_id: params[:User][:sponser_id]).or(User.where(email: params[:User][:sponser_id]))
+        temp_user = User.where(sponser_id: params[:User][:sponser_id].upcase).or(User.where(email: params[:User][:sponser_id]))
         if temp_user.last.present? 
             @user = temp_user.last
             if @user.valid_password?(params[:User][:password])

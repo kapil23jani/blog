@@ -16,6 +16,7 @@ class RegistrationsController < ApplicationController
 
     def create
     	@user = User.new(user_params)
+        params[:sponser_id] = params[:sponser_id].upcase
         @user.sponsered_by_id = User.find_by(sponser_id: params[:sponser_id]).try(:id)  if params[:sponser_id].present?
         return render_error(400, "Sponser Not Found") if @user.sponsered_by_id.nil?
         @user.h_parent = get_parent_id(User.find_by(sponser_id: params[:sponser_id]).try(:id), params[:position]) if @user.sponsered_by_id.present?
@@ -23,7 +24,7 @@ class RegistrationsController < ApplicationController
         @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id] : nil
         @user.is_invoice_valid = false
         @user.unique_user_id = params[:password]
-    	if @user.save(validate: false)
+    	if @user.save
             render_message("Registered Successfully", @user)
     	else
             render_error(400, @user.errors.full_messages.join(','))
