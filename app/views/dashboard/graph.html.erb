@@ -1,0 +1,302 @@
+<style type="text/css">
+/*Now the CSS*/
+* {margin: 0; padding: 0;}
+
+.tree ul {
+    padding-top: 20px; position: relative;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+.tree li {
+    float: left; text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+/*We will use ::before and ::after to draw the connectors*/
+
+.tree li::before, .tree li::after{
+    content: '';
+    position: absolute; top: 0; right: 50%;
+    border-top: 2.5px solid #696565;
+    width: 50%; height: 20px;
+}
+.tree li::after{
+    right: auto; left: 50%;
+    border-left: 2.5px solid #696565;
+}
+
+/*We need to remove left-right connectors from elements without 
+any siblings*/
+.tree li:only-child::after, .tree li:only-child::before {
+    display: none;
+}
+
+/*Remove space from the top of single children*/
+.tree li:only-child{ padding-top: 0;}
+
+/*Remove left connector from first child and 
+right connector from last child*/
+.tree li:first-child::before, .tree li:last-child::after{
+    border: 0 none;
+}
+/*Adding back the vertical connector to the last nodes*/
+.tree li:last-child::before{
+    border-right: 2.5px solid #696565;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+
+/*Time to add downward connectors from parents*/
+.tree ul ul::before{
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    border-left: 2.5px solid #696565;
+    width: 0; height: 20px;
+}
+
+.tree li a{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
+
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+.tree li a:hover, .tree li a:hover+ul li a {
+    border: 1px solid #94a0b4;
+}
+/*Connector styles on hover*/
+.tree li a:hover+ul li::after, 
+.tree li a:hover+ul li::before, 
+.tree li a:hover+ul::before, 
+.tree li a:hover+ul ul::before{
+    border-color:  #94a0b4;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  
+  padding: 10px;
+}
+
+.treestyle{
+    /*padding: 20px;*/
+    width: 1;
+    width: 1200px;
+    height: 800px;
+    border: 3px solid gray;
+    background-color: white;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    /*margin: auto;*/
+}
+
+.scroller{
+  position: relative;
+  /*width: 1600px;*/
+  /*height: 1000px;*/
+  overflow: auto;
+}
+
+.avatar_men{
+  background-image: url("/assets/avatar_men.jpg");
+  width: 100px;
+  height: 85px;
+  background-size: cover;
+  background-position: top center;
+    /*border-radius: 50%;*/
+     -webkit-border-radius: 60px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 60px;
+    -moz-background-clip: padding;
+    border-radius: 60px;
+    background-clip: padding-box;
+}
+
+.black_spot{
+  background-image: url("/assets/black_spot.jpeg");
+  width: 100px;
+  height: 85px;
+  background-size: cover;
+  background-position: top center;
+    /*border-radius: 50%;*/
+     -webkit-border-radius: 60px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 60px;
+    -moz-background-clip: padding;
+    border-radius: 60px;
+    background-clip: padding-box;
+}
+
+
+.avatar_female{
+  background-image: url("/assets/avatar_female.jpg");
+  width: 100px;
+  height: 85px;
+  background-size: cover;
+  background-position: top center;
+    /*border-radius: 50%;*/
+     -webkit-border-radius: 60px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 60px;
+    -moz-background-clip: padding;
+    border-radius: 60px;
+    background-clip: padding-box;
+}
+.container-fluid{
+  background-color: #ebebeb;
+}
+
+.action_control_section {
+  padding: 20px;
+  background-color: white;
+  margin: auto;
+  border: 2px gray;
+}
+
+</style>
+<div class="container-fluid scroller" style="padding: 10px">
+  <div class="action_control_section">
+    <!-- <div class="col-6"> -->
+    <div class="md-form mb-5"><br>
+      <%= form_for :graph, url: graph_dashboard_index_path, method: :get do |form| %>
+        <%#= form.label :SponserID %>
+        <%= form.text_field :sponser_id, placeholder: "SponserID" ,class: "form-control" %><br>
+        <%#= form.text_field :down_level, placeholder: "Down Level" ,class: "form-control" %><br>
+        <%= form.submit "Fetch", class: "btn btn-secondary" %>
+        <%= form.submit "Reset", type: "reset", class: "btn btn-warning" %>
+        <%= link_to "Back", dashboard_index_path, class: "btn btn-danger"%>
+      <% end  %>
+    </div>
+  </div><br>
+  <div class="treestyle">
+    <div class="tree">
+      <ul>
+        <li style="padding: 20px;">
+
+          <%= link_to "", graph_dashboard_index_path(id: @graph_users[0].try(:id)), class: "#{@graph_users[0].try(:gender).present? ? @graph_users[0].try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+          <%= @graph_users[0].try(:name)%><br>(<%= @graph_users[0].try(:sponser_id)%>)
+          <% @graph_users.delete(@graph_users[0]) %>
+          <ul>
+              <li>
+                <% left_child_level_one = @graph_users.select{|i| i.position == "Left"}.try(:first)%>
+                 <%= link_to "", graph_dashboard_index_path(id: left_child_level_one.try(:id)), class: "#{left_child_level_one.try(:gender).present? ? left_child_level_one.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                <%= @graph_users.select{|i| i.position == "Left"}.try(:first).try(:name) %><br><%= @graph_users.select{|i| i.position == "Left"}.try(:first).try(:sponser_id)%>
+                <% @graph_users.delete(@graph_users.select{|i| i.position == "Left"}.try(:first)) %>
+                <ul>
+                  <li>
+                    <% left_child_level_two = User.where(h_parent: left_child_level_one.try(:id), position: "Left").try(:first) if left_child_level_one.present?%>
+                    <%= link_to "", graph_dashboard_index_path(id: left_child_level_two.try(:id)), class: "#{left_child_level_two.try(:gender).present? ? left_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                    <%= left_child_level_two.try(:name)%> <br> <%= left_child_level_two.try(:sponser_id)%>
+                      <ul>
+                        <li>
+                          <% left_child_level_three = User.where(h_parent: left_child_level_two.try(:id), position: "Left").try(:first) if left_child_level_two.present?%>
+                          <%= link_to "", graph_dashboard_index_path(id: left_child_level_three.try(:id)), class: "#{left_child_level_three.try(:gender).present? ? left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <%= left_child_level_three.try(:name)%> <br> <%= left_child_level_three.try(:sponser_id)%>
+                        </li>
+                        <li>
+                          <% left_child_level_three = User.where(h_parent: left_child_level_two.try(:id), position: "Right").try(:first) if left_child_level_two.present?%>
+                          <%= link_to "", graph_dashboard_index_path(id: left_child_level_three.try(:id)), class: "#{left_child_level_three.try(:gender).present? ? left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <%= left_child_level_three.try(:name)%> <br> <%= left_child_level_three.try(:sponser_id)%>
+                        </li>
+                      </ul>
+                  </li>
+                  <li>
+                    <% level_one_right_child = User.where(h_parent: left_child_level_one.try(:id), position: "Right").try(:first) if left_child_level_one.present?%>
+                    <a href="" class="<%=level_one_right_child.try(:gender).present? ? level_one_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %> rounded-circle"></a><br>
+                    <%= level_one_right_child.try(:name)%> <br> <%= level_one_right_child.try(:sponser_id)%>
+                    <ul>
+                      <li>
+                        <% level_two_right_left_child = User.where(h_parent: level_one_right_child.try(:id), position: "Left").try(:first) if level_one_right_child.present?%>
+                        <a href="" class="<%=level_two_right_left_child.try(:gender).present? ? level_two_right_left_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %> rounded-circle"></a><br>
+                        <%= level_two_right_left_child.try(:name)%> <br> <%= level_two_right_left_child.try(:sponser_id)%>
+                      </li>
+                      <li>
+                        <% level_two_right_right_child = User.where(h_parent: level_one_right_child.try(:id), position: "Right").try(:first) if level_one_right_child.present?%>
+                        <a href="" class="<%=level_two_right_right_child.try(:gender).present? ? level_two_right_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %> rounded-circle"></a><br>
+                        <%= level_two_right_right_child.try(:name)%> <br> <%= level_two_right_right_child.try(:sponser_id)%>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <% right_child_level_one = @graph_users.select{|i| i.position == "Right"}.try(:first)%>
+                <%= link_to "", graph_dashboard_index_path(id: right_child_level_one.try(:id)), class: "#{right_child_level_one.try(:gender).present? ? right_child_level_one.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                <%= @graph_users.select{|i| i.position == "Right"}.try(:first).try(:name)%><br><%= @graph_users.select{|i| i.position == "Right"}.try(:first).try(:sponser_id)%>
+                 <% @graph_users.delete(@graph_users.select{|i| i.position == "Right"}.try(:first)) %>
+                <ul>
+                  <li>
+                    <%right_left_child_level_two = User.where(h_parent: right_child_level_one.try(:id), position: "Left").first if right_child_level_one.present? %>
+                     <%= link_to "", graph_dashboard_index_path(id: right_left_child_level_two.try(:id)), class: "#{right_left_child_level_two.try(:gender).present? ? right_left_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                    <%= right_left_child_level_two.try(:name)%> <br> <%= right_left_child_level_two.try(:sponser_id)%> 
+                    <ul>
+                      <li>
+                        <% right_left_child_level_three = User.where(h_parent: right_left_child_level_two.try(:id), position: "Left" ).first if right_left_child_level_two.present? %>
+                        <%= link_to "", graph_dashboard_index_path(id: right_left_child_level_three.try(:id)), class: "#{right_left_child_level_three.try(:gender).present? ? right_left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                        <%= right_left_child_level_three.try(:name)%> <br> <%= right_left_child_level_three.try(:sponser_id) %> 
+                      </li>
+                      <li>
+                        <% right_right_child_level_three = User.where(h_parent: right_left_child_level_two.try(:id), position: "Right" ).first if right_left_child_level_two.present? %>
+                       <%= link_to "", graph_dashboard_index_path(id: right_right_child_level_three.try(:id)), class: "#{right_right_child_level_three.try(:gender).present? ? right_right_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                        <%= right_right_child_level_three.try(:name)%> <br> <%= right_right_child_level_three.try(:sponser_id) %> 
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <%right_right_child_level_two = User.where(h_parent: right_child_level_one.try(:id), position: "Right").first if right_child_level_one.present? %>
+                    <%= link_to "", graph_dashboard_index_path(id: right_right_child_level_two.try(:id)), class: "#{right_right_child_level_two.try(:gender).present? ? right_right_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                    <%= right_right_child_level_two.try(:name)%> <br> <%= right_right_child_level_two.try(:sponser_id) %>
+                    <ul>
+                      <li>
+                        <%extreme_right_left_child_level_three = User.where(h_parent: right_right_child_level_two.try(:id), position: "Left").first if right_right_child_level_two.present? %>
+                         <%= link_to "", graph_dashboard_index_path(id: extreme_right_left_child_level_three.try(:id)), class: "#{extreme_right_left_child_level_three.try(:gender).present? ? extreme_right_left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                        <%= extreme_right_left_child_level_three.try(:name) %> <br> <%=extreme_right_left_child_level_three.try(:sponser_id) %>
+                      </li>
+                      <li>
+                        <%extreme_right_right_child_level_three = User.where(h_parent: right_right_child_level_two.try(:id), position: "Right").first if right_right_child_level_two.present?%>
+                        <%= link_to "", graph_dashboard_index_path(id: extreme_right_right_child_level_three.try(:id)), class: "#{extreme_right_right_child_level_three.try(:gender).present? ? extreme_right_right_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                         <%= extreme_right_right_child_level_three.try(:name) %> <br> <%=extreme_right_right_child_level_three.try(:sponser_id) %>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+        </li>  
+      </ul>
+    </div>
+  </div>
+</div>
