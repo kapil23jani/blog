@@ -29,6 +29,7 @@
             <thead>
                 <tr>
                     <th> Name </th>
+                    <th> User ID </th>
                     <th> Position </th>
                     <th> Joining Date </th>
                     <th> Address </th>
@@ -41,11 +42,12 @@
                 <% @users.each do |user| %>
                 <tr>
                     <td><%= link_to user.name, my_teams_dashboard_index_path(user_id: user.id), style: "text-decoration: none;" %></td>
+                    <td><%= user.try(:sponser_id) %></td>
                     <td><%= user.position %></td>
                     <td><%= user.created_at.strftime("%F") %></td>
                     <td><%= user.address %></td>
                     <td><%= User.find_by(sponser_id: user.sponser_id).try(:name) %></td>
-                    <td><%= user.try(:sponser_id) %></td>
+                    <td><%= User.find_by(sponser_id: user.sponser_id).try(:sponser_id) %></td>
                     <td><%= user.is_invoice_valid.eql?(true) ? "Active" : "Inactive" %> </td>
                 </tr>
                 <%end%>
