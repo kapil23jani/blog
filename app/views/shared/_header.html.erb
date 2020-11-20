@@ -32,6 +32,7 @@
         <div class="dropdown">
           <a href="" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <% if !@current_user.admin? %>
+
               <img src="/assets/icon.png" width="35px;">
             <%else%>
               <img src="/assets/admin.png" width="45px;">
@@ -51,7 +52,10 @@
               </div>
               <div class="text_label">
                 <p style="text-align: center; font-size: 20px;"> <%= @current_user.name %></p>
-                <p style="text-align: center; font-size: 15px;">Sponser ID - <%= @current_user.sponser_id %></p>
+                <p style="text-align: center; font-size: 15px;">User ID - <%= @current_user.sponser_id %></p>
+                <p style="text-align: center; font-size: 15px;">Sponser Name - <%= User.find_by(id: @current_user.sponsered_by_id).try(:name) %></p>
+                <p style="text-align: center; font-size: 15px;">Sponser ID - <%= User.find_by(id: @current_user.sponsered_by_id).try(:sponser_id) %></p>
+                <p style="text-align: center; font-size: 15px;">Joining Date - <%= @current_user.created_at.strftime("%F") %></p>
                 <p style="text-align: center; font-size: 20px;"> <%= link_to "Profile", edit_user_path(@current_user.id), class: "btn btn-info"%></p>
                 
                 
@@ -59,9 +63,10 @@
               <div style="padding: 10px;">
                 <% if !@current_user.admin? %>
                   <%= link_to "Graph", graph_dashboard_index_path, class: "btn btn-secondary", style: "padding:5px;float:left;font-size:16px;" %>
+
                 <%else%>
                 <%end%>
-                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-secondary", style: "padding: 5px;float: right;font-size: 16px;" %>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-danger", style: "padding: 5px;float: right;font-size: 16px;" %>
               </div>
             </div>
           </div>

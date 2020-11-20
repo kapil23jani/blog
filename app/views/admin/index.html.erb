@@ -1,24 +1,87 @@
-<div class="row">
-	<div class="col-sm-12">
-		<h3 style="padding: 20px;">Pending Invoices</h3>
-		<% @invoices.each do |invoice|%>
-			<div class="row">
-				<div class="col-sm-8">
-					<div class="card" style=" background-color: #c9c8c1; padding: 20px; margin-left: 20px; border: 2px;border-style: groove;">
-					  <div class="card-header">
-					    <h4>Name: <%= invoice.try(:user).try(:name)%></h4>
-					    <h4 class="card-title">Sponser Name: <%= User.find_by(sponser_id: invoice.try(:user).try(:sponser_id)).try(:name)%></h4>
-					    <h4 class="card-title">Sponser ID: <%= invoice.try(:user).try(:sponser_id)%></h4><br>
-					    <h4 class="card-title">Invoice Number: <%= invoice.try(:invoice_number)%></h4>
-					    <h4 class="card-title">Invoice Number: <%= invoice.try(:invoice_number)%></h4>
-					    <p class="card-text"><h4>Bill Amount: <%= invoice.try(:amount)%></h4></p>
+<body style="background: #e1e8e3">
+		<div class="row">
+			<div class="col-sm-12">
 
-					    <%= link_to "Accept Invoice", invoice_operation_admin_index_path(id: invoice.id, status: "accept"), class: "btn btn-success"%>
-					    <%= link_to "Reject Invoice", invoice_operation_admin_index_path(id: invoice.id, status: "reject"), class: "btn btn-danger"%>
-					  </div>
-					</div>
+					<div class="col-lg-3 col-md-6 col-sm-6">
+			            <div class="card card-stats"  style="background: white; width: 280px;">
+			              <div class="card-header card-header-danger card-header-icon">
+			                <div class="card-icon">
+			                  <i class="material-icons">people</i>
+			                </div>
+			                <p class="card-category">Total User's</p><br>
+			                <h3 class="card-title"><%= User.all.count - 1 %></h3>
+			              </div>
+			              <div class="card-footer">
+			                <div class="stats">
+			                  <!-- <i class="material-icons">local_offer</i> Tracked from Github -->
+			                </div>
+			              </div>
+			            </div>
+			        </div>
+			        <div class="col-lg-3 col-md-6 col-sm-6">
+			            <div class="card card-stats"  style="background: white; width: 280px;">
+			              <div class="card-header card-header-success card-header-icon">
+			                <div class="card-icon">
+			                  <i class="material-icons">done_all</i>
+			                </div>
+			                <p class="card-category">Active User's</p><br>
+			                <h3 class="card-title"><%= User.where(is_invoice_valid: true).count  %></h3>
+			              </div>
+			              <div class="card-footer">
+			                <div class="stats">
+			                  <!-- <i class="material-icons">local_offer</i> Tracked from Github -->
+			                </div>
+			              </div>
+			            </div>
+			        </div>
+			        <div class="col-lg-3 col-md-6 col-sm-6">
+			            <div class="card card-stats"  style="background: white; width: 280px;">
+			              <div class="card-header card-header-warning card-header-icon">
+			                <div class="card-icon">
+			                  <i class="material-icons">warning</i>
+			                </div>
+			                <p class="card-category">Inactive User's</p><br>
+			                <h3 class="card-title"><%= User.where(is_invoice_valid: false).count %></h3> 
+			              </div>
+			              <div class="card-footer">
+			                <div class="stats">
+			                  <!-- <i class="material-icons">local_offer</i> Tracked from Github -->
+			                </div>
+			              </div>
+			            </div>
+			        </div>
+			</div>
+			<div class="col-sm-12" style="margin-left: 40px; background: white; overflow: auto; white-space: nowrap;">
+				<div class="scrollmenu" style="width: 500px;">
+					<h3 style="padding: 20px;">Recent Joiners</h3>
+					<%= line_chart User.group_by_day(:created_at).count %>
+				</div>
+			</div><br>
+
+			<div class="col-sm-12" style="background: white; margin-left: 40px;">
+				<div>
+					<h3 style="padding: 20px;">Pending Invoices</h3>
+					<% @invoices.each do |invoice|%>
+						<div class="row">
+							<div class="col-sm-8">
+								<div class="card" style=" background-color: #d5ded7; padding: 20px; border: 2px;border-style: groove;">
+								  <div class="card-header">
+								    <h4>Name: <%= invoice.try(:user).try(:name)%></h4>
+								    <h4 class="card-title">Sponser Name: <%= User.find_by(sponser_id: invoice.try(:user).try(:sponser_id)).try(:name)%></h4>
+								    <h4 class="card-title">Sponser ID: <%= invoice.try(:user).try(:sponser_id)%></h4><br>
+								    <h4 class="card-title">Invoice Number: <%= invoice.try(:invoice_number)%></h4>
+								    <p class="card-text"><h4>Bill Amount: <%= invoice.try(:amount)%></h4></p>
+
+								    <%= link_to "Accept Invoice", invoice_operation_admin_index_path(id: invoice.id, status: "accept"), class: "btn btn-success"%>
+								    <%= link_to "Reject Invoice", invoice_operation_admin_index_path(id: invoice.id, status: "reject"), class: "btn btn-danger"%>
+								  </div>
+								</div>
+							</div>
+						</div><br>
+					<%end%>
+					
 				</div>
 			</div>
-		<%end%>
-	</div>
-</div>
+		</div><br>
+	
+</body>

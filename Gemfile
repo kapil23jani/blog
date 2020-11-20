@@ -34,6 +34,10 @@ gem 'popper_js'
 gem 'jquery-validation-rails'
 gem 'pry'
 gem 'jwt'
+gem "chartkick"
+
+gem 'groupdate'
+
 
 gem 'ancestry'
 # Use Active Storage variant

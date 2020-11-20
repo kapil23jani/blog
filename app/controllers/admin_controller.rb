@@ -26,17 +26,17 @@ class AdminController < ApplicationController
 	    search = params[:search].to_s.downcase if params[:search].present?
 	    users_where_values.merge!(search: "%#{search}%")  
 	    if params[:start_date].present? && params[:end_time].present?
-		    @users = User.where(role_id: nil).where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
+		    @users = User.where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
 		else
-			@users = User.where(role_id: nil).where([users_where, users_where_values])
+			@users = User.where([users_where, users_where_values])
 		end
 
 
-		if params[:range].present?
-			@pairs = Pair.where(user_id: @users.pluck(:id)).where.not(left_user_id: nil, right_user_id: nil).pluck(:user_id)
-			@users = User.where(id: @pairs.uniq)
-			@users.limit(params[:range])
-		end
+		# if params[:range].present?
+		# 	@pairs = Pair.where(user_id: @users.pluck(:id)).where.not(left_user_id: nil, right_user_id: nil).pluck(:user_id)
+		# 	@users = User.where(id: @pairs.uniq)
+		# 	@users.limit(params[:range])
+		# end
 
 		session[:search] = {}
 		session[:range] = {}
@@ -69,6 +69,15 @@ class AdminController < ApplicationController
 			if user.save
 				redirect_to manage_members_admin_index_path 
 			end
+		end
+	end
+
+	def assign_admin
+		user = User.find_by(id: params[:id])
+		if user.present?
+			user.role_id = Role.find_by(role_type: "super_user").try(:id)
+			user.save!
+			redirect_to manage_members_admin_index_path 
 		end
 	end
 

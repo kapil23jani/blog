@@ -43,6 +43,15 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def set_super_admin
+		user = User.find_by(id: params[:id])
+		if user.present?
+			user.role_id = Role.find_by(role_type: "super_user").try(:id)
+			user.save(validate: false)
+			redirect_to manage_members_admin_index_path 
+		end
+	end
+
 	
 
 

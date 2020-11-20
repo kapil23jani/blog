@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get :contact_us, on: :collection
     get :invoice_operation, on: :collection
     get :invoices, on: :collection
+    # patch :assign_admin, on: :collection  
   end
 
 	devise_for :users, controllers: {
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
     get :get_user_kyc, on: :collection  
     put :update_user_kyc, on: :collection  
     post :fetch_sponser, on: :collection
+    put 'set_super_admin', on: :member
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

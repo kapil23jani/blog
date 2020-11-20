@@ -52,11 +52,12 @@
 		<div class = "col-sm-4">
 			<form action="<%manage_members_admin_index_path%>" method="get">
 		        <input type="text" id="search" name="search" class="form-control" placeholder="Search"><br>
-		        <input type="submit" value="Submit" class="btn btn-info">
+		        <input type="submit" value="Submit" class="btn btn-secondary">
 		        <input type="reset" value="Reset" class="btn btn-warning">
 	        </form> 
 		</div>
-
+	</div>
+	<div class="col-sm-12"><br>
 		<div class="col-sm-4">
 			<form action="<%manage_members_admin_index_path%>" method="get">
 	          	<div class="slidecontainer">
@@ -64,43 +65,45 @@
 			  		<input type="range" name = "range" min="1" max="100" value="" class="slider" id="myRange"><br>
 			  		<p>Value: <span id="demo"></span></p>
 				</div>
-	          	<input type="submit" value="Fetch" name="Fetch" class="btn btn-info">
+	          	<input type="submit" value="Fetch" name="Fetch" class="btn btn-secondary">
 	        </form> 
 		</div>
+	</div>
+	<div class="col-sm-12"><br>
 		<div class="col-sm-4">
 			<%= link_to "Last Month",  pair_details_admin_index_path(start_date: (Date.today.beginning_of_month - 1.month).to_datetime, end_time: (Date.today.end_of_month - 1.month).to_datetime), class: "btn"%> &nbsp;
         	<%= link_to "Current Month",  pair_details_admin_index_path(start_date: (Date.today.beginning_of_month).to_datetime, end_time: (Date.today.end_of_month).to_datetime), class: "btn"%> &nbsp;
         	<%= link_to "All",  pair_details_admin_index_path, class: "btn"%> 
 		</div>
-	</div>
+	</div><br>
 	<div class="col-sm-12">
-		<% @users.where(is_invoice_valid: true).each do |user|%>	
-			<div class="col-sm-3" style="margin-left: 10px; margin-right: 10px;">
-				<div class="card white bg-info mb-3" style="width: auto;height:auto;">
-					 <div class="card-body">
-					    <h3 class="card-title">Name: <%= user.name%></h4><br>
-					    <h4 class="card-subtitle mb-2 text-muted">Sponser ID: <%= user.sponser_id%> </h4>
-					    <div class="card-body table-responsive">
-			                <table class="table">
-			                  <thead class="text-success">
-			                    <th style="font-size: 15px;">Left Wing Users</th>
-			                    <th style="font-size: 15px;">Right Wing Users</th>
-			                    <th style="font-size: 15px;">Pairs</th>
-			                    <th style="font-size: 15px;">Total</th>
-			                  </thead>
-			                  <tbody>
-			                    <tr>
-			                     <td style="font-size: 15px;"><%= User.where(id: user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count %></td>
-			                      <td style="font-size: 15px;"><%= User.where(id:  user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
-			                      <td style="font-size: 15px;"><%= Pair.where(is_left_verified: true, is_right_verified: true, user_id: user.id).count %></td>
-			                      <td style="font-size: 15px;"><%= User.where(id:  user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count + User.where(id: user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
-			                    </tr>
-			                  </tbody>
-			                </table>
-			            </div>
+		<% @users.each do |user|%>
+			<%if !user.admin?%>
+				<div style="width: 300px;">
+					<div style="margin-left: 10px; margin-right: 10px; ">
+						<div class="card" style="background: #f0f2f2;">
+						  <div class="card-header">
+						    <h4>Name: <b><%= user.try(:name)%></b></h4>
+						    <h5>User ID: <b><%= user.try(:sponser_id)%></b></h5>
+						    <h5>Sponser Name: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:name)%></b></h5>
+						    <h5>Sponser ID: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:sponser_id)%></b></h5>
+						    <h5>Joining Date: <b><%=  user.created_at.strftime("%F")%></b></h5>
+						  </div>
+						  <div class="card-body">
+						  	<h5>Active Left User's - <b><%= get_active_users(user, "active_left")%></b></h5>
+						  	<h5>Active Right User's - <b><%= get_active_users(user, "active_right")%></b></h5>
+						  	<h5>Non Active Left User's - <b><%= get_active_users(user, "inactive_left")%></b></h5>
+						  	<h5>Non Active Right User's - <b><%= get_active_users(user, "inactive_right")%></b></h5>
+						  	<h5><b>Pairs</b></h5>
+						  	<h5><p>1st to 10th </p> - <b><%= find_pair(user, 1)%></b></h5>
+						  	<h5><p>11th to 20th </p> - <b><%= find_pair(user, 2)%></b></h5>
+						  	<h5><p>21th to 31st </p> - <b><%= find_pair(user, 3)%></b></h5>
+						  	
+						  </div>
+						</div>
 					</div>
 				</div>
-			</div>
+			<%end%>
 		<%end%>
 	</div>
 </div>

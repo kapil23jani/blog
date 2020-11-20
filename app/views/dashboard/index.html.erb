@@ -198,23 +198,39 @@
               <div class="card-body table-responsive">
                 <table class="table table-hover">
                   <thead class="text-success">
-                    <th style="font-size: 14px;">Left Wing Users</th>
-                    <th style="font-size: 14px;">Right Wing Users</th>
+                    <th style="font-size: 14px;">Inactive Left Users</th>
+                    <th style="font-size: 14px;">Inactive Left Users</th>
+                    <th style="font-size: 14px;">Active Left Users</th>
+                    <th style="font-size: 14px;">Active Right Users</th>
                     <th style="font-size: 14px;">Pairs</th>
                     <th style="font-size: 14px;">Total</th>
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="font-size: 15px;"><%= User.where(id: @current_user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count %></td>
-                      <td style="font-size: 15px;"><%= User.where(id:  @current_user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
-                      <td style="font-size: 15px;"><%= Pair.where(is_left_verified: true, is_right_verified: true, user_id: @current_user.id).count %></td>
-                      <td style="font-size: 15px;"><%= User.where(id:  @current_user.pairs.where.not(left_user_id: nil).pluck(:left_user_id), is_invoice_valid: true).count + User.where(id: @current_user.pairs.where.not(right_user_id: nil).pluck(:right_user_id), is_invoice_valid: true).count %></td>
+                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "inactive_left") %></td>
+                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "inactive_right") %></td>
+                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") %></td>
+                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_right") %></td>
+                      <td style="font-size: 15px;"><%= find_pair(@current_user, 4) %></td>
+                      <td style="font-size: 15px;"><%= get_final_users(@current_user).present? ? get_final_users(@current_user).uniq { |user| user.id}.count : 0%></td>
                     </tr>
                   </tbody>
                 </table>
-
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-12" style="background: white; overflow: auto; white-space: nowrap;">
+            <div class="card"  style="background: white">
+              <div class="card-header card-header-info">
+                <h4 class="card-title">My Joinings</h4>
+              </div><br>
+              <% if get_final_users(@current_user).present?%>
+                <% users = User.where(id: get_final_users(@current_user).pluck(:id)) %>
+                <%= line_chart users.group_by_day(:created_at).count %>
+              <%end%>
           </div>
         </div>
       <%else%>
