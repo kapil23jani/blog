@@ -28,6 +28,7 @@ module AdminHelper
 		if !user.admin?
 			users = []
 			left_users = get_users(user.id, "Left").present? ?  get_users(user.id, "Left").pluck("id") : nil
+			Rails.logger.info "left_users: #{User.find left_users[0]}"
 			child_left_users = get_final_users(User.find left_users[0]).pluck(:id) if left_users.present?
 			left_users << child_left_users if child_left_users.present?
 			left_users = User.where(id: left_users.flatten.uniq) if left_users.present?
