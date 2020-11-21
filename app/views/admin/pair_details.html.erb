@@ -90,10 +90,10 @@
 						    <h5>Joining Date: <b><%=  user.created_at.strftime("%F")%></b></h5>
 						  </div>
 						  <div class="card-body">
-						  	<h5>Active Left User's - <b><%= get_active_users(user, "active_left")%></b></h5>
-						  	<h5>Active Right User's - <b><%= get_active_users(user, "active_right")%></b></h5>
-						  	<h5>Non Active Left User's - <b><%= get_active_users(user, "inactive_left")%></b></h5>
-						  	<h5>Non Active Right User's - <b><%= get_active_users(user, "inactive_right")%></b></h5>
+						  	<h5>Non Active Left User's - <b><%= find_left_team(user) %></b></h5>
+						  	<h5>Non Active Right User's - <b><%= find_right_team(user) %></b></h5>
+						  	<h5>Active Left User's - <b><%= get_active_users(user, "inactive_left")%></b></h5>
+						  	<h5>Active Right User's - <b><%= get_active_users(user, "inactive_right")%></b></h5>
 						  	<h5><b>Pairs</b></h5>
 						  	<h5><p>1st to 10th </p> - <b><%= find_pair(user, 1)%></b></h5>
 						  	<h5><p>11th to 20th </p> - <b><%= find_pair(user, 2)%></b></h5>
