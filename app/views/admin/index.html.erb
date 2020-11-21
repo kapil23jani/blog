@@ -57,7 +57,6 @@
 					<%= line_chart User.group_by_day(:created_at).count %>
 				</div>
 			</div><br>
-
 			<div class="col-sm-12" style="background: white; margin-left: 40px;">
 				<div>
 					<h3 style="padding: 20px;">Pending Invoices</h3>
@@ -81,7 +80,39 @@
 					<%end%>
 					
 				</div>
-			</div>
-		</div><br>
+			</div><br>
+
+			<div class="col-sm-12" style="margin-left: 40px; background: white; overflow: auto; white-space: nowrap;">
+	          <div class="col-lg-6 col-md-12">
+	            <div class="card"  style="background: white">
+	              <div class="card-header card-header-success">
+	                <h4 class="card-title">Top Joiners</h4>
+	              </div>
+	              <div class="card-body table-responsive">
+	                <table class="table table-hover">
+	                  <thead class="text-success">
+	                    <th style="font-size: 14px;">Name</th>
+	                    <th style="font-size: 14px;">UserID</th>
+	                    <th style="font-size: 14px;">Sponser Name</th>
+	                    <th style="font-size: 14px;">Sponser ID</th>
+	                    <th style="font-size: 14px;">Pairs</th>
+	                  </thead>
+	                  <tbody>
+	                  	<%@top_joiners.each do |joiner|%>
+		                    <tr>
+		                      <td style="font-size: 15px;"><%= joiner[:name] %></td>
+		                      <td style="font-size: 15px;"><%= joiner[:user_id] %></td>
+		                      <td style="font-size: 15px;"><%= joiner[:sponser_name] %></td>
+		                      <td style="font-size: 15px;"><%= joiner[:sponser_id] %></td>
+		                      <td style="font-size: 15px;"><%= joiner[:pairs] %></td>
+		                    </tr>
+						<%end%>		                    
+	                  </tbody>
+	                </table>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+			</div><br>
 	
 </body>
