@@ -233,17 +233,17 @@ right connector from last child*/
                   </li>
                   <li>
                     <% level_one_right_child = User.where(h_parent: left_child_level_one.try(:id), position: "Right").try(:first) if left_child_level_one.present?%>
-                    <a href="" class="<%=level_one_right_child.try(:gender).present? ? level_one_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %> rounded-circle"></a><br>
+                    <%= link_to "", graph_dashboard_index_path(id: level_one_right_child.try(:id)), class: "#{level_one_right_child.try(:gender).present? ? level_one_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
                     <%= level_one_right_child.try(:name)%> <br> <%= level_one_right_child.try(:sponser_id)%>
                     <ul>
                       <li>
                         <% level_two_right_left_child = User.where(h_parent: level_one_right_child.try(:id), position: "Left").try(:first) if level_one_right_child.present?%>
-                        <a href="" class="<%=level_two_right_left_child.try(:gender).present? ? level_two_right_left_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %> rounded-circle"></a><br>
+                        <%= link_to "", graph_dashboard_index_path(id: level_two_right_left_child.try(:id)), class: "#{level_two_right_left_child.try(:gender).present? ? level_two_right_left_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
                         <%= level_two_right_left_child.try(:name)%> <br> <%= level_two_right_left_child.try(:sponser_id)%>
                       </li>
                       <li>
                         <% level_two_right_right_child = User.where(h_parent: level_one_right_child.try(:id), position: "Right").try(:first) if level_one_right_child.present?%>
-                        <a href="" class="<%=level_two_right_right_child.try(:gender).present? ? level_two_right_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot" %> rounded-circle"></a><br>
+                        <%= link_to "", graph_dashboard_index_path(id: level_two_right_right_child.try(:id)), class: "#{level_two_right_right_child.try(:gender).present? ? level_two_right_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br><br>
                         <%= level_two_right_right_child.try(:name)%> <br> <%= level_two_right_right_child.try(:sponser_id)%>
                       </li>
                     </ul>
