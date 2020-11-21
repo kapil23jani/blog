@@ -33,6 +33,12 @@
           <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Email ID" value="<%= @user.email %>" readonly= "readonly">
         </div>
       </div>
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-username">Email ID</label>
+          <%= f.text_field :upi_id, autofocus: true, placeholder: "UPI ID", class: "form-control" %>
+        </div>
+      </div>
      
     </div>
     <div class="row">

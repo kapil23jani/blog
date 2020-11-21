@@ -68,6 +68,12 @@
           <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<%= @current_user.phone_number %>" readonly="readonly">
         </div>
       </div> 
+      <div class="col-lg-4">
+        <div class="form-group focused" style="width: auto; padding: 10px;">
+          <label class="form-control-label" for="input-city">Phone Number</label>
+          <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="<%= @current_user.try(:upi_id) %>" readonly="readonly">
+        </div>
+      </div> 
     </div>
     <div class="row">
       <div class="col-lg-3">

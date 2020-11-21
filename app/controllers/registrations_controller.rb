@@ -34,6 +34,6 @@ class RegistrationsController < ApplicationController
     private
 
     def user_params
-        params.permit(:zipcode, :city, :state, :country, :name, :dob, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
+        params.permit(:upi_id, :zipcode, :city, :state, :country, :name, :dob, :position, :address, :country_code, :phone_number, :pan_number, :gender, :email, :password, :password_confirmation)
     end
 end

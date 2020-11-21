@@ -366,6 +366,10 @@ body {
 
             <div class="md-form mb-5">
               <%= f.text_field :pan_number, autofocus: true, id: "pan_number" ,placeholder: "Pan", class: "form-control" %>
+            </div> 
+
+            <div class="md-form mb-5">
+              <%= f.text_field :upi_id, autofocus: true, id: "upi_id" ,placeholder: "UPI ID", class: "form-control" %>
             </div>     
 
             <div class="square" style="padding: 3px;">
@@ -526,6 +530,7 @@ body {
       var phone_number = document.getElementById('phone_number').value;
       var pan_number = document.getElementById('pan_number').value;
       var unique_user_id = document.getElementById('unique_user_id').value;
+      var upi_id = document.getElementById('upi_id').value;
       var reqObj = {
         sponser_id: sponser_id,
         position: position,
@@ -542,6 +547,7 @@ body {
         phone_number: phone_number,
         pan_number: pan_number,
         unique_user_id: unique_user_id,
+        upi_id: upi_id,
       }
       console.log(reqObj);
       var rating = $.ajax({
