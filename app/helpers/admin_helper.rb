@@ -48,7 +48,7 @@ module AdminHelper
 			# check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
 			# return 0 if check_main_pair == 1 || check_main_pair == 0
 			users = []
-			right_users = get_users(user.id, "Right").pluck("id")
+			right_users = get_users(user.id, "Right").pluck("id") if right_users.present?
 			child_right_users = User.where(sponsered_by_id: get_users(user.id, "Right").pluck("id")).pluck(:id) if right_users.present?
 			
 			right_users << child_right_users if child_right_users.present?
