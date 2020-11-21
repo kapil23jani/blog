@@ -94,19 +94,19 @@ module AdminHelper
 	def top_joines 
 		users = User.all
 		result = []
-		users.each do |user|
+		users.each_with_index do |user, i|
 			if !user.admin?
 				result << {
-					name: user.try(:name),
-					user_id: user.try(:sponser_id),
-					sponser_name: User.find_by(id: user.sponsered_by_id).try(:name),
-					sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id),
-					pairs: find_pair(user, 4)
+					name: user.try(:name) || "",
+					user_id: user.try(:sponser_id) || "",
+					sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
+					sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
+					pairs: find_pair(user, 4) || 0
 
 				}
 			end
 		end
-		return result.sort_by { |record| record['pairs'].to_i }.first(10) if result.present?
+		return result.sort_by {|x| p x[:pairs]}.reverse.first(10).first(10) if result.present?
 	end
 
 
