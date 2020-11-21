@@ -10,7 +10,7 @@ module AdminHelper
 				
 				left_users << child_left_users if child_left_users.present?
 				left_users = User.where(id: left_users.flatten.uniq, is_invoice_valid: true) if left_users.present?
-				return left_users.count
+				return left_users.try(:count)
 			elsif type == "active_right"
 				users = []
 				right_users = get_users(user.id, "Right").present? ?  get_users(user.id, "Right").pluck("id") : nil
@@ -18,7 +18,7 @@ module AdminHelper
 				
 				right_users << child_right_users if child_right_users.present?
 				right_users = User.where(id: right_users.flatten.uniq, is_invoice_valid: true) if right_users.present?
-				return right_users.count
+				return right_users.try(:count)
 			# elsif type == "inactive_left"
 			# 	count = users.select {|user| user.position == "Left" && user.is_invoice_valid == false}.count
 			# elsif type == "inactive_right"
@@ -39,7 +39,7 @@ module AdminHelper
 			
 			left_users << child_left_users if child_left_users.present?
 			left_users = User.where(id: left_users.flatten.uniq) if left_users.present?
-			return left_users.count
+			return left_users.try(:count)
 		end
 	end
 
@@ -53,8 +53,7 @@ module AdminHelper
 			
 			right_users << child_right_users if child_right_users.present?
 			right_users = User.where(id: right_users.flatten.uniq) if right_users.present?
-			return right_users.count
-
+			return right_users.try(:count)
 		end
 
 	end
