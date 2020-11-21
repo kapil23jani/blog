@@ -201,99 +201,154 @@ right connector from last child*/
       <% end  %>
     </div>
   </div><br>
+  <div class="modal" id="loginModal">
+    Test Content
+</div>
   <div class="treestyle">
     <div class="tree">
-      <ul>
-        <li style="padding: 20px;">
+      <%if @user.present? %>
+        <ul>
+          <li style="padding: 20px;">
 
-          <%= link_to "", graph_dashboard_index_path(id: @user.try(:id)), class: "#{@user.try(:gender).present? ? @user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-          <%= @user.try(:name)%><br>(<%= @user.try(:sponser_id)%>)
-          <ul>
-              <li>
-                <% left_child_level_one = User.where(h_parent: @user.id, position: "Left").try(:first)%>
-                 <%= link_to "", graph_dashboard_index_path(id: left_child_level_one.try(:id)), class: "#{left_child_level_one.try(:gender).present? ? left_child_level_one.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                <%= left_child_level_one.try(:name) %><br><%= left_child_level_one.try(:sponser_id)%>
-                <ul>
-                  <li>
-                    <% left_child_level_two = User.where(h_parent: left_child_level_one.try(:id), position: "Left").try(:first) if left_child_level_one.present?%>
-                    <%= link_to "", graph_dashboard_index_path(id: left_child_level_two.try(:id)), class: "#{left_child_level_two.try(:gender).present? ? left_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                    <%= left_child_level_two.try(:name)%> <br> <%= left_child_level_two.try(:sponser_id)%>
+            <%= link_to "", graph_dashboard_index_path(id: @user.try(:id)), class: "#{@user.try(:gender).present? ? @user.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+            <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=@user.id%>)"><%= @user.name %></a><br>(<%= @user.try(:sponser_id)%>)
+            <ul>
+                <li>
+                  <% left_child_level_one = User.where(h_parent: @user.id, position: "Left").try(:first)%>
+                   <%= link_to "", graph_dashboard_index_path(id: left_child_level_one.try(:id)), class: "#{left_child_level_one.try(:gender).present? ? left_child_level_one.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                  <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=left_child_level_one.try(:id)%>)"><%= left_child_level_one.try(:name) %></a><br><%= left_child_level_one.try(:sponser_id)%>
+                  <ul>
+                    <li>
+                      <% left_child_level_two = User.where(h_parent: left_child_level_one.try(:id), position: "Left").try(:first) if left_child_level_one.present?%>
+                      <%= link_to "", graph_dashboard_index_path(id: left_child_level_two.try(:id)), class: "#{left_child_level_two.try(:gender).present? ? left_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                      <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=left_child_level_two.try(:id)%>)"><%= left_child_level_two.try(:name) %></a> <br> <%= left_child_level_two.try(:sponser_id)%>
+                        <ul>
+                          <li>
+                            <% left_child_level_three = User.where(h_parent: left_child_level_two.try(:id), position: "Left").try(:first) if left_child_level_two.present?%>
+                            <%= link_to "", graph_dashboard_index_path(id: left_child_level_three.try(:id)), class: "#{left_child_level_three.try(:gender).present? ? left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                            <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=left_child_level_three.try(:id)%>)"><%= left_child_level_three.try(:name) %></a> <br> <%= left_child_level_three.try(:sponser_id)%>
+                          </li>
+                          <li>
+                            <% left_child_level_three = User.where(h_parent: left_child_level_two.try(:id), position: "Right").try(:first) if left_child_level_two.present?%>
+                            <%= link_to "", graph_dashboard_index_path(id: left_child_level_three.try(:id)), class: "#{left_child_level_three.try(:gender).present? ? left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                            <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=left_child_level_three.try(:id)%>)"><%= left_child_level_three.try(:name) %></a> <br> <%= left_child_level_three.try(:sponser_id)%>
+                          </li>
+                        </ul>
+                    </li>
+                    <li>
+                      <% level_one_right_child = User.where(h_parent: left_child_level_one.try(:id), position: "Right").try(:first) if left_child_level_one.present?%>
+                      <%= link_to "", graph_dashboard_index_path(id: level_one_right_child.try(:id)), class: "#{level_one_right_child.try(:gender).present? ? level_one_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                      <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=level_one_right_child.try(:id)%>)"><%= level_one_right_child.try(:name) %></a> <br> <%= level_one_right_child.try(:sponser_id)%>
                       <ul>
                         <li>
-                          <% left_child_level_three = User.where(h_parent: left_child_level_two.try(:id), position: "Left").try(:first) if left_child_level_two.present?%>
-                          <%= link_to "", graph_dashboard_index_path(id: left_child_level_three.try(:id)), class: "#{left_child_level_three.try(:gender).present? ? left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                          <%= left_child_level_three.try(:name)%> <br> <%= left_child_level_three.try(:sponser_id)%>
+                          <% level_two_right_left_child = User.where(h_parent: level_one_right_child.try(:id), position: "Left").try(:first) if level_one_right_child.present?%>
+                          <%= link_to "", graph_dashboard_index_path(id: level_two_right_left_child.try(:id)), class: "#{level_two_right_left_child.try(:gender).present? ? level_two_right_left_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=level_two_right_left_child.try(:id)%>)"><%= level_two_right_left_child.try(:name) %></a> <br> <%= level_two_right_left_child.try(:sponser_id)%>
                         </li>
                         <li>
-                          <% left_child_level_three = User.where(h_parent: left_child_level_two.try(:id), position: "Right").try(:first) if left_child_level_two.present?%>
-                          <%= link_to "", graph_dashboard_index_path(id: left_child_level_three.try(:id)), class: "#{left_child_level_three.try(:gender).present? ? left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                          <%= left_child_level_three.try(:name)%> <br> <%= left_child_level_three.try(:sponser_id)%>
+                          <% level_two_right_right_child = User.where(h_parent: level_one_right_child.try(:id), position: "Right").try(:first) if level_one_right_child.present?%>
+                          <%= link_to "", graph_dashboard_index_path(id: level_two_right_right_child.try(:id)), class: "#{level_two_right_right_child.try(:gender).present? ? level_two_right_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=level_two_right_right_child.try(:id)%>)"><%= level_two_right_right_child.try(:name) %></a> <br> <%= level_two_right_right_child.try(:sponser_id)%>
                         </li>
                       </ul>
-                  </li>
-                  <li>
-                    <% level_one_right_child = User.where(h_parent: left_child_level_one.try(:id), position: "Right").try(:first) if left_child_level_one.present?%>
-                    <%= link_to "", graph_dashboard_index_path(id: level_one_right_child.try(:id)), class: "#{level_one_right_child.try(:gender).present? ? level_one_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                    <%= level_one_right_child.try(:name)%> <br> <%= level_one_right_child.try(:sponser_id)%>
-                    <ul>
-                      <li>
-                        <% level_two_right_left_child = User.where(h_parent: level_one_right_child.try(:id), position: "Left").try(:first) if level_one_right_child.present?%>
-                        <%= link_to "", graph_dashboard_index_path(id: level_two_right_left_child.try(:id)), class: "#{level_two_right_left_child.try(:gender).present? ? level_two_right_left_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                        <%= level_two_right_left_child.try(:name)%> <br> <%= level_two_right_left_child.try(:sponser_id)%>
-                      </li>
-                      <li>
-                        <% level_two_right_right_child = User.where(h_parent: level_one_right_child.try(:id), position: "Right").try(:first) if level_one_right_child.present?%>
-                        <%= link_to "", graph_dashboard_index_path(id: level_two_right_right_child.try(:id)), class: "#{level_two_right_right_child.try(:gender).present? ? level_two_right_right_child.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br><br>
-                        <%= level_two_right_right_child.try(:name)%> <br> <%= level_two_right_right_child.try(:sponser_id)%>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <% right_child_level_one = User.where(h_parent: @user.id, position: "Right").try(:first)%>
-                <%= link_to "", graph_dashboard_index_path(id: right_child_level_one.try(:id)), class: "#{right_child_level_one.try(:gender).present? ? right_child_level_one.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                <%= right_child_level_one.try(:name)%><br><%= right_child_level_one.try(:sponser_id)%>
-                <ul>
-                  <li>
-                    <%right_left_child_level_two = User.where(h_parent: right_child_level_one.try(:id), position: "Left").first if right_child_level_one.present? %>
-                     <%= link_to "", graph_dashboard_index_path(id: right_left_child_level_two.try(:id)), class: "#{right_left_child_level_two.try(:gender).present? ? right_left_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                    <%= right_left_child_level_two.try(:name)%> <br> <%= right_left_child_level_two.try(:sponser_id)%> 
-                    <ul>
-                      <li>
-                        <% right_left_child_level_three = User.where(h_parent: right_left_child_level_two.try(:id), position: "Left" ).first if right_left_child_level_two.present? %>
-                        <%= link_to "", graph_dashboard_index_path(id: right_left_child_level_three.try(:id)), class: "#{right_left_child_level_three.try(:gender).present? ? right_left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                        <%= right_left_child_level_three.try(:name)%> <br> <%= right_left_child_level_three.try(:sponser_id) %> 
-                      </li>
-                      <li>
-                        <% right_right_child_level_three = User.where(h_parent: right_left_child_level_two.try(:id), position: "Right" ).first if right_left_child_level_two.present? %>
-                       <%= link_to "", graph_dashboard_index_path(id: right_right_child_level_three.try(:id)), class: "#{right_right_child_level_three.try(:gender).present? ? right_right_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                        <%= right_right_child_level_three.try(:name)%> <br> <%= right_right_child_level_three.try(:sponser_id) %> 
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <%right_right_child_level_two = User.where(h_parent: right_child_level_one.try(:id), position: "Right").first if right_child_level_one.present? %>
-                    <%= link_to "", graph_dashboard_index_path(id: right_right_child_level_two.try(:id)), class: "#{right_right_child_level_two.try(:gender).present? ? right_right_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                    <%= right_right_child_level_two.try(:name)%> <br> <%= right_right_child_level_two.try(:sponser_id) %>
-                    <ul>
-                      <li>
-                        <%extreme_right_left_child_level_three = User.where(h_parent: right_right_child_level_two.try(:id), position: "Left").first if right_right_child_level_two.present? %>
-                         <%= link_to "", graph_dashboard_index_path(id: extreme_right_left_child_level_three.try(:id)), class: "#{extreme_right_left_child_level_three.try(:gender).present? ? extreme_right_left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                        <%= extreme_right_left_child_level_three.try(:name) %> <br> <%=extreme_right_left_child_level_three.try(:sponser_id) %>
-                      </li>
-                      <li>
-                        <%extreme_right_right_child_level_three = User.where(h_parent: right_right_child_level_two.try(:id), position: "Right").first if right_right_child_level_two.present?%>
-                        <%= link_to "", graph_dashboard_index_path(id: extreme_right_right_child_level_three.try(:id)), class: "#{extreme_right_right_child_level_three.try(:gender).present? ? extreme_right_right_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
-                         <%= extreme_right_right_child_level_three.try(:name) %> <br> <%=extreme_right_right_child_level_three.try(:sponser_id) %>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-          </ul>
-        </li>  
-      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <% right_child_level_one = User.where(h_parent: @user.id, position: "Right").try(:first)%>
+                  <%= link_to "", graph_dashboard_index_path(id: right_child_level_one.try(:id)), class: "#{right_child_level_one.try(:gender).present? ? right_child_level_one.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                  <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=right_child_level_one.try(:id)%>)"><%= right_child_level_one.try(:name) %></a><br><%= right_child_level_one.try(:sponser_id)%>
+                  <ul>
+                    <li>
+                      <%right_left_child_level_two = User.where(h_parent: right_child_level_one.try(:id), position: "Left").first if right_child_level_one.present? %>
+                       <%= link_to "", graph_dashboard_index_path(id: right_left_child_level_two.try(:id)), class: "#{right_left_child_level_two.try(:gender).present? ? right_left_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                      <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=right_left_child_level_two.try(:id)%>)"><%= right_left_child_level_two.try(:name) %></a> <br> <%= right_left_child_level_two.try(:sponser_id)%> 
+                      <ul>
+                        <li>
+                          <% right_left_child_level_three = User.where(h_parent: right_left_child_level_two.try(:id), position: "Left" ).first if right_left_child_level_two.present? %>
+                          <%= link_to "", graph_dashboard_index_path(id: right_left_child_level_three.try(:id)), class: "#{right_left_child_level_three.try(:gender).present? ? right_left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=right_left_child_level_three.try(:id)%>)"><%= right_left_child_level_three.try(:name) %></a> <br> <%= right_left_child_level_three.try(:sponser_id) %> 
+                        </li>
+                        <li>
+                          <% right_right_child_level_three = User.where(h_parent: right_left_child_level_two.try(:id), position: "Right" ).first if right_left_child_level_two.present? %>
+                         <%= link_to "", graph_dashboard_index_path(id: right_right_child_level_three.try(:id)), class: "#{right_right_child_level_three.try(:gender).present? ? right_right_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=right_right_child_level_three.try(:id)%>)"><%= right_right_child_level_three.try(:name) %></a> <br> <%= right_right_child_level_three.try(:sponser_id) %> 
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <%right_right_child_level_two = User.where(h_parent: right_child_level_one.try(:id), position: "Right").first if right_child_level_one.present? %>
+                      <%= link_to "", graph_dashboard_index_path(id: right_right_child_level_two.try(:id)), class: "#{right_right_child_level_two.try(:gender).present? ? right_right_child_level_two.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                      <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=right_right_child_level_two.try(:id)%>)"><%= right_right_child_level_two.try(:name) %></a> <br> <%= right_right_child_level_two.try(:sponser_id) %>
+                      <ul>
+                        <li>
+                          <%extreme_right_left_child_level_three = User.where(h_parent: right_right_child_level_two.try(:id), position: "Left").first if right_right_child_level_two.present? %>
+                           <%= link_to "", graph_dashboard_index_path(id: extreme_right_left_child_level_three.try(:id)), class: "#{extreme_right_left_child_level_three.try(:gender).present? ? extreme_right_left_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                          <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=extreme_right_left_child_level_three.try(:id)%>)"><%= extreme_right_left_child_level_three.try(:name) %></a> <br> <%=extreme_right_left_child_level_three.try(:sponser_id) %>
+                        </li>
+                        <li>
+                          <%extreme_right_right_child_level_three = User.where(h_parent: right_right_child_level_two.try(:id), position: "Right").first if right_right_child_level_two.present?%>
+                          <%= link_to "", graph_dashboard_index_path(id: extreme_right_right_child_level_three.try(:id)), class: "#{extreme_right_right_child_level_three.try(:gender).present? ? extreme_right_right_child_level_three.try(:gender).eql?("male") ? "avatar_men" : "avatar_female" : "black_spot"} rounded-circle" %><br>
+                           <a href="" data-toggle="modal" data-target="#exampleModal" onclick="edit(<%=extreme_right_right_child_level_three.try(:id)%>)"><%= extreme_right_right_child_level_three.try(:name) %></a><br> <%=extreme_right_right_child_level_three.try(:sponser_id) %>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+            </ul>
+          </li>  
+        </ul>
+      <%end%>
     </div>
   </div>
 </div>
+
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="width: 280px;">
+      <div class="modal-header" style="background: #32a8a2">
+        <h3 class="modal-title" id="exampleModalLabel">User Details</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background: #d3dbdb">
+          <label for="title">Name</label><p id="name" type="text" value=""></p>
+          <label for="title">User ID</label><p id="user_id" type="text" value=""></p>
+          <label for="title">Joining Date</label><p id="joining_date" type="text" value=""></p>
+          <label for="body">Sponser Name</label><p id="sponser_name"></p>
+          <label for="body">Sponser ID</label><p id="sponser_id"></p>
+          <label for="body">Active Status</label><p id="active_status"></p>
+          <label for="body">Left Users</label><p id="left_users"></p>
+          <label for="body">Right Users</label><p id="right_users"></p>
+          <label for="body">Pairs</label><p id="pairs"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function edit(id) {
+    $.ajax({
+      type: 'GET',    
+      url:'/users/'+id+'/get_user_details',
+      success: function(data) {
+        console.log(data["object"]);
+        var dataInput = data["object"];
+        console.log(dataInput);
+        $('#name').text(dataInput.name);
+        $("#user_id").text(dataInput.user_id);
+        $("#joining_date").text(dataInput.joining_date);
+        $("#sponser_name").text(dataInput.sponser_name);
+        $("#sponser_id").text(dataInput.sponser_id);
+        $("#active_status").text(dataInput.is_active);
+        $("#left_users").text(dataInput.left_users);
+        $("#right_users").text(dataInput.right_users);
+        $("#pairs").text(dataInput.pairs);
+      },
+      failure: function(){
+        console.log('error');
+      }
+    });
+}
+</script>

@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     put :update_user_kyc, on: :collection  
     post :fetch_sponser, on: :collection
     put 'set_super_admin', on: :member
+    get 'get_user_details', on: :member
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

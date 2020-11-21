@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
+	include UsersHelper
 
 	skip_before_action :authenticate_user!, only: [ :fetch_sponser]
 
 	def show
-
 	end
 
 	def edit
@@ -52,6 +52,11 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def get_user_details
+		user = User.find_by(id: params[:id])
+		result = format_user_details(user)
+		render_message("", result)
+	end
 	
 
 

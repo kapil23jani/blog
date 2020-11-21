@@ -1,5 +1,7 @@
 module UsersHelper
 
+	include AdminHelper
+
 	def fetch_date_of_birth
 		result = []
 		if params[:date].present?
@@ -49,6 +51,20 @@ module UsersHelper
 			#return id
 		end
 
+	end
+
+	def format_user_details user
+		{
+			name: user.try(:name) || "",
+			user_id: user.try(:sponser_id) || "", 
+			sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "" ,
+			sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "" ,
+			left_users: find_left_team(user) || 0 ,
+			right_users: find_right_team(user) || 0 ,
+			pairs: find_pair(user,4) || 0,
+			is_active: user.try(:is_invoice_valid),
+			joining_date: user.created_at.strftime("%F")
+		}
 	end
 
 
