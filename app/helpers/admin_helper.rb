@@ -4,58 +4,107 @@ module AdminHelper
 
 	def get_active_users user, type = nil
 		if !user.admin?
-			users = get_final_users(user)
 			if type == "active_left"
-				count = users.select {|user| user.position == "Left" && user.is_invoice_valid == true}.count
+				left_users = get_users(user.id, "Left").pluck("id")
+				child_left_users = User.where(sponsered_by_id: get_users(user.id, "Left").pluck("id")).pluck(:id) if left_users.present?
+				
+				left_users << child_left_users if child_left_users.present?
+				left_users = User.where(id: left_users.flatten.uniq, is_invoice_valid: true) if left_users.present?
+				return left_users.count
 			elsif type == "active_right"
-				count = users.select {|user| user.position == "Right" && user.is_invoice_valid == true}.count
-			elsif type == "inactive_left"
-				count = users.select {|user| user.position == "Left" && user.is_invoice_valid == false}.count
-			elsif type == "inactive_right"
-				count = users.select {|user| user.position == "Right" && user.is_invoice_valid == false}.count
+				users = []
+				right_users = get_users(user.id, "Right").pluck("id")
+				child_right_users = User.where(sponsered_by_id: get_users(user.id, "Right").pluck("id")).pluck(:id) if right_users.present?
+				
+				right_users << child_right_users if child_right_users.present?
+				right_users = User.where(id: right_users.flatten.uniq, is_invoice_valid: true) if right_users.present?
+				return right_users.count
+			# elsif type == "inactive_left"
+			# 	count = users.select {|user| user.position == "Left" && user.is_invoice_valid == false}.count
+			# elsif type == "inactive_right"
+			# 	count = users.select {|user| user.position == "Right" && user.is_invoice_valid == false}.count
 			
 			end
 		end
 	end
 
+
+	def find_left_team user
+		if !user.admin?
+			# check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
+			# return 0 if check_main_pair == 1 || check_main_pair == 0
+			users = []
+			left_users = get_users(user.id, "Left").pluck("id")
+			child_left_users = User.where(sponsered_by_id: get_users(user.id, "Left").pluck("id")).pluck(:id) if left_users.present?
+			
+			left_users << child_left_users if child_left_users.present?
+			left_users = User.where(id: left_users.flatten.uniq) if left_users.present?
+			return left_users.count
+		end
+	end
+
+	def find_right_team user
+		if !user.admin?
+			# check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
+			# return 0 if check_main_pair == 1 || check_main_pair == 0
+			users = []
+			right_users = get_users(user.id, "Right").pluck("id")
+			child_right_users = User.where(sponsered_by_id: get_users(user.id, "Right").pluck("id")).pluck(:id) if right_users.present?
+			
+			right_users << child_right_users if child_right_users.present?
+			right_users = User.where(id: right_users.flatten.uniq) if right_users.present?
+			return right_users.count
+
+		end
+
+	end
+
+
+
 	def find_pair user, type = nil 
 		if !user.admin?
-			users = get_final_users(user)
+			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
+			return 0 if check_main_pair == 1 || check_main_pair == 0
+			users = []
+			left_users = get_users(user.id, "Left").pluck("id")
+			right_users = get_users(user.id, "Right").pluck("id")
+			child_left_users = User.where(sponsered_by_id: get_users(user.id, "Left").pluck("id")).pluck(:id) if left_users.present?
+			child_right_users = User.where(sponsered_by_id: get_users(user.id, "Right").pluck("id")).pluck(:id) if right_users.present?
+			
+			left_users << child_left_users if child_left_users.present?
+			right_users << child_right_users if child_right_users.present?
+			left_users = User.where(id: left_users.flatten.uniq) if left_users.present?
+			right_users = User.where(id: right_users.flatten.uniq) if right_users.present?
+
+
+
 			if type == 1
-				check_main_pair = users.select{|child_user| child_user.sponsered_by_id ==  user.id}.pluck(:position).uniq.count
-				return 0 if check_main_pair == 1 || check_main_pair == 0
-				final_pair = User.where(id: users.pluck(:id)).where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort
-				return calculate_pairs(final_pair)
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort
+				return calculate_pairs(left_final_pairs, right_final_pairs)
 			elsif type == 2
-				check_main_pair = users.select{|child_user| child_user.sponsered_by_id ==  user.id}.pluck(:position).uniq.count
-				return 0 if check_main_pair == 1 || check_main_pair == 0
-				final_pair = User.where(id: users.pluck(:id)).where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort
-				return calculate_pairs(final_pair)	
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort
+				return calculate_pairs(left_final_pairs, right_final_pairs)
 			elsif type == 3
-				check_main_pair = users.select{|child_user| child_user.sponsered_by_id ==  user.id}.pluck(:position).uniq.count
-				return 0 if check_main_pair == 1 || check_main_pair == 0
-				final_pair = User.where(id: users.pluck(:id)).where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort
-				return calculate_pairs(final_pair)
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort
+				return calculate_pairs(left_final_pairs, right_final_pairs)
 			elsif type == 4
-				check_main_pair = users.select{|child_user| child_user.sponsered_by_id ==  user.id}.pluck(:position).uniq.count
-				return 0 if check_main_pair == 1 || check_main_pair == 0
-				final_pair = User.where(id: users.pluck(:id))
-				return calculate_pairs(final_pair)
+				return calculate_pairs(left_users, right_users)
 			end
 		end
 	end
 
-	def calculate_pairs users = nil
-		left_users = users.select{|user| user.position == "Left"}
-		right_users = users.select{|user| user.position == "Right"}
+	def calculate_pairs left_final_pairs = nil, right_final_pairs = nil
 
-		if left_users.present? && right_users.present?
-			if left_users.count == right_users.count
-				return left_users.count - 1 
-			elsif left_users.count > right_users.count
-				return right_users.count
-			elsif right_users.count > left_users.count
-				return left_users.count - 1
+		if left_final_pairs.present? && right_final_pairs.present?
+			if left_final_pairs.count == right_final_pairs.count
+				return left_final_pairs.count - 1 
+			elsif left_final_pairs.count > right_final_pairs.count
+				return right_final_pairs.count
+			elsif right_final_pairs.count > left_final_pairs.count
+				return left_final_pairs.count
 			else
 				return 0
 			end

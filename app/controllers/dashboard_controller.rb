@@ -1,6 +1,7 @@
 class DashboardController < ApplicationController
 
 	include DashboardHelper
+	include AdminHelper
 
 	def index
 	end

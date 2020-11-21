@@ -199,7 +199,7 @@
                 <table class="table table-hover">
                   <thead class="text-success">
                     <th style="font-size: 14px;">Inactive Left Users</th>
-                    <th style="font-size: 14px;">Inactive Left Users</th>
+                    <th style="font-size: 14px;">Inactive Right Users</th>
                     <th style="font-size: 14px;">Active Left Users</th>
                     <th style="font-size: 14px;">Active Right Users</th>
                     <th style="font-size: 14px;">Pairs</th>
@@ -207,8 +207,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "inactive_left") %></td>
-                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "inactive_right") %></td>
+                      <td style="font-size: 15px;"><%= find_left_team(@current_user) %></td>
+                      <td style="font-size: 15px;"><%= find_right_team(@current_user) %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_right") %></td>
                       <td style="font-size: 15px;"><%= find_pair(@current_user, 4) %></td>
