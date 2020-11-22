@@ -16,9 +16,9 @@ class DashboardController < ApplicationController
 	    search = params[:search].to_s.downcase if params[:search].present?
 	    users_where_values.merge!(search: "%#{search}%")  
 	    if params[:start_date].present? && params[:end_time].present?
-		    @users = User.where(id: @final_object).where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
+		    @users = User.where(id: @final_object).where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time]).order(:name)
 		else
-			@users = User.where(id: @final_object).where([users_where, users_where_values]).uniq
+			@users = User.where(id: @final_object).where([users_where, users_where_values]).order(:name).uniq
 		end
 
 
@@ -35,5 +35,10 @@ class DashboardController < ApplicationController
 	end
 
 	def invoice
+	end
+
+	def earnings 
+		@users = get_final_users(@current_user)
+		@users = @users.select {|user| user.is_invoice_valid == true }
 	end
 end

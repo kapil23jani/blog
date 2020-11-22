@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get :my_profile, on: :collection  
     get :graph, on: :collection  
     get :invoice, on: :collection  
+    get 'earnings', on: :member
   end
 
   resources :invoices

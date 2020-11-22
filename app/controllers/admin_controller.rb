@@ -13,9 +13,9 @@ class AdminController < ApplicationController
 	    search = params[:search].to_s.downcase if params[:search].present?
 	    users_where_values.merge!(search: "%#{search}%")  
 	    if params[:start_date].present? && params[:end_time].present?
-		    @users = User.where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
+		    @users = User.where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time]).order(:name)
 		else
-			@users = User.where([users_where, users_where_values])
+			@users = User.where([users_where, users_where_values]).order(:name)
 		end
 
 	    session[:search] = {}
@@ -28,9 +28,9 @@ class AdminController < ApplicationController
 	    search = params[:search].to_s.downcase if params[:search].present?
 	    users_where_values.merge!(search: "%#{search}%")  
 	    if params[:start_date].present? && params[:end_time].present?
-		    @users = User.where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time])
+		    @users = User.where([users_where, users_where_values]).where('created_at BETWEEN ? AND ?', params[:start_date], params[:end_time]).order(:name)
 		else
-			@users = User.where([users_where, users_where_values])
+			@users = User.where([users_where, users_where_values]).order(:name)
 		end
 
 
@@ -46,8 +46,8 @@ class AdminController < ApplicationController
 
 
 	def manage_members
-		@users = User.all
-		@users = User.where(is_invoice_valid: params[:is_invoice_valid]) if params[:is_invoice_valid].present?
+		@users = User.all.order(:name)
+		@users = User.where(is_invoice_valid: params[:is_invoice_valid]).order(:name) if params[:is_invoice_valid].present?
 		@user = User.new
 	end
 

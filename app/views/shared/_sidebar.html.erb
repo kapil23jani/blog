@@ -127,31 +127,22 @@
             <center><i class="material-icons" style="color: white; font-size: 30px;">dashboard</i>
             <p class="heading">Dashboard</p></center>
           </a>
-          <a href="#pageSubmenu" data-toggle="collapse" id="mydashboard" >
-            <center>
-              <i class=" material-icons" style="color: white; font-size: 30px;">dashboard</i>
-                <p class="heading">My Business</p>
-              </center>
-          </a>
-          <ul class="collapse list-unstyled" id="pageSubmenu" style="background-color: #332e2e">
-            <li>
-              <a class="nav-link" href="/dashboard/my_teams">
-                <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
-                <p class="heading">My Team</p></center>
-              </a>
-            </li>
-          </ul>
-
-      
-          <a class="nav-link" href="">
-            <center><i class="material-icons" style="color: white; font-size: 30px;">account_balance_wallet</i>
-            <p class="heading">Earning</p></center>
-          </a>
-
+        
           <a class="nav-link" href="/dashboard/my_teams">
             <center><i class="material-icons" style="color: white; font-size: 30px;">people</i>
             <p class="heading">My Team</p></center>
           </a>
+
+          <a class="nav-link" href="/dashboard/graph">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">analytics</i>
+            <p class="heading">Graph</p></center>
+          </a>
+      
+          <a class="nav-link" href="/dashboard/<%=@current_user.id%>/earnings">
+            <center><i class="material-icons" style="color: white; font-size: 30px;">account_balance_wallet</i>
+            <p class="heading">Earning</p></center>
+          </a>
+
           <a class="nav-link" href="/invoices/">
             <center><i class="material-icons" style="color: white; font-size: 30px;">receipt</i>
             <p class="heading">Invoice</p></center>

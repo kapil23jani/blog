@@ -186,6 +186,18 @@ right connector from last child*/
   border: 2px gray;
 }
 
+label {
+  color: black;
+}
+
+p{
+  size: 15px;
+  font-size: 16px;
+}
+
+.tree li a {
+font-size: 15px;}
+
 </style>
 <div class="container-fluid scroller" style="padding: 10px">
   <div class="action_control_section">
@@ -321,7 +333,7 @@ right connector from last child*/
           <label for="body">Active Status</label><p id="active_status"></p>
           <label for="body">Left Users</label><p id="left_users"></p>
           <label for="body">Right Users</label><p id="right_users"></p>
-          <label for="body">Pairs</label><p id="pairs"></p>
+          <label for="body">Total Team</label><p id="total_team"></p>
       </div>
     </div>
   </div>
@@ -344,7 +356,7 @@ right connector from last child*/
         $("#active_status").text(dataInput.is_active);
         $("#left_users").text(dataInput.left_users);
         $("#right_users").text(dataInput.right_users);
-        $("#pairs").text(dataInput.pairs);
+        $("#total_team").text(dataInput.total_team);
       },
       failure: function(){
         console.log('error');

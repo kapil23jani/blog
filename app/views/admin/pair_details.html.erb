@@ -46,8 +46,11 @@
   cursor: pointer;
 }
 }
+.th {
+	color: black;
+}
 </style>
-<div class="row">
+<body style="background: #edf5f5">
 	<div class="col-sm-12"><br>
 		<div class = "col-sm-4">
 			<form action="<%manage_members_admin_index_path%>" method="get">
@@ -76,37 +79,59 @@
         	<%= link_to "All",  pair_details_admin_index_path, class: "btn"%> 
 		</div>
 	</div><br>
-	<div class="col-sm-12">
-		<% @users.each do |user|%>
-			<%if !user.admin?%>
-				<div style="width: 300px;">
-					<div style="margin-left: 10px; margin-right: 10px; ">
-						<div class="card" style="background: #f0f2f2;">
-						  <div class="card-header">
-						    <h4>Name: <b><%= user.try(:name)%></b></h4>
-						    <h5>User ID: <b><%= user.try(:sponser_id)%></b></h5>
-						    <h5>Sponser Name: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:name)%></b></h5>
-						    <h5>Sponser ID: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:sponser_id)%></b></h5>
-						    <h5>Joining Date: <b><%=  user.created_at.strftime("%F")%></b></h5>
-						  </div>
-						  <div class="card-body">
-						  	<h5>Non Active Left User's - <b><%= find_left_team(user) %></b></h5>
-						  	<h5>Non Active Right User's - <b><%= find_right_team(user) %></b></h5>
-						  	<h5>Active Left User's - <b><%= get_active_users(user, "inactive_left")%></b></h5>
-						  	<h5>Active Right User's - <b><%= get_active_users(user, "inactive_right")%></b></h5>
-						  	<h5><b>Pairs</b></h5>
-						  	<h5><p>1st to 10th </p> - <b><%= find_pair(user, 1)%></b></h5>
-						  	<h5><p>11th to 20th </p> - <b><%= find_pair(user, 2)%></b></h5>
-						  	<h5><p>21th to 31st </p> - <b><%= find_pair(user, 3)%></b></h5>
-						  	
-						  </div>
-						</div>
-					</div>
-				</div>
-			<%end%>
+
+	<% @users.each do |user|%>
+		<%if !user.admin?%>
+			<div class="col-lg-12" style="padding: 20px; overflow-x: auto; margin-bottom: 20px;">
+	            <div class="card-header" style="">
+	                <h3 style="background: #635f5f; padding: 20px; color: white;"><%= user.try(:name)%></h3><br>
+	                <p>User ID: <b><%= user.try(:sponser_id)%></b></p>
+	                <p>Sponser Name: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:name)%></b></p>
+	                <p>Sponser ID: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:sponser_id)%></b></p>
+	                <p>Mobile Number: <b><%= user.try(:phone_number)%></b></p>
+	                <p>UPI ID: <b><%= user.try(:upi_id)%></b></p>
+	            </div>
+	            <div class="card-body" style="background: white;"><h4 style="background: #c9d3d6; padding: 20px; color: #484a4a">Business Details: </h4><br>
+	                <h5 class="card-title">Total Team Size: <b><%= get_final_users(user).try(:uniq) { |user| user.id}.try(:count)%></b></h5>
+	                <p>Total Left Team: <b><%= find_left_team(user)%></b></p>
+	                <p>Total Right Team: <b><%= find_right_team(user)%></b></p>
+	                <p>Total Active Left Team: <b><%= get_active_users(user, "active_left") %></b></p>
+	                <p>Total Active Right Team: <b><%= get_active_users(user, "active_right") %></b></p>
+	                <p>Total Pairs: <b><%= find_pair(user, 4) %></b></p><br>
+	                
+
+	                <!-- <div class="col-lg-6 col-md-12"> -->
+	                <div class="card">
+	                  <div class="card-header card-header" style="background: #a85462 padding: 20px;">
+	                    <h4 class="card-title" style="background: white;"><h4 style="background: #c9d3d6; padding: 20px; color: #484a4a;">Current Month Pairs</h4>
+	                  </div>
+	                  <div class="card-body table-responsive">
+	                    <table class="table table-hover">
+	                      <thead class="text-success">
+	                        <th style="font-size: 14px; color: black">1 - 10</th>
+	                        <th style="font-size: 14px; color: black">11- 20</th>
+	                        <th style="font-size: 14px; color: black">21 - 31</th>
+	                        <th style="font-size: 14px; color: black">Total</th>
+	                      </thead>
+	                      <tbody>
+	                        <tr>
+	                          <td style="font-size: 15px;"><%= find_pair(user, 1) %></td>
+	                          <td style="font-size: 15px;"><%= find_pair(user, 2) %></td>
+	                          <td style="font-size: 15px;"><%= find_pair(user, 3) %></td>
+	                          <td style="font-size: 15px;"><%= find_pair(user, 4) %></td>
+	                        </tr>
+	                      </tbody>
+	                    </table>
+	                  </div>
+	                <!-- </div> -->
+	              </div>
+	            </div>
+	        </div>
 		<%end%>
-	</div>
-</div>
+		<br>
+	<%end%>
+
+</body>
 
 <script type="text/javascript">
 	var slider = document.getElementById("myRange");

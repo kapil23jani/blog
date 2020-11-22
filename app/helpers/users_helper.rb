@@ -61,7 +61,7 @@ module UsersHelper
 			sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "" ,
 			left_users: find_left_team(user) || 0 ,
 			right_users: find_right_team(user) || 0 ,
-			pairs: find_pair(user,4) || 0,
+			total_team: get_final_users(user).count || 0,
 			is_active: user.try(:is_invoice_valid),
 			joining_date: user.created_at.strftime("%F")
 		}
