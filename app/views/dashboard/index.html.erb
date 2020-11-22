@@ -177,8 +177,10 @@
                 <div class="card-icon">
                   <i class="material-icons">account_balance_wallet</i>
                 </div>
-                <p class="card-category">Earnings</p>
-                <h3 class="card-title">+<%= Invoice.where(user_id: User.where(sponsered_by_id: @current_user.id, is_invoice_valid: true).pluck(:id)).present? ? Invoice.where(user_id: User.where(sponsered_by_id: @current_user.id, is_invoice_valid: true).pluck(:id)).pluck(:amount).map(&:to_i).inject(0){|sum,x| sum + x } : ""%></h3>
+                <p class="card-category">Current Closing Pair</p>
+                <%date = Date.today.strftime("%d").to_i%>
+                <%duration = (1..10).include?(date) ? 1 : (11..20).include?(date) ? 2 : (21..31).include?(date) ? 3 : nil%>
+                <h3 class="card-title"><%=find_pair(@current_user, duration) %></h3>
               </div>
               <div class="card-footer">
                 <div class="stats">
@@ -202,7 +204,6 @@
                     <th style="font-size: 14px;">Inactive Right Users</th>
                     <th style="font-size: 14px;">Active Left Users</th>
                     <th style="font-size: 14px;">Active Right Users</th>
-                    <th style="font-size: 14px;">Pairs</th>
                     <th style="font-size: 14px;">Total</th>
                   </thead>
                   <tbody>
@@ -211,7 +212,6 @@
                       <td style="font-size: 15px;"><%= find_right_team(@current_user) %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_right") %></td>
-                      <td style="font-size: 15px;"><%= find_pair(@current_user, 4) %></td>
                       <td style="font-size: 15px;"><%= get_final_users(@current_user).present? ? get_final_users(@current_user).uniq { |user| user.id}.count : 0%></td>
                     </tr>
                   </tbody>

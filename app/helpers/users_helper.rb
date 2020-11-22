@@ -62,7 +62,7 @@ module UsersHelper
 			left_users: find_left_team(user) || 0 ,
 			right_users: find_right_team(user) || 0 ,
 			total_team: get_final_users(user).count || 0,
-			is_active: user.try(:is_invoice_valid),
+			is_active: user.try(:is_invoice_valid) == true ? "Active" : "Inactive",
 			joining_date: user.created_at.strftime("%F")
 		}
 	end

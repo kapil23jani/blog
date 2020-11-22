@@ -43,8 +43,7 @@
                 <p>Total Left Team: <b><%= find_left_team(user)%></b></p>
                 <p>Total Right Team: <b><%= find_right_team(user)%></b></p>
                 <p>Total Active Left Team: <b><%= get_active_users(user, "active_left") %></b></p>
-                <p>Total Active Right Team: <b><%= get_active_users(user, "active_right") %></b></p>
-                <p>Total Pairs: <b><%= find_pair(user, 4) %></b></p><br>
+                <p>Total Active Right Team: <b><%= get_active_users(user, "active_right") %></b></p><br>
                 
 
                 <!-- <div class="col-lg-6 col-md-12"> -->
@@ -58,14 +57,12 @@
                         <th style="font-size: 14px;">1 - 10</th>
                         <th style="font-size: 14px;">11- 20</th>
                         <th style="font-size: 14px;">21 - 31</th>
-                        <th style="font-size: 14px;">Total</th>
                       </thead>
                       <tbody>
                         <tr>
                           <td style="font-size: 15px;"><%= find_pair(user, 1) %></td>
                           <td style="font-size: 15px;"><%= find_pair(user, 2) %></td>
                           <td style="font-size: 15px;"><%= find_pair(user, 3) %></td>
-                          <td style="font-size: 15px;"><%= find_pair(user, 4) %></td>
                         </tr>
                       </tbody>
                     </table>
