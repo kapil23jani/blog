@@ -91,16 +91,7 @@ class AdminController < ApplicationController
 				user = invoice.try(:user)
 				user.is_invoice_valid = params[:status].eql?("accept") ? true : false
 				if user.save(validate: false)
-					pair = Pair.where(left_user_id: user.id).or(Pair.where(right_user_id: user.id)).try(:last)
-					if pair.present?
-						if pair.try(:left_user_id) == user.id
-							pair.is_left_verified = true
-							pair.save
-						elsif pair.try(:right_user_id) == user.id
-							pair.is_right_verified = true
-							pair.save
-						end
-					end
+					
 					redirect_to admin_index_path if @current_user.try(:role).try(:role_type) == "admin"
 					redirect_to invoices_admin_index_path if @current_user.try(:role).try(:role_type) == "super_user"
 				end
