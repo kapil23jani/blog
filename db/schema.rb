@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_21_131821) do
+ActiveRecord::Schema.define(version: 2020_11_23_151310) do
 
   create_table "contacts", force: :cascade do |t|
     t.string "first_name"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 2020_11_21_131821) do
     t.string "upl_id"
     t.integer "h_parent"
     t.string "upi_id"
+    t.boolean "is_first_pair_valid"
     t.index "\"left_user_id\"", name: "index_users_on_left_user_id"
     t.index "\"right_user_id\"", name: "index_users_on_right_user_id"
     t.index ["ancestry"], name: "index_users_on_ancestry"

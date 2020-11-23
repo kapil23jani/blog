@@ -19,6 +19,33 @@ module UsersHelper
 		return result.join("-")
 	end
 
+
+	def is_first_pair_valid id = nil
+		user = User.find(id) if id.present?
+		left_users = find_left_team(user, true)
+		right_users = find_right_team(user, true) 
+		if user.present?
+			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count 
+			if check_main_pair.present?
+				if check_main_pair == 2
+					if left_users.present? && right_users.present? 
+						if left_users.count >= 2 && right_users.count >= 1
+							user.is_first_pair_valid = true
+							user.save(validate: false)
+
+						elsif right_users.count >= 2 && left_users.count >= 1 
+							user.is_first_pair_valid = true
+							user.save(validate: false)
+						end
+					end
+				end
+			end
+		end
+	end
+
+
+
+
 	def get_parent_id id, position
 		sql = "WITH RECURSIVE child_users(id, sponsered_by_id,h_parent,position,lvl) AS " +
 			"( SELECT id, sponsered_by_id, h_parent, position, 0 FROM users " +

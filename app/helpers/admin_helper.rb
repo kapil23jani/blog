@@ -51,44 +51,44 @@ module AdminHelper
 
 	def find_pair user, type = nil 
 		if !user.admin?
-
 			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
 			return 0 if check_main_pair == 1 || check_main_pair == 0
-			left_users = find_left_team(user, true)
-			right_users = find_right_team(user, true) 
+			left_users = find_left_team(user, true).present? ? find_left_team(user, true).where(is_invoice_valid: true) : nil
+			right_users = find_right_team(user, true).present? ? find_right_team(user, true).where(is_invoice_valid: true) : nil
+
 			if type == 1
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?
-					return calculate_pairs(left_final_pairs, right_final_pairs) if Date.today.strftime("%d").to_i < 11
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i < 11
 					return 0 
 				else
 					return 0
 				end
 			elsif type == 2
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
-					return calculate_pairs(left_final_pairs, right_final_pairs) if Date.today.strftime("%d").to_i < 21
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i < 21
 					return 0
 				else
 					return 0
 				end
 			elsif type == 3
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
-					return calculate_pairs(left_final_pairs, right_final_pairs)
+					return calculate_pairs(left_final_pairs, right_final_pairs, user)
 				else
 					return 0
 				end
 			elsif type == 5
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort
-				return calculate_pairs(left_final_pairs, right_final_pairs)
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort if right_users.present?
+				return calculate_pairs(left_final_pairs, right_final_pairs, user)
 			elsif type == 4
 				if left_final_pairs.present? && right_final_pairs.present?					
-					return calculate_pairs(left_final_pairs, right_final_pairs)
+					return calculate_pairs(left_final_pairs, right_final_pairs, user)
 				else
 					return 0
 				end
@@ -96,9 +96,9 @@ module AdminHelper
 		end
 	end
 
-	def calculate_pairs left_final_pairs = 0, right_final_pairs = 0
+	def calculate_pairs left_final_pairs = 0, right_final_pairs = 0, user = nil
 		if left_final_pairs.count == right_final_pairs.count
-			return left_final_pairs.count - 1 
+			return user.try(:is_first_pair_valid) == true ? left_final_pairs.count : left_final_pairs.count 
 		elsif left_final_pairs.count > right_final_pairs.count
 			return right_final_pairs.count
 		elsif right_final_pairs.count > left_final_pairs.count

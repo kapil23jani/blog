@@ -177,7 +177,7 @@
                 <div class="card-icon">
                   <i class="material-icons">account_balance_wallet</i>
                 </div>
-                <p class="card-category">Current Closing Pair</p>
+                <p class="card-category">Current Closing Pairs</p>
                 <%date = Date.today.strftime("%d").to_i%>
                 <%duration = (1..10).include?(date) ? 1 : (11..20).include?(date) ? 2 : (21..31).include?(date) ? 3 : nil%>
                 <h3 class="card-title"><%=find_pair(@current_user, duration) %></h3>
