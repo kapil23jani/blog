@@ -5,20 +5,14 @@ module AdminHelper
 	def get_active_users user, type = nil
 		if !user.admin?
 			if type == "active_left"
-				left_users = get_users(user.id, "Left").present? ?  get_users(user.id, "Left").pluck("id") : nil
-				child_left_users = User.where(sponsered_by_id: get_users(user.id, "Left").pluck("id")).pluck(:id) if left_users.present?
-				
-				left_users << child_left_users if child_left_users.present?
-				left_users = User.where(id: left_users.flatten.uniq, is_invoice_valid: true) if left_users.present?
-				return left_users.try(:count)
+				left_users = find_left_team(user, true).present? ?  find_left_team(user, true) : nil
+				left_users = left_users.where(is_invoice_valid: true)
+				return left_users.try(:count) || 0
 			elsif type == "active_right"
 				users = []
-				right_users = get_users(user.id, "Right").present? ?  get_users(user.id, "Right").pluck("id") : nil
-				child_right_users = User.where(sponsered_by_id: get_users(user.id, "Right").pluck("id")).pluck(:id) if right_users.present?
-				
-				right_users << child_right_users if child_right_users.present?
-				right_users = User.where(id: right_users.flatten.uniq, is_invoice_valid: true) if right_users.present?
-				return right_users.try(:count)
+				right_users = find_right_team(user, true).present? ?  find_right_team(user, true) : nil
+				right_users = right_users.where(is_invoice_valid: true) if right_users.present?
+				return right_users.try(:count) || 0
 			end
 		end
 	end

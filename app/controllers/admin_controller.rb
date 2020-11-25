@@ -90,6 +90,7 @@ class AdminController < ApplicationController
 			if invoice.save
 				user = invoice.try(:user)
 				user.is_invoice_valid = params[:status].eql?("accept") ? true : false
+				user.created_at = Time.now
 				if user.save(validate: false)
 					
 					redirect_to admin_index_path if @current_user.try(:role).try(:role_type) == "admin"
