@@ -41,8 +41,8 @@
             </div><br>
             <div class="card-body" style="background: white;"><h4 style="background: #45d4f5; padding: 20px; color: white;">Business Details: </h4><br>
                 <h5 class="card-title">Total Team Size: <b><%= get_final_users(user).try(:uniq) { |user| user.id}.try(:count)%></b></h5>
-                <p>Total Left Team: <b><%= find_left_team(user)%></b></p>
-                <p>Total Right Team: <b><%= find_right_team(user)%></b></p>
+                <p>Total Left Team: <b><%= find_left_team(user, "inactive").present? ? find_left_team(user, "inactive") : 0%></b></p>
+                <p>Total Right Team: <b><%= find_right_team(user, "inactive").present? ? find_right_team(user, "inactive") : 0%></b></p>
                 <p>Total Active Left Team: <b><%= get_active_users(user, "active_left") %></b></p>
                 <p>Total Active Right Team: <b><%= get_active_users(user, "active_right") %></b></p><br>
                 

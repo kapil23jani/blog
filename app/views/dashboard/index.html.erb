@@ -184,19 +184,29 @@
               <div class="card-body table-responsive">
                 <table class="table table-hover">
                   <thead class="text-success">
-                    <th style="font-size: 14px;">Inactive Left Users</th>
-                    <th style="font-size: 14px;">Inactive Right Users</th>
-                    <th style="font-size: 14px;">Active Left Users</th>
-                    <th style="font-size: 14px;">Active Right Users</th>
+                    <th style="font-size: 14px;">Type</th>
+                    <th style="font-size: 14px;">Left Users</th>
+                    <th style="font-size: 14px;">Right Users</th>
                     <th style="font-size: 14px;">Total</th>
                   </thead>
                   <tbody>
                     <tr>
-                      <td style="font-size: 15px;"><%= find_left_team(@current_user) %></td>
-                      <td style="font-size: 15px;"><%= find_right_team(@current_user) %></td>
+                      <td style="font-size: 15px;">Inacitve</td>
+                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") %></td>
+                      <td style="font-size: 15px;"><%= find_right_team(@current_user, "inactive") %></td>
+                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") + find_right_team(@current_user, "inactive") %></td>
+                    </tr>
+                    <tr>
+                      <td style="font-size: 15px;">Active</td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_right") %></td>
-                      <td style="font-size: 15px;"><%= get_final_users(@current_user).present? ? get_final_users(@current_user).uniq { |user| user.id}.count : 0%></td>
+                      <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right")%></td>
+                    </tr>
+                    <tr>
+                      <td style="font-size: 15px;">Total</td>
+                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") + get_active_users(@current_user, "active_left") %></td>
+                      <td style="font-size: 15px;"><%= find_right_team(@current_user, "inactive") + get_active_users(@current_user, "active_right") %></td>
+                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") + find_right_team(@current_user, "inactive") + get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right") %></td>
                     </tr>
                   </tbody>
                 </table>
