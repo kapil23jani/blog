@@ -38,7 +38,9 @@
 			<% if @current_user.try(:invoice).present? %>
 	      		<a href="" class="btn btn-warning" style="float: right; font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modalupdateForm">Update Invoice</a>
 	     	<%end%>
-	      	<a href="" class="btn btn-success" style="float: right; font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modaladdForm">Add Invoice</a>
+	     	<% if !@current_user.try(:invoice).present? %>
+	      		<a href="" class="btn btn-success" style="float: right; font-size: 15px; margin-bottom: 10px;" data-toggle="modal" data-target="#modaladdForm">Add Invoice</a>
+	      	<%end%>
 		</div>
 	</div>
 

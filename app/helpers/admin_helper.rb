@@ -6,7 +6,7 @@ module AdminHelper
 		if !user.admin?
 			if type == "active_left"
 				left_users = find_left_team(user, true).present? ?  find_left_team(user, true) : nil
-				left_users = left_users.where(is_invoice_valid: true)
+				left_users = left_users.where(is_invoice_valid: true) if left_users.present?
 				return left_users.try(:count) || 0
 			elsif type == "active_right"
 				users = []
@@ -92,7 +92,7 @@ module AdminHelper
 
 	def calculate_pairs left_final_pairs = 0, right_final_pairs = 0, user = nil
 		if left_final_pairs.count == right_final_pairs.count
-			return user.try(:is_first_pair_valid) == true ? left_final_pairs.count : left_final_pairs.count 
+			return user.try(:is_first_pair_valid) == true ? left_final_pairs.count : left_final_pairs.count - 1
 		elsif left_final_pairs.count > right_final_pairs.count
 			return right_final_pairs.count
 		elsif right_final_pairs.count > left_final_pairs.count
