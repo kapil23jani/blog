@@ -20,8 +20,9 @@ module UsersHelper
 	end
 
 
-	def is_first_pair_valid id = nil
+	def is_first_pair_valid id = nil, requested_user_id = nil
 		user = User.find(id) if id.present?
+		requested_user = User.find_by(id: requested_user_id) if requested_user_id.present?
 		left_users = find_left_team(user, true)
 		right_users = find_right_team(user, true) 
 		if user.present?
@@ -41,6 +42,7 @@ module UsersHelper
 				end
 			end
 		end
+		return requested_user_id
 	end
 
 

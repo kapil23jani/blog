@@ -21,12 +21,13 @@ class RegistrationsController < ApplicationController
         return render_error(400, "Sponser Not Found") if @user.sponsered_by_id.nil?
         @user.h_parent = get_parent_id(User.find_by(sponser_id: params[:sponser_id]).try(:id), params[:position]) if @user.sponsered_by_id.present?
         @user.dob = params[:date].present? ? fetch_date_of_birth : ""
-        @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id] : nil
+        @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id].upcase : nil
         @user.is_invoice_valid = false
         @user.unique_user_id = params[:password]
     	if @user.save
-            is_first_pair_valid(@user.sponsered_by_id)
+
             render_message("Registered Successfully", @user)
+            is_first_pair_valid(@user.sponsered_by_id, @user.id)
     	else
             render_error(400, @user.errors.full_messages.join(','))
     	end
