@@ -192,9 +192,9 @@
                   <tbody>
                     <tr>
                       <td style="font-size: 15px;">Inacitve</td>
-                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") %></td>
-                      <td style="font-size: 15px;"><%= find_right_team(@current_user, "inactive") %></td>
-                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") + find_right_team(@current_user, "inactive") %></td>
+                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) %></td>
+                      <td style="font-size: 15px;"><%= find_right_inactive_team(@current_user) %></td>
+                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + find_right_inactive_team(@current_user) %></td>
                     </tr>
                     <tr>
                       <td style="font-size: 15px;">Active</td>
@@ -204,9 +204,9 @@
                     </tr>
                     <tr>
                       <td style="font-size: 15px;">Total</td>
-                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") + get_active_users(@current_user, "active_left") %></td>
-                      <td style="font-size: 15px;"><%= find_right_team(@current_user, "inactive") + get_active_users(@current_user, "active_right") %></td>
-                      <td style="font-size: 15px;"><%= find_left_team(@current_user, "inactive") + find_right_team(@current_user, "inactive") + get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right") %></td>
+                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + get_active_users(@current_user, "active_left") %></td>
+                      <td style="font-size: 15px;"><%= find_right_inactive_team(@current_user) + get_active_users(@current_user, "active_right") %></td>
+                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + find_right_inactive_team(@current_user) + get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right") %></td>
                     </tr>
                   </tbody>
                 </table>

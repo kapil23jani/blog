@@ -25,7 +25,6 @@ module AdminHelper
 			child_left_users = get_final_users(User.find left_users[0]).pluck(:id) if left_users.present?
 			left_users << child_left_users if child_left_users.present?
 			left_users = User.where(id: left_users.flatten.uniq) if left_users.present?
-			return left_users.where(is_invoice_valid: false).try(:count) || 0 if left_users.present? && is_pair_request == "inactive"
 			return left_users.try(:count) || 0 if is_pair_request.nil?
 			left_users || nil
 		end
@@ -37,9 +36,29 @@ module AdminHelper
 			child_right_users = get_final_users(User.find right_users[0]).pluck(:id) if right_users.present?
 			right_users << child_right_users if child_right_users.present?
 			right_users = User.where(id: right_users.flatten.uniq) if right_users.present?
-			return right_users.where(is_invoice_valid: false).try(:count) || 0 if right_users.present? && is_pair_request == "inactive"
 			return right_users.try(:count) || 0 if is_pair_request.nil?
 			right_users || nil
+		end
+	end
+
+	def find_left_inactive_team user
+		if !user.admin?
+			users = []
+			left_users = User.where(h_parent: user.id, position: "Left").pluck(:id)
+			child_left_users = get_final_users(User.find left_users[0]).pluck(:id) if left_users.present?
+			left_users << child_left_users if child_left_users.present?
+			left_users = User.where(id: left_users.flatten.uniq) if left_users.present?
+			return left_users.present? ? left_users.where(is_invoice_valid: false).count : 0
+		end
+	end
+
+	def find_right_inactive_team user, is_pair_request = nil
+		if !user.admin?
+			right_users = User.where(h_parent: user.id, position: "Right").pluck(:id)
+			child_right_users = get_final_users(User.find right_users[0]).pluck(:id) if right_users.present?
+			right_users << child_right_users if child_right_users.present?
+			right_users = User.where(id: right_users.flatten.uniq) if right_users.present?
+			return right_users.present? ? right_users.where(is_invoice_valid: false).count : 0
 		end
 	end
 
