@@ -72,8 +72,8 @@ module AdminHelper
 			right_users = find_right_team(user, true).present? ? find_right_team(user, true).where(is_invoice_valid: true) : nil
 
 			if type == 1
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort if left_users.present?
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 10.days).sort if right_users.present?
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 7.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 7.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?
 					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i < 11
 					return 0 
@@ -81,8 +81,8 @@ module AdminHelper
 					return 0
 				end
 			elsif type == 2
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort if left_users.present?
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 10.days, (Date.today.beginning_of_month).to_datetime + 20.days).sort if right_users.present?
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 7.days, (Date.today.beginning_of_month).to_datetime + 14.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 7.days, (Date.today.beginning_of_month).to_datetime + 14.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
 					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i < 21
 					return 0
@@ -90,8 +90,24 @@ module AdminHelper
 					return 0
 				end
 			elsif type == 3
-				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort if left_users.present?
-				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 20.days, (Date.today.beginning_of_month).to_datetime + 30.days).sort if right_users.present?
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 14.days, (Date.today.beginning_of_month).to_datetime + 21.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 14.days, (Date.today.beginning_of_month).to_datetime + 21.days).sort if right_users.present?
+				if left_final_pairs.present? && right_final_pairs.present?					
+					return calculate_pairs(left_final_pairs, right_final_pairs, user)
+				else
+					return 0
+				end
+			elsif type == 6
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 21.days, (Date.today.beginning_of_month).to_datetime + 28.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 21.days, (Date.today.beginning_of_month).to_datetime + 28.days).sort if right_users.present?
+				if left_final_pairs.present? && right_final_pairs.present?					
+					return calculate_pairs(left_final_pairs, right_final_pairs, user)
+				else
+					return 0
+				end
+			elsif type == 7
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
 					return calculate_pairs(left_final_pairs, right_final_pairs, user)
 				else
@@ -111,6 +127,20 @@ module AdminHelper
 		end
 	end
 
+
+	def find_end_of_month 
+		if Date.today.end_of_month.strftime("%d").to_i == 30
+			return 3
+		elsif Date.today.end_of_month.strftime("%d").to_i == 31
+			return 4
+		elsif Date.today.end_of_month.strftime("%d").to_i == 29
+			return 2
+		else
+			return 1
+		end
+	end
+
+
 	def calculate_pairs left_final_pairs = 0, right_final_pairs = 0, user = nil
 		if left_final_pairs.count == right_final_pairs.count
 			return user.try(:is_first_pair_valid) == true ? left_final_pairs.count : left_final_pairs.count - 1
@@ -129,7 +159,7 @@ module AdminHelper
 		result = []
 		date = Date.today.strftime("%d").to_i
 
-		duration = (1..10).include?(date) ? 1 : (11..20).include?(date) ? 2 : (21..31).include?(date) ? 3 : nil
+		duration = (1..7).include?(date) ? 1 : (8..14).include?(date) ? 2 : (15..21).include?(date) ? 3 : (22..28).include?(date) ? 6 : (29..31).include?(date) ? 7 : nil
 		users.each_with_index do |user, i|
 			if !user.admin?
 				result << {

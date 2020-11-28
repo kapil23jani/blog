@@ -36,7 +36,7 @@
                 <p>Sponser Name: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:name)%></b></p>
                 <p>Sponser ID: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:sponser_id)%></b></p>
                 <p>Mobile Number: <b><%= user.try(:phone_number)%></b></p>
-                <p>UPI ID: <b><%= user.try(:upi_id)%></b></p>
+                <p>Phone Pe: <b><%= user.try(:upi_id)%></b></p>
                 <p>Status: <b><%= user.try(:is_invoice_valid).eql?(true) ? "Active" : "Inactive"%></b></p>
             </div><br>
             <div class="card-body" style="background: white;"><h4 style="background: #45d4f5; padding: 20px; color: white;">Business Details: </h4><br>
@@ -53,19 +53,23 @@
                     <h4 class="card-title">Current Month Pairs</h4>
                   </div>
                   <div class="card-body table-responsive">
-                    <table class="table table-hover">
-                      <thead class="text-success">
-                        <th style="font-size: 14px;">1 - 10</th>
-                        <th style="font-size: 14px;">11- 20</th>
-                        <th style="font-size: 14px;">21 - 31</th>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td style="font-size: 15px;"><%= find_pair(user, 1) %></td>
-                          <td style="font-size: 15px;"><%= find_pair(user, 2) %></td>
-                          <td style="font-size: 15px;"><%= find_pair(user, 3) %></td>
-                        </tr>
-                      </tbody>
+                   <table class="table table-hover">
+                          <thead class="text-success">
+                            <th style="font-size: 14px; color: black">1 - 07</th>
+                            <th style="font-size: 14px; color: black">8- 14</th>
+                            <th style="font-size: 14px; color: black">15 - 21</th>
+                            <th style="font-size: 14px; color: black">22 - 28</th>
+                            <th style="font-size: 14px; color: black">29 - 31</th>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td style="font-size: 15px;"><%= find_pair(user, 1) %></td>
+                              <td style="font-size: 15px;"><%= find_pair(user, 2) %></td>
+                              <td style="font-size: 15px;"><%= find_pair(user, 3) %></td>
+                              <td style="font-size: 15px;"><%= find_pair(user, 6) %></td>
+                              <td style="font-size: 15px;"><%= find_pair(user, 7) %></td>
+                            </tr>
+                          </tbody>
                     </table>
                   </div>
                 <!-- </div> -->

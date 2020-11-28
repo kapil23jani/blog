@@ -89,7 +89,7 @@
 	                <p>Sponser Name: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:name)%></b></p>
 	                <p>Sponser ID: <b><%= User.find_by(id: user.try(:sponsered_by_id)).try(:sponser_id)%></b></p>
 	                <p>Mobile Number: <b><%= user.try(:phone_number)%></b></p>
-	                <p>UPI ID: <b><%= user.try(:upi_id)%></b></p>
+	                <p>Phone Pe: <b><%= user.try(:upi_id)%></b></p>
 	            </div>
 	            <div class="card-body" style="background: white;"><h4 style="background: #c9d3d6; padding: 20px; color: #484a4a">Business Details: </h4><br>
 	                <h5 class="card-title">Total Team Size: <b><%= get_final_users(user).try(:uniq) { |user| user.id}.try(:count)%></b></h5>
@@ -107,15 +107,19 @@
 	                  <div class="card-body table-responsive">
 	                    <table class="table table-hover">
 	                      <thead class="text-success">
-	                        <th style="font-size: 14px; color: black">1 - 10</th>
-	                        <th style="font-size: 14px; color: black">11- 20</th>
-	                        <th style="font-size: 14px; color: black">21 - 31</th>
+	                        <th style="font-size: 14px; color: black">1 - 07</th>
+	                        <th style="font-size: 14px; color: black">8- 14</th>
+	                        <th style="font-size: 14px; color: black">15 - 21</th>
+	                        <th style="font-size: 14px; color: black">22 - 28</th>
+	                        <th style="font-size: 14px; color: black">29 - 31</th>
 	                      </thead>
 	                      <tbody>
 	                        <tr>
 	                          <td style="font-size: 15px;"><%= find_pair(user, 1) %></td>
 	                          <td style="font-size: 15px;"><%= find_pair(user, 2) %></td>
 	                          <td style="font-size: 15px;"><%= find_pair(user, 3) %></td>
+	                          <td style="font-size: 15px;"><%= find_pair(user, 6) %></td>
+	                          <td style="font-size: 15px;"><%= find_pair(user, 7) %></td>
 	                        </tr>
 	                      </tbody>
 	                    </table>
