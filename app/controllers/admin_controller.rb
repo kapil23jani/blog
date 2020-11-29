@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
 	def index
 		@invoices = Invoice.where(is_invoice_valid: [nil, false])
-		@top_joiners = top_joines
+		@top_joiners = top_joines || []
 	end
 
 	def members

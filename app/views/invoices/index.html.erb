@@ -22,7 +22,7 @@
 		      <div class="col-lg-4">
 		        <div class="form-group focused" style="width: auto; padding: 10px;">
 		          <label class="form-control-label" for="input-username">Invoice Number</label>
-		          <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="<%= @current_user.try(:invoice).try(:invoice_number)%>" readonly="readonly">
+		          <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Invoice Number" value="<%= @current_user.try(:invoice).try(:invoice_number)%>" readonly="readonly">
 		        </div>
 		      </div>
 		      <div class="col-lg-4">

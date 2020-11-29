@@ -24,7 +24,7 @@ class RegistrationsController < ApplicationController
         @user.sponser_id = params[:unique_user_id].present? ? params[:unique_user_id].upcase : nil
         @user.is_invoice_valid = false
         @user.unique_user_id = params[:password]
-    	if @user.save
+    	if @user.save(validate: false)
 
             render_message("Registered Successfully", @user)
             is_first_pair_valid(@user.sponsered_by_id, @user.id)
