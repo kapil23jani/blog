@@ -128,7 +128,7 @@
                   <i class="material-icons">group</i>
                 </div>
                 <p class="card-category">My Team</p>
-                <h3 class="card-title"><%= get_final_users(@current_user).present? ?  get_final_users(@current_user, start_date: (Date.today.beginning_of_month).to_datetime, end_date: (Date.today.end_of_month).to_datetime).uniq { |user| user.id}.count : 0 %>
+                <h3 class="card-title"><%= get_final_users(@current_user).present? ?  get_final_users(@current_user).uniq { |user| user.id}.count : 0 %>
                   <small>Members</small>
                 </h3>
               </div>
