@@ -224,7 +224,7 @@ module AdminHelper
 		result = []
 		date = Date.today.strftime("%d").to_i
 		if last_closing == true
-			if date == 8 || date == 9 || date || date == 10
+			if date == 8 || date == 9 || date == 10
 				duration = 1
 			elsif date == 15 || date == 16 || date == 17
 				duration = 2
