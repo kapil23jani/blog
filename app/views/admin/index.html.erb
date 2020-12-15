@@ -66,8 +66,7 @@
 								<div class="card" style=" background-color: #d5ded7; padding: 20px; border: 2px;border-style: groove;">
 								  <div class="card-header">
 								    <h4>Name: <%= invoice.try(:user).try(:name)%></h4>
-								    <h4 class="card-title">Sponser Name: <%= User.find_by(id: invoice.try(:user).try(:sponsered_by_id)).try(:name)%></h4>
-								    <h4 class="card-title">Sponser ID: <%= invoice.try(:user).try(:sponser_id)%></h4><br>
+								    <h4 class="card-title">User ID: <%= invoice.try(:user).try(:sponser_id)%></h4><br>
 								    <h4 class="card-title">Invoice Number: <%= invoice.try(:invoice_number)%></h4>
 								    <p class="card-text"><h4>Bill Amount: <%= invoice.try(:amount)%></h4></p>
 
@@ -95,6 +94,7 @@
 	                    <th style="font-size: 14px;">UserID</th>
 	                    <th style="font-size: 14px;">Sponser Name</th>
 	                    <th style="font-size: 14px;">Sponser ID</th>
+	                    <th style="font-size: 14px;">Phone Pe</th>
 	                    <th style="font-size: 14px;">Pairs</th>
 	                  </thead>
 	                  <tbody>
@@ -105,6 +105,7 @@
 			                      <td style="font-size: 15px;"><%= joiner[:user_id] %></td>
 			                      <td style="font-size: 15px;"><%= joiner[:sponser_name] %></td>
 			                      <td style="font-size: 15px;"><%= joiner[:sponser_id] %></td>
+			                      <td style="font-size: 15px;"><%= joiner[:phone_pe] %></td>
 			                      <td style="font-size: 15px;"><%= joiner[:pairs] %></td>
 			                    </tr>
 			                <%end%>
@@ -122,6 +123,7 @@
 	                    <th style="font-size: 14px;">UserID</th>
 	                    <th style="font-size: 14px;">Sponser Name</th>
 	                    <th style="font-size: 14px;">Sponser ID</th>
+	                    <th style="font-size: 14px;">Phone Pe</th>
 	                    <th style="font-size: 14px;">Pairs</th>
 	                  </thead>
 	                  <tbody>
@@ -132,6 +134,7 @@
 			                      <td style="font-size: 15px;"><%= joiner[:user_id] %></td>
 			                      <td style="font-size: 15px;"><%= joiner[:sponser_name] %></td>
 			                      <td style="font-size: 15px;"><%= joiner[:sponser_id] %></td>
+			                      <td style="font-size: 15px;"><%= joiner[:phone_pe] %></td>
 			                      <td style="font-size: 15px;"><%= joiner[:pairs] %></td>
 			                    </tr>
 			                <%end%>

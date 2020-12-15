@@ -218,12 +218,20 @@
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_right") %></td>
                       <td style="font-size: 15px;"><%= get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right")%></td>
+                    </tr> 
+                    <tr>
+                      <td style="font-size: 15px;">Current Week Status (Only Active)</td>
+                      <%date = Date.today.strftime("%d").to_i%>
+                      <%duration = (1..7).include?(date) ? 1 : (8..14).include?(date) ? 2 : (15..21).include?(date) ? 3 : (22..28).include?(date) ? 6 : (29..31).include?(date) ? 7 : nil%> 
+                      <td style="font-size: 15px;"><%= left_fetch_pending_pair(@current_user, "Left", duration) %></td>
+                      <td style="font-size: 15px;"><%= right_fetch_pending_pair(@current_user, "Right", duration) %></td>
+                      <td style="font-size: 15px;"><%= left_fetch_pending_pair(@current_user, "Left", duration) + right_fetch_pending_pair(@current_user, "Right",duration)%></td>
                     </tr>
                     <tr>
                       <td style="font-size: 15px;">Total</td>
-                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + get_active_users(@current_user, "active_left") %></td>
-                      <td style="font-size: 15px;"><%= find_right_inactive_team(@current_user) + get_active_users(@current_user, "active_right") %></td>
-                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + find_right_inactive_team(@current_user) + get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right") %></td>
+                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + get_active_users(@current_user, "active_left") + left_fetch_pending_pair(@current_user, "Left", duration) %></td>
+                      <td style="font-size: 15px;"><%= find_right_inactive_team(@current_user) + get_active_users(@current_user, "active_right") + right_fetch_pending_pair(@current_user, "Left", duration) %></td>
+                      <td style="font-size: 15px;"><%= find_left_inactive_team(@current_user) + find_right_inactive_team(@current_user) + get_active_users(@current_user, "active_left") + get_active_users(@current_user, "active_right") + left_fetch_pending_pair(@current_user, "Left", duration) + right_fetch_pending_pair(@current_user, "Left", duration) %></td>
                     </tr>
                   </tbody>
                 </table>

@@ -64,6 +64,64 @@ module AdminHelper
 
 
 
+	def left_fetch_pending_pair user, type = nil, duration = nil
+		if !user.admin?
+			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
+			return 0 if check_main_pair == 1 || check_main_pair == 0 
+			users = find_left_team(user, true).present? ? find_left_team(user, true).where(is_invoice_valid: true) : nil if type = "Left"
+			if duration == 1
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 7.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 2
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 7.days, (Date.today.beginning_of_month).to_datetime + 14.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 3
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 14.days, (Date.today.beginning_of_month).to_datetime + 21.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 6
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 21.days, (Date.today.beginning_of_month).to_datetime + 28.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 7
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			end
+		end
+	end
+
+	def right_fetch_pending_pair user, type = nil, duration = nil
+		if !user.admin?
+			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
+			return 0 if check_main_pair == 1 || check_main_pair == 0 
+			users = find_right_team(user, true).present? ? find_right_team(user, true).where(is_invoice_valid: true) : nil if type = "Right"
+			if duration == 1
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 7.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 2
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 7.days, (Date.today.beginning_of_month).to_datetime + 14.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 3
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 14.days, (Date.today.beginning_of_month).to_datetime + 21.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 6
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 21.days, (Date.today.beginning_of_month).to_datetime + 28.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 7
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			end
+		end
+	end
+
 	def find_pair user, type = nil , last_closing = false
 		if !user.admin?
 			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
@@ -166,15 +224,15 @@ module AdminHelper
 		result = []
 		date = Date.today.strftime("%d").to_i
 		if last_closing == true
-			if date == 8 || date == 9
+			if date == 8 || date == 9 || date || date == 10
 				duration = 1
-			elsif date == 15 || date == 16
+			elsif date == 15 || date == 16 || date == 17
 				duration = 2
-			elsif date == 22 || date == 23
+			elsif date == 22 || date == 23 || date == 24
 				duration = 3
-			elsif date == 29 || date == 30
+			elsif date == 29 || date == 30 || date == 31
 				duration = 6
-			elsif date == 1 || date == 2
+			elsif date == 1 || date == 2 || date == 3
 				duration = 7 
 			end
 			users.each_with_index do |user, i|
@@ -185,7 +243,8 @@ module AdminHelper
 						sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
 						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
 						pairs: find_pair(user, duration, true) || 0,
-						is_invoice_valid: user.try(:is_invoice_valid)
+						is_invoice_valid: user.try(:is_invoice_valid),
+						phone_pe: user.try(:upi_id)
 
 					}
 				end
