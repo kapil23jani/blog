@@ -64,7 +64,7 @@ module AdminHelper
 
 
 
-	def find_pair user, type = nil 
+	def find_pair user, type = nil , last_closing = true
 		if !user.admin?
 			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
 			return 0 if check_main_pair == 1 || check_main_pair == 0
@@ -75,6 +75,7 @@ module AdminHelper
 				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 7.days).sort if left_users.present?
 				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.beginning_of_month).to_datetime + 7.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if last_closing == true
 					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i <= 7
 					return 0 
 				else
@@ -83,7 +84,9 @@ module AdminHelper
 			elsif type == 2
 				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 7.days, (Date.today.beginning_of_month).to_datetime + 14.days).sort if left_users.present?
 				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 7.days, (Date.today.beginning_of_month).to_datetime + 14.days).sort if right_users.present?
-				if left_final_pairs.present? && right_final_pairs.present?					
+				if left_final_pairs.present? && right_final_pairs.present?		
+
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if last_closing == true
 					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i <= 14
 					return 0
 				else
@@ -93,6 +96,7 @@ module AdminHelper
 				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 14.days, (Date.today.beginning_of_month).to_datetime + 21.days).sort if left_users.present?
 				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 14.days, (Date.today.beginning_of_month).to_datetime + 21.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if last_closing == true
 					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i <= 21
 					return 0
 				else
@@ -102,6 +106,7 @@ module AdminHelper
 				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 21.days, (Date.today.beginning_of_month).to_datetime + 28.days).sort if left_users.present?
 				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 21.days, (Date.today.beginning_of_month).to_datetime + 28.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if last_closing == true
 					return calculate_pairs(left_final_pairs, right_final_pairs, user) if Date.today.strftime("%d").to_i <= 28
 					return 0
 				else
@@ -111,6 +116,7 @@ module AdminHelper
 				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if left_users.present?
 				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if right_users.present?
 				if left_final_pairs.present? && right_final_pairs.present?					
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if last_closing == true
 					return calculate_pairs(left_final_pairs, right_final_pairs, user)
 				else
 					return 0
@@ -178,7 +184,8 @@ module AdminHelper
 						user_id: user.try(:sponser_id) || "",
 						sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
 						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
-						pairs: find_pair(user, duration) || 0
+						pairs: find_pair(user, duration, true) || 0,
+						is_invoice_valid: user.try(:is_invoice_valid)
 
 					}
 				end
