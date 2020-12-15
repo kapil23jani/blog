@@ -64,7 +64,7 @@ module AdminHelper
 
 
 
-	def find_pair user, type = nil , last_closing = true
+	def find_pair user, type = nil , last_closing = false
 		if !user.admin?
 			check_main_pair = User.where(sponsered_by_id: user.id).pluck(:position).uniq.count
 			return 0 if check_main_pair == 1 || check_main_pair == 0
