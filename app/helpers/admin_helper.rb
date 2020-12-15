@@ -155,27 +155,58 @@ module AdminHelper
 		
 	end
 
-	def top_joines 
+	def top_joines last_closing = false
 		users = User.all
 		result = []
 		date = Date.today.strftime("%d").to_i
-
-		duration = (1..7).include?(date) ? 1 : (8..14).include?(date) ? 2 : (15..21).include?(date) ? 3 : (22..28).include?(date) ? 6 : (29..31).include?(date) ? 7 : nil
-		users.each_with_index do |user, i|
-			if !user.admin?
-				result << {
-					name: user.try(:name) || "",
-					user_id: user.try(:sponser_id) || "",
-					sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
-					sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
-					pairs: find_pair(user, duration) || 0
-
-				}
+		if last_closing == true
+			if date == 8 || date == 9
+				duration = 1
+			elsif date == 15 || date == 16
+				duration = 2
+			elsif date == 22 || date == 23
+				duration = 3
+			elsif date == 29 || date == 30
+				duration = 6
+			elsif date == 1 || date == 2
+				duration = 7 
 			end
+			users.each_with_index do |user, i|
+				if !user.admin?
+					result << {
+						name: user.try(:name) || "",
+						user_id: user.try(:sponser_id) || "",
+						sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
+						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
+						pairs: find_pair(user, duration) || 0
+
+					}
+				end
+			end
+			result = result.delete_if {|x| x[:pairs].to_i == 0}
+			return result.sort_by {|x| p x[:pairs]}.reverse.first(20) if result.present?
+		else
+			duration = (1..7).include?(date) ? 1 : (8..14).include?(date) ? 2 : (15..21).include?(date) ? 3 : (22..28).include?(date) ? 6 : (29..31).include?(date) ? 7 : nil
+			users.each_with_index do |user, i|
+				if !user.admin?
+					result << {
+						name: user.try(:name) || "",
+						user_id: user.try(:sponser_id) || "",
+						sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
+						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
+						pairs: find_pair(user, duration) || 0
+
+					}
+				end
+			end
+			result = result.delete_if {|x| x[:pairs].to_i == 0}
+			return result.sort_by {|x| p x[:pairs]}.reverse.first(20) if result.present?
 		end
-		result = result.delete_if {|x| x[:pairs].to_i == 0}
-		return result.sort_by {|x| p x[:pairs]}.reverse.first(20) if result.present?
 	end
+
+
+
+
 
 
 				

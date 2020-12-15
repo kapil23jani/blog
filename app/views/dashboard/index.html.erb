@@ -173,6 +173,23 @@
               </div>
             </div>
           </div>
+          <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats"  style="background: white; width: 280px;">
+              <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon">
+                  <i class="material-icons">done</i>
+                </div>
+                <p class="card-category">Today's Joining</p>
+                
+                <h3 class="card-title"><%= get_final_users(@current_user).present? ?  get_final_users(@current_user, start_date: Date.today.to_datetime, end_date: (Date.today+1).to_datetime).uniq { |user| user.id}.count : 0 %></h3>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <!-- <i class="material-icons">update</i> Just Updated -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       
         <div class="row">

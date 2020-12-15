@@ -4,6 +4,7 @@ class AdminController < ApplicationController
 	def index
 		@invoices = Invoice.where(is_invoice_valid: [nil, false])
 		@top_joiners = top_joines || []
+		@last_joiners = top_joines(true) || []
 	end
 
 	def members

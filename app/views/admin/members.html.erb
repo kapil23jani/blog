@@ -46,8 +46,8 @@
                     <td><%= user.position %></td>
                     <td><%= user.created_at.strftime("%F") %></td>
                     <td><%= user.address %></td>
-                    <td><%= User.find_by(sponser_id: user.sponser_id).try(:name) %></td>
-                    <td><%= User.find_by(sponser_id: user.sponser_id).try(:sponser_id) %></td>
+                    <td><%= User.find_by(id: user.sponsered_by_id).try(:name) %></td>
+                    <td><%= User.find_by(id: user.sponsered_by_id).try(:sponser_id) %></td>
                     <td><%= user.is_invoice_valid.eql?(true) ? "Active" : "Inactive" %> </td>
                 </tr>
                 <%end%>

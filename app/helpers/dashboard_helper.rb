@@ -17,7 +17,6 @@ module DashboardHelper
 					result << User.where(id: records_array.pluck("id")).sort
 				else
 					result << User.where(id: records_array.pluck("id")).where('created_at BETWEEN ? AND ?', start_date[:start_date], start_date[:end_date]).sort
-
 				end
 			end
 			result.flatten.delete_if { |user| user.id == @user.id}
