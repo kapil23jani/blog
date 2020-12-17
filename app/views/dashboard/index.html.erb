@@ -18,7 +18,10 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+ <!--  <script scr="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script> -->
   <!-- Custom styles for this template -->
   <!-- <link href="css/simple-sidebar.css" rel="stylesheet"> -->
 
@@ -231,7 +234,8 @@
               </div><br>
               <% users = User.where(id: get_final_users(@current_user).pluck(:id)) %>
               <% if get_final_users(@current_user).present?%>
-                <%= pie_chart users.group(:is_invoice_valid).count %>
+                <% users = {"Active": users.where(is_invoice_valid: true).count, "Inacitve": users.where(is_invoice_valid: false).count}%>
+                <%= pie_chart users, colors: ["#2bad07", "#db1226"]%>
               <%end%>
           </div>
           <div class="col-lg-8 col-md-12" style="background: white; overflow: auto; white-space: nowrap;">
@@ -241,7 +245,7 @@
               </div><br>
               <% users = User.where(id: get_final_users(@current_user).pluck(:id)) %>
               <% if get_final_users(@current_user).present?%>
-                <%= column_chart users.group_by_day_of_week(:created_at, format: "%a").count %>
+                <%= column_chart users.where("created_at > ?", Time.now-7.days).group_by_day(:created_at, format: "%a").count %>
               <%end%>
             </div>
           </div>
