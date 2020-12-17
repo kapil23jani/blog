@@ -260,7 +260,8 @@ module AdminHelper
 						user_id: user.try(:sponser_id) || "",
 						sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
 						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
-						pairs: find_pair(user, duration) || 0
+						pairs: find_pair(user, duration) || 0,
+						is_invoice_valid: user.try(:is_invoice_valid)
 
 					}
 				end
