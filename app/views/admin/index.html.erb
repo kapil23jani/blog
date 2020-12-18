@@ -54,7 +54,7 @@
 			<div class="col-sm-12" style="margin-left: 40px; background: white; overflow: auto; white-space: nowrap;">
 				<div class="scrollmenu" style="width: 500px;">
 					<h3 style="padding: 20px;">Recent Joiners</h3>
-					<%= line_chart User.group_by_day(:created_at).count %>
+					<%= line_chart User.where("created_at > ?", Time.now-30.days).group_by_day(:created_at).count %>
 				</div>
 			</div><br>
 			<div class="col-sm-12" style="background: white; margin-left: 40px;">

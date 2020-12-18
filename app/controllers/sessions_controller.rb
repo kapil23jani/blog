@@ -22,6 +22,9 @@ class SessionsController < ApplicationController
                 else
                     redirect_to admin_index_path
                 end
+            else
+                flash[:danger] = "Invalid User ID or Password"
+                redirect_to welcome_index_path
             end
         else
         end
