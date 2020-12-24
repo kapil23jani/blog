@@ -189,6 +189,12 @@ module AdminHelper
 				else
 					return 0
 				end
+			elsif type == 10
+				if left_users.present? && right_users.present?				
+					return calculate_pairs(left_users, right_users, user, true)
+				else
+					return 0
+				end
 			end
 		end
 	end
@@ -206,15 +212,23 @@ module AdminHelper
 	end
 
 
-	def calculate_pairs left_final_pairs = 0, right_final_pairs = 0, user = nil
-		if left_final_pairs.count == right_final_pairs.count
-			return user.try(:is_first_pair_valid) == true ? left_final_pairs.count : left_final_pairs.count - 1
-		elsif left_final_pairs.count > right_final_pairs.count
-			return right_final_pairs.count
-		elsif right_final_pairs.count > left_final_pairs.count
-			return left_final_pairs.count
+	def calculate_pairs left_final_pairs = 0, right_final_pairs = 0, user = nil, is_first_pair = false
+		if is_first_pair == true
+			if left_final_pairs.count >= 2 && right_final_pairs.count <= 2 || right_final_pairs.count >= 2 && left_final_pairs.count <= 2
+				return "Yes"
+			else
+				return "No"
+			end
 		else
-			return 0
+			if left_final_pairs.count == right_final_pairs.count
+				return user.try(:is_first_pair_valid) == true ? left_final_pairs.count : left_final_pairs.count - 1
+			elsif left_final_pairs.count > right_final_pairs.count
+				return right_final_pairs.count
+			elsif right_final_pairs.count > left_final_pairs.count
+				return left_final_pairs.count
+			else
+				return 0
+			end
 		end
 		
 	end
@@ -244,7 +258,8 @@ module AdminHelper
 						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
 						pairs: find_pair(user, duration, true) || 0,
 						is_invoice_valid: user.try(:is_invoice_valid),
-						phone_pe: user.try(:upi_id)
+						phone_pe: user.try(:upi_id),
+						is_first_pair: find_pair(user, 10, true) || "No"
 
 					}
 				end
@@ -261,8 +276,8 @@ module AdminHelper
 						sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
 						sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
 						pairs: find_pair(user, duration) || 0,
-						is_invoice_valid: user.try(:is_invoice_valid)
-
+						is_invoice_valid: user.try(:is_invoice_valid),
+						is_first_pair: find_pair(user, 10, false) || "No"
 					}
 				end
 			end
