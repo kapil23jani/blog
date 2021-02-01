@@ -207,6 +207,8 @@ module AdminHelper
 			return 31
 		elsif Date.today.end_of_month.strftime("%d").to_i == 29
 			return 29
+		elsif Date.today.end_of_month.strftime("%d").to_i == 28
+			return 28
 		else
 		end
 	end
