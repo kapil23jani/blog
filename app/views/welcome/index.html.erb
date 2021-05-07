@@ -107,11 +107,14 @@ body {
   <div class="site-section bg-light" id="about-section">
     <div class="container">
       <% flash.each do |key, value| %>
+      
         <%= content_tag(:div, class: "alert alert-#{key} alert-dismissable") do %>
           <%= value %>
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>   
         <% end %> 
-      <% end %>   
+      <% end %> 
+
+
 
       <div class="row mb-5">
         <div class="col-12 text-center">
@@ -447,7 +450,7 @@ body {
             <button class="btn btn-success">Login</button><br>
           </div>
           <div class="modal-footer d-flex justify-content-left">
-            <%#= link_to "Forgot Password?", "" %> 
+            <%= link_to "Forgot Password?", forgot_password_form_users_path %> 
           </div>
           
         <%end%>

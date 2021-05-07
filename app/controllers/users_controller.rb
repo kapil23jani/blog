@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	include UsersHelper
 
-	skip_before_action :authenticate_user!, only: [ :fetch_sponser]
+	skip_before_action :authenticate_user!, only: [ :fetch_sponser, :forgot_password_form, :update_password]
 
 	def show
 	end
@@ -68,6 +68,30 @@ class UsersController < ApplicationController
 		else
 		end
 	end
+
+	def forgot_password_form
+
+	end
+
+	def update_password
+		if params[:user][:user_id].present?
+			user = User.find_by(sponser_id: params[:user][:user_id])
+			if user.present?
+				user.password = params[:user][:password]
+				user.save(validate: false)
+				redirect_to root_path
+				flash[:info] = "Password Changed!"
+			else
+				redirect_to root_path
+				flash[:warning] = "User Not Found!"
+			end
+		else
+			redirect_to root_path
+			flash[:warning] = "User Not Found!"
+		end
+
+	end
+
 	
 
 	private

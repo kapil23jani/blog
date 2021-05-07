@@ -43,6 +43,8 @@ Rails.application.routes.draw do
     post :fetch_sponser, on: :collection
     put 'set_super_admin', on: :member
     get 'get_user_details', on: :member
-  end
+    get :forgot_password_form, on: :collection
+    put :update_password, on: :collection
+   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
