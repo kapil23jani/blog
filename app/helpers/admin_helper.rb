@@ -89,6 +89,10 @@ module AdminHelper
 				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if users.present?
 				return final_pairs.count if final_pairs.present?
 				return 0
+			elsif duration == 15
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
 			end
 		end
 	end
@@ -116,6 +120,10 @@ module AdminHelper
 				return 0
 			elsif duration == 7
 				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime + 28.days, (Date.today.beginning_of_month).to_datetime + find_end_of_month.days).sort if users.present?
+				return final_pairs.count if final_pairs.present?
+				return 0
+			elsif duration == 15
+				final_pairs = users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime , (Date.today.end_of_month).to_datetime).sort if users.present?
 				return final_pairs.count if final_pairs.present?
 				return 0
 			end
@@ -192,6 +200,15 @@ module AdminHelper
 			elsif type == 10
 				if left_users.present? && right_users.present?				
 					return calculate_pairs(left_users, right_users, user, true)
+				else
+					return 0
+				end
+			elsif 15
+				left_final_pairs = left_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort if left_users.present?
+				right_final_pairs = right_users.where('created_at BETWEEN ? AND ?', (Date.today.beginning_of_month).to_datetime, (Date.today.end_of_month).to_datetime).sort if right_users.present?
+				if left_final_pairs.present? && right_final_pairs.present?					
+					return calculate_pairs(left_final_pairs, right_final_pairs, user) if last_closing == true
+					return calculate_pairs(left_final_pairs, right_final_pairs, user)
 				else
 					return 0
 				end
@@ -286,6 +303,28 @@ module AdminHelper
 			result = result.delete_if {|x| x[:pairs].to_i == 0}
 			return result.sort_by {|x| p x[:pairs]}.reverse.first(20) if result.present?
 		end
+	end
+
+	def top_month_joines last_closing = false
+		users = User.all
+		result = []
+		date = Date.today.strftime("%d").to_i
+		
+		users.each_with_index do |user, i|
+			if !user.admin?
+				result << {
+					name: user.try(:name) || "",
+					user_id: user.try(:sponser_id) || "",
+					sponser_name: User.find_by(id: user.sponsered_by_id).try(:name) || "",
+					sponser_id: User.find_by(id: user.sponsered_by_id).try(:sponser_id) || "",
+					pairs: find_pair(user, 15) || 0,
+					is_invoice_valid: user.try(:is_invoice_valid),
+					is_first_pair: find_pair(user, 10, false) || "No"
+				}
+			end
+		end
+		result = result.delete_if {|x| x[:pairs].to_i == 0}
+		return result.sort_by {|x| p x[:pairs]}.reverse.first(20) if result.present?
 	end
 
 
